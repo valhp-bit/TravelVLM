@@ -176,25 +176,356 @@
     </div>
   </div>
 
+  <script src="https://unpkg.com/dompurify@2.4.0/dist/purify.min.js"></script>
   <script>
     function escapeHtml(str){if(!str) return ''; return str.replace(/[&<>"'`]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s]));}
+    
     const STORAGE_KEY='traveldream_comments_v1';
-    function loadComments(){try{const raw=localStorage.getItem(STORAGE_KEY);return raw?JSON.parse(raw):[]}catch(e){console.error(e);return []}}
-    function saveComments(list){localStorage.setItem(STORAGE_KEY,JSON.stringify(list));}
-    function formatDate(ts){const d=new Date(ts);return d.toLocaleString();}
-    function renderComments(){const list=loadComments();const container=document.getElementById('commentList');container.innerHTML='';if(list.length===0){container.innerHTML='<div class="small">Aucun commentaire pour le moment. Soyez le premier !</div>';updateStats(list);return}list.sort((a,b)=>b.time-a.time);for(const c of list){const item=document.createElement('div');item.className='comment-item';const stars='★'.repeat(c.rating)+'☆'.repeat(5-c.rating);item.innerHTML=`<div class="comment-header"><div><div class="comment-author">${escapeHtml(c.name)} <span class="small">— ${escapeHtml(c.email||'')}</span></div><div class="small">${formatDate(c.time)}</div></div><div style="text-align:right"><div class="small">${stars}</div></div></div><div class="comment-text">${escapeHtml(c.text)}</div>`;container.appendChild(item);}updateStats(list);}
-    function updateStats(list){const avgEl=document.getElementById('avgRating');const countEl=document.getElementById('countComments');if(!list||list.length===0){avgEl.textContent='0.0';countEl.textContent='(0)';return}const s=list.reduce((a,b)=>a+b.rating,0);const avg=(s/list.length).toFixed(1);avgEl.textContent=avg;countEl.textContent=`(${list.length})`;}
-    (function(){const stars=document.querySelectorAll('#stars .star');const ratingInput=document.getElementById('rating');function setStars(n){stars.forEach(s=>{const v=+s.dataset.value;s.textContent=v<=n?'★':'☆';s.classList.toggle('filled',v<=n)});ratingInput.value=n;}stars.forEach(s=>{s.addEventListener('click',()=>setStars(+s.dataset.value));s.addEventListener('mouseenter',()=>{const v=+s.dataset.value;stars.forEach(x=>x.textContent=+x.dataset.value<=v?'★':'☆');});s.addEventListener('mouseleave',()=>setStars(+ratingInput.value));});setStars(5);})();
-    document.getElementById('commentForm').addEventListener('submit',function(e){e.preventDefault();const name=document.getElementById('name').value.trim()||'Anonyme';const email=document.getElementById('email').value.trim();const text=document.getElementById('comment').value.trim();const rating=Math.max(1,Math.min(5,parseInt(document.getElementById('rating').value||5)));if(!text){alert('Veuillez saisir un commentaire.');return}const list=loadComments();list.push({name,email,text,rating,time:Date.now()});saveComments(list);renderComments();this.reset();document.getElementById('rating').value='5';});
-    document.getElementById('clearAll').addEventListener('click',()=>{if(!confirm('Effacer tous les commentaires ?'))return;localStorage.removeItem(STORAGE_KEY);renderComments();document.getElementById('exportArea').value='';});
-    document.getElementById('exportBtn').addEventListener('click',()=>{const list=loadComments();const txt=JSON.stringify(list,null,2);document.getElementById('exportArea').value=txt;});
-    document.getElementById('importBtn').addEventListener('click',()=>{document.getElementById('importFile').click();});
-    document.getElementById('importFile').addEventListener('change',(ev)=>{const f=ev.target.files&&ev.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=function(){try{const data=JSON.parse(reader.result);if(!Array.isArray(data))throw new Error('Format invalide');const existing=loadComments();const merged=existing.concat(data);saveComments(merged);renderComments();alert('Importation réussie ('+data.length+' commentaires)');}catch(err){alert('Erreur : '+err.message)}};reader.readAsText(f,'utf-8');ev.target.value='';});
+    
+    /**
+     * Valide les données commentaires importées
+     * N'accepte que les champs attendus pour éviter l'injection de données
+     */
+    function validateImportedComments(obj){
+      if(!Array.isArray(obj)) return { valid: false, error: 'Doit être un tableau' };
+      for(const item of obj){
+        if(typeof item.name !== 'string' || !item.name.trim()){
+          return { valid: false, error: 'Chaque commentaire doit avoir un nom' };
+        }
+        if(typeof item.text !== 'string' || !item.text.trim()){
+          return { valid: false, error: 'Chaque commentaire doit avoir du texte' };
+        }
+        if(item.rating !== undefined && (typeof item.rating !== 'number' || item.rating < 1 || item.rating > 5)){
+          return { valid: false, error: 'La note doit être entre 1 et 5' };
+        }
+        // Refuser les clés auth ou vip
+        for(const key of Object.keys(item)){
+          if(key.toLowerCase().includes('auth') || key.toLowerCase().includes('vip') || key.toLowerCase().includes('password')){
+            return { valid: false, error: 'Clé non autorisée détectée: ' + key };
+          }
+        }
+      }
+      return { valid: true };
+    }
+    
+    function loadComments(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      }catch(e){
+        console.error('Erreur chargement commentaires:', e);
+        return [];
+      }
+    }
+    
+    function saveComments(list){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+    
+    function formatDate(ts){
+      const d = new Date(ts);
+      return d.toLocaleString('fr-FR');
+    }
+    
+    function renderComments(){
+      const list = loadComments();
+      const container = document.getElementById('commentList');
+      container.innerHTML = '';
+      
+      if(list.length === 0){
+        container.innerHTML = '<div class="small">Aucun commentaire pour le moment. Soyez le premier !</div>';
+        updateStats(list);
+        return;
+      }
+      
+      list.sort((a,b) => b.time - a.time);
+      
+      for(const c of list){
+        const item = document.createElement('div');
+        item.className = 'comment-item';
+        const stars = '★'.repeat(c.rating || 0) + '☆'.repeat(5 - (c.rating || 0));
+        
+        // Sanitize text with DOMPurify
+        const safeText = DOMPurify.sanitize(c.text || '');
+        
+        item.innerHTML = `
+          <div class="comment-header">
+            <div>
+              <div class="comment-author">${escapeHtml(c.name || 'Anonyme')} <span class="small">— ${escapeHtml(c.email || '')}</span></div>
+              <div class="small">${formatDate(c.time || Date.now())}</div>
+            </div>
+            <div style="text-align:right">
+              <div class="small">${stars}</div>
+            </div>
+          </div>
+          <div class="comment-text">${safeText}</div>
+        `;
+        container.appendChild(item);
+      }
+      
+      updateStats(list);
+    }
+    
+    function updateStats(list){
+      const avgEl = document.getElementById('avgRating');
+      const countEl = document.getElementById('countComments');
+      
+      if(!list || list.length === 0){
+        avgEl.textContent = '0.0';
+        countEl.textContent = '(0)';
+        return;
+      }
+      
+      const sum = list.reduce((a,b) => a + (b.rating || 0), 0);
+      const avg = (sum / list.length).toFixed(1);
+      avgEl.textContent = avg;
+      countEl.textContent = `(${list.length})`;
+    }
+    
+    // Star rating system
+    (function(){
+      const stars = document.querySelectorAll('#stars .star');
+      const ratingInput = document.getElementById('rating');
+      
+      function setStars(n){
+        stars.forEach(s => {
+          const v = +s.dataset.value;
+          s.textContent = v <= n ? '★' : '☆';
+          s.classList.toggle('filled', v <= n);
+        });
+        ratingInput.value = n;
+      }
+      
+      stars.forEach(s => {
+        s.addEventListener('click', () => setStars(+s.dataset.value));
+        s.addEventListener('mouseenter', () => {
+          const v = +s.dataset.value;
+          stars.forEach(x => x.textContent = +x.dataset.value <= v ? '★' : '☆');
+        });
+        s.addEventListener('mouseleave', () => setStars(+ratingInput.value));
+      });
+      
+      setStars(5);
+    })();
+    
+    // Form submission
+    document.getElementById('commentForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim() || 'Anonyme';
+      const email = document.getElementById('email').value.trim();
+      const text = document.getElementById('comment').value.trim();
+      const rating = Math.max(1, Math.min(5, parseInt(document.getElementById('rating').value || 5)));
+      
+      if(!text){
+        alert('Veuillez saisir un commentaire.');
+        return;
+      }
+      
+      const list = loadComments();
+      list.push({
+        name,
+        email,
+        text,
+        rating,
+        time: Date.now()
+      });
+      
+      saveComments(list);
+      renderComments();
+      this.reset();
+      document.getElementById('rating').value = '5';
+    });
+    
+    // Clear all comments
+    document.getElementById('clearAll').addEventListener('click', () => {
+      if(!confirm('Effacer tous les commentaires ? Cette action ne peut pas être annulée.'))
+        return;
+      localStorage.removeItem(STORAGE_KEY);
+      renderComments();
+      document.getElementById('exportArea').value = '';
+    });
+    
+    // Export comments
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const list = loadComments();
+      const txt = JSON.stringify(list, null, 2);
+      document.getElementById('exportArea').value = txt;
+    });
+    
+    // Import comments
+    document.getElementById('importBtn').addEventListener('click', () => {
+      document.getElementById('importFile').click();
+    });
+    
+    document.getElementById('importFile').addEventListener('change', (ev) => {
+      const f = ev.target.files && ev.target.files[0];
+      if(!f) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(){
+        try{
+          const data = JSON.parse(reader.result);
+          const validation = validateImportedComments(data);
+          
+          if(!validation.valid){
+            alert('Erreur d\'import : ' + validation.error);
+            return;
+          }
+          
+          const existing = loadComments();
+          const merged = existing.concat(data);
+          saveComments(merged);
+          renderComments();
+          alert('Importation réussie (' + data.length + ' commentaires ajoutés)');
+        }catch(err){
+          alert('Erreur JSON : ' + err.message);
+        }
+      };
+      reader.readAsText(f, 'utf-8');
+      ev.target.value = '';
+    });
+    
+    // Initial render
     renderComments();
-    document.addEventListener('DOMContentLoaded',function(){const key='traveldream_cookies_v1';const banner=document.getElementById('cookieBanner');const v=localStorage.getItem(key);if(!v)banner.style.display='flex';document.getElementById('cookieAccept').addEventListener('click',()=>{localStorage.setItem(key,'accepted');banner.style.display='none';});document.getElementById('cookieReject').addEventListener('click',()=>{localStorage.setItem(key,'rejected');banner.style.display='none';});try{localStorage.setItem('traveldream_visited','1');}catch(e){}});
-    function recordAdClick(e,id){try{if(e&&e.preventDefault)e.preventDefault();}catch(err){}const key='traveldream_cookies_v1';const v=localStorage.getItem(key);const href=(e&&e.currentTarget&&e.currentTarget.href)?e.currentTarget.href:null;const doNav=()=>{if(href)window.location.href=href;return false;};if(v==='accepted'){const ck='traveldream_ad_clicks_'+id;const n=parseInt(localStorage.getItem(ck)||'0',10)+1;localStorage.setItem(ck,String(n));return doNav();}else{const ok=confirm('Acceptez les cookies pour activer le suivi des clics ?');if(ok){localStorage.setItem(key,'accepted');try{document.getElementById('cookieBanner').style.display='none';}catch(e){}const ck='traveldream_ad_clicks_'+id;const n=parseInt(localStorage.getItem(ck)||'0',10)+1;localStorage.setItem(ck,String(n));return doNav();}else{return doNav();}}}
-    (function(){const secretPhrase=document.getElementById('secretPhrase');let clickCount=0;let lastClickTime=0;secretPhrase.addEventListener('click',function(e){e.preventDefault();const now=Date.now();if(now-lastClickTime>2000)clickCount=0;clickCount++;lastClickTime=now;secretPhrase.style.color='#ff1493';secretPhrase.style.textShadow='0 0 8px rgba(255, 20, 147, 0.8)';setTimeout(()=>{if(clickCount<3){secretPhrase.style.color='#999';secretPhrase.style.textShadow='none';}},200);if(clickCount===3){secretPhrase.style.color='#00ff88';secretPhrase.style.textShadow='0 0 12px rgba(0, 255, 136, 0.8)';setTimeout(()=>window.location.href='boss_login.html',300);}});secretPhrase.addEventListener('mouseenter',function(){if(clickCount>0)this.style.color='#ff1493';else this.style.color='#999';});secretPhrase.addEventListener('mouseleave',function(){if(clickCount<3)this.style.color='#999';});})();
-    (function(){const EGG_KEY='traveldream_easter_egg_v1';const el=document.getElementById('secretEgg');if(!el)return;let state=parseInt(localStorage.getItem(EGG_KEY)||'0',10);const labels=['🥚','🐲','🐉'];function render(){el.textContent=labels[state]||labels[0];if(state>0)el.classList.add('revealed');else el.classList.remove('revealed');}function animatePop(){el.style.transform='scale(1.25)';setTimeout(()=>el.style.transform='scale(1)',160);}el.addEventListener('click',function(e){e.preventDefault();state=(state+1)%labels.length;localStorage.setItem(EGG_KEY,String(state));render();animatePop();});let pressTimer=null;el.addEventListener('pointerdown',()=>{pressTimer=setTimeout(()=>{state=0;localStorage.setItem(EGG_KEY,'0');render();alert('Oeuf réinitialisé');},1600);});el.addEventListener('pointerup',()=>{if(pressTimer){clearTimeout(pressTimer);pressTimer=null}});render();})();
+  </script>
+  
+  <!-- Cookie banner & other scripts -->
+  <script src="auth-ui.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const key = 'traveldream_cookies_v1';
+      const banner = document.getElementById('cookieBanner');
+      const v = localStorage.getItem(key);
+      if(!v) banner.style.display = 'flex';
+      
+      document.getElementById('cookieAccept').addEventListener('click', () => {
+        localStorage.setItem(key, 'accepted');
+        banner.style.display = 'none';
+      });
+      
+      document.getElementById('cookieReject').addEventListener('click', () => {
+        localStorage.setItem(key, 'rejected');
+        banner.style.display = 'none';
+      });
+      
+      try{ localStorage.setItem('traveldream_visited', '1'); }catch(e){}
+    });
+    
+    function recordAdClick(e, id){
+      try{ if(e && e.preventDefault) e.preventDefault(); }catch(err){}
+      const key = 'traveldream_cookies_v1';
+      const v = localStorage.getItem(key);
+      const href = (e && e.currentTarget && e.currentTarget.href) ? e.currentTarget.href : null;
+      const doNav = () => { if(href) window.location.href = href; return false; };
+      
+      if(v === 'accepted'){
+        const ck = 'traveldream_ad_clicks_' + id;
+        const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
+        localStorage.setItem(ck, String(n));
+        return doNav();
+      } else {
+        const ok = confirm('Acceptez les cookies pour activer le suivi des clics ?');
+        if(ok){
+          localStorage.setItem(key, 'accepted');
+          try{ document.getElementById('cookieBanner').style.display = 'none'; }catch(e){}
+          const ck = 'traveldream_ad_clicks_' + id;
+          const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
+          localStorage.setItem(ck, String(n));
+          return doNav();
+        } else {
+          return doNav();
+        }
+      }
+    }
+    
+    // Easter egg
+    (function(){
+      const secretPhrase = document.getElementById('secretPhrase');
+      let clickCount = 0;
+      let lastClickTime = 0;
+      
+      secretPhrase.addEventListener('click', function(e){
+        e.preventDefault();
+        const now = Date.now();
+        if(now - lastClickTime > 2000) clickCount = 0;
+        clickCount++;
+        lastClickTime = now;
+        
+        secretPhrase.style.color = '#ff1493';
+        secretPhrase.style.textShadow = '0 0 8px rgba(255, 20, 147, 0.8)';
+        
+        setTimeout(() => {
+          if(clickCount < 3){
+            secretPhrase.style.color = '#999';
+            secretPhrase.style.textShadow = 'none';
+          }
+        }, 200);
+        
+        if(clickCount === 3){
+          secretPhrase.style.color = '#00ff88';
+          secretPhrase.style.textShadow = '0 0 12px rgba(0, 255, 136, 0.8)';
+          setTimeout(() => window.location.href = 'boss_login.html', 300);
+        }
+      });
+      
+      secretPhrase.addEventListener('mouseenter', function(){
+        if(clickCount > 0) this.style.color = '#ff1493';
+        else this.style.color = '#999';
+      });
+      
+      secretPhrase.addEventListener('mouseleave', function(){
+        if(clickCount < 3) this.style.color = '#999';
+      });
+    })();
+    
+    // Easter egg egg
+    (function(){
+      const EGG_KEY = 'traveldream_easter_egg_v1';
+      const el = document.getElementById('secretEgg');
+      if(!el) return;
+      
+      let state = parseInt(localStorage.getItem(EGG_KEY) || '0', 10);
+      const labels = ['🥚', '🐲', '🐉'];
+      
+      function render(){
+        el.textContent = labels[state] || labels[0];
+        if(state > 0) el.classList.add('revealed');
+        else el.classList.remove('revealed');
+      }
+      
+      function animatePop(){
+        el.style.transform = 'scale(1.25)';
+        setTimeout(() => el.style.transform = 'scale(1)', 160);
+      }
+      
+      el.addEventListener('click', function(e){
+        e.preventDefault();
+        state = (state + 1) % labels.length;
+        localStorage.setItem(EGG_KEY, String(state));
+        render();
+        animatePop();
+      });
+      
+      let pressTimer = null;
+      el.addEventListener('pointerdown', () => {
+        pressTimer = setTimeout(() => {
+          state = 0;
+          localStorage.setItem(EGG_KEY, '0');
+          render();
+          alert('Oeuf réinitialisé');
+        }, 1600);
+      });
+      
+      el.addEventListener('pointerup', () => {
+        if(pressTimer){
+          clearTimeout(pressTimer);
+          pressTimer = null;
+        }
+      });
+      
+      render();
+    })();
   </script>
 </body>
 </html>
