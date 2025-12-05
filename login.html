@@ -303,6 +303,7 @@
         </div>
     </div>
 
+    <script src="auth-ui.js"></script>
     <script>
         const form = document.getElementById('loginForm');
         const errorDiv = document.getElementById('error');
@@ -314,20 +315,20 @@
 
         // Load saved email if "remember me" was checked
         window.addEventListener('load', () => {
-            const savedEmail = localStorage.getItem('traveldream_remembered_email');
+            const savedEmail = hasLocalStorage() ? localStorage.getItem('traveldream_remembered_email') : null;
             if (savedEmail) {
                 emailInput.value = savedEmail;
                 rememberCheckbox.checked = true;
             }
         });
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
             loadingDiv.style.display = 'block';
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 const email = emailInput.value.trim();
                 const password = passwordInput.value;
 
@@ -337,41 +338,35 @@
                     return;
                 }
 
-                // Get users from storage
-                const users = JSON.parse(localStorage.getItem('traveldream_users') || '[]');
-                const user = users.find(u => u.email === email);
+                // Login using enhanced auth function
+                const result = await loginUser(email, password);
 
-                if (!user) {
-                    showError('Email ou mot de passe incorrect.');
-                    loadingDiv.style.display = 'none';
-                    return;
-                }
-
-                if (user.password !== hashPassword(password)) {
-                    showError('Email ou mot de passe incorrect.');
+                if (!result.success) {
+                    showError(result.error || 'Email ou mot de passe incorrect.');
                     loadingDiv.style.display = 'none';
                     return;
                 }
 
                 // Save email if remember me is checked
-                if (rememberCheckbox.checked) {
+                if (rememberCheckbox.checked && hasLocalStorage()) {
                     localStorage.setItem('traveldream_remembered_email', email);
-                } else {
+                } else if (hasLocalStorage()) {
                     localStorage.removeItem('traveldream_remembered_email');
                 }
 
                 // Set session
                 sessionStorage.setItem('traveldream_currentUser', JSON.stringify({
-                    id: user.id,
-                    firstname: user.firstname,
-                    lastname: user.lastname,
-                    email: user.email,
-                    avatar: user.avatar
+                    id: Date.now().toString(),
+                    firstname: email.split('@')[0],
+                    email: email,
+                    avatar: { initials: email.charAt(0).toUpperCase(), color: '#667eea' }
                 }));
 
-                localStorage.setItem('traveldream_lastLoginTime', new Date().toISOString());
+                if (hasLocalStorage()) {
+                    localStorage.setItem('traveldream_lastLoginTime', new Date().toISOString());
+                }
 
-                showSuccess('Connexion réussie! Redirection...');
+                showSuccess(`Connexion réussie! (${result.backend}) — Redirection...`);
                 loadingDiv.style.display = 'none';
 
                 setTimeout(() => {
@@ -379,16 +374,6 @@
                 }, 1500);
             }, 1000);
         });
-
-        function hashPassword(password) {
-            let hash = 0;
-            for (let i = 0; i < password.length; i++) {
-                const char = password.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return 'hash_' + Math.abs(hash).toString(36);
-        }
 
         function togglePassword() {
             passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';

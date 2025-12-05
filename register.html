@@ -303,6 +303,7 @@
         </div>
     </div>
 
+    <script src="auth-ui.js"></script>
     <script>
         const form = document.getElementById('registerForm');
         const errorDiv = document.getElementById('error');
@@ -344,7 +345,7 @@
             field.type = field.type === 'password' ? 'text' : 'password';
         }
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
@@ -382,49 +383,34 @@
                 return;
             }
 
-            // Check if email already exists
-            const users = JSON.parse(localStorage.getItem('traveldream_users') || '[]');
-            if (users.find(u => u.email === email)) {
-                showError('Cet email est déjà utilisé.');
-                return;
-            }
-
-            // Create user
-            const newUser = {
-                id: Date.now().toString(),
+            // Register using enhanced auth function
+            const result = await registerUser(email, password, {
                 firstname,
                 lastname,
-                email,
                 phone: document.getElementById('phone').value.trim(),
-                password: hashPassword(password),
                 birthdate: document.getElementById('birthdate').value,
                 country: document.getElementById('country').value,
-                createdAt: new Date().toISOString(),
                 avatar: generateAvatar(firstname, lastname)
-            };
+            });
 
-            users.push(newUser);
-            localStorage.setItem('traveldream_users', JSON.stringify(users));
-
-            showSuccess('Compte créé avec succès! Redirection vers la connexion...');
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 2000);
+            if (result.success) {
+                // Store current user in sessionStorage for consistency
+                sessionStorage.setItem('traveldream_currentUser', JSON.stringify({
+                    id: Date.now().toString(),
+                    firstname,
+                    email
+                }));
+                showSuccess(`Compte créé avec succès! (${result.backend === 'firebase' ? 'Firebase' : result.backend === 'localStorage' ? 'localStorage' : 'mémoire session'}) — Redirection vers la connexion...`);
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            } else {
+                showError(result.error || 'Erreur lors de la création du compte.');
+            }
         });
 
         function validateEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-
-        function hashPassword(password) {
-            // Simple hash (NOT production-grade)
-            let hash = 0;
-            for (let i = 0; i < password.length; i++) {
-                const char = password.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return 'hash_' + Math.abs(hash).toString(36);
         }
 
         function generateAvatar(firstname, lastname) {
