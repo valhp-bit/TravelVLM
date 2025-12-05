@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎮 Easter Egg - TravelVLM</title>
+  <link rel="stylesheet" href="../style/style.css">
+  <style>
+    :root{--accent:#667eea;--accent2:#ff9800;--bg:#f7f8fb}
+    * { box-sizing: border-box; }
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+      color:#fff;
+      margin:0;
+      padding:0;
+      min-height:100vh;
+    }
+    header{background:rgba(0,0,0,0.8);color:#fff;padding:16px 20px;box-shadow:0 4px 15px rgba(0,0,0,0.5);position:sticky;top:0;z-index:100;border-bottom:3px solid #00ff88}
+    .header-top{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .header-top a{color:#00ff88;text-decoration:none;font-weight:bold;display:flex;align-items:center;gap:8px;transition:color 0.3s}
+    .header-top a:hover{color:#ffff00}
+    .header-top nav{display:flex;gap:16px;align-items:center}
+    .header-top nav a{font-weight:500;padding:6px 12px;border-radius:4px;transition:background 0.3s,color 0.3s}
+    .header-top nav a:hover{background:rgba(0,255,136,0.2);color:#ffff00}
+    .container{max-width:1200px;margin:24px auto;padding:0 16px}
+    .hero-banner{background:linear-gradient(135deg,#00ff88,#00ffff);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;padding:40px 20px;margin-bottom:30px}
+    .hero-banner h1{margin:0;font-size:48px;text-shadow:0 0 20px rgba(0,255,136,0.5);-webkit-text-fill-color:#00ff88;color:#00ff88}
+    .hero-banner p{margin:10px 0 0;font-size:18px;color:#00ffff}
+    .easter-box{background:rgba(0,255,136,0.1);border:2px solid #00ff88;border-radius:10px;padding:20px;margin:20px 0;text-align:center}
+    .easter-box h2{color:#00ff88;font-size:28px;margin:0}
+    .easter-box p{color:#fff;margin:10px 0 0}
+    .achievement{background:rgba(255,255,0,0.1);border:2px dashed #ffff00;border-radius:10px;padding:16px;margin:16px 0;text-align:center;animation:pulse 2s infinite}
+    .achievement h3{color:#ffff00;margin:0}
+    .achievement p{color:#fff;margin:10px 0 0;font-size:13px}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+    .achievement.unlocked{border-color:#00ff88;background:rgba(0,255,136,0.2);animation:none}
+    .achievement.unlocked h3{color:#00ff88}
+    .achievement.unlocked p{color:#00ffff}
+    .game-area{background:rgba(0,0,0,0.6);border:2px solid #00ff88;border-radius:10px;padding:20px;margin:30px 0;text-align:center}
+    .game-area h3{color:#00ff88;margin:0 0 15px}
+    .btn-game{
+      display:inline-block;
+      padding:12px 24px;
+      margin:8px;
+      background:linear-gradient(135deg,#00ff88,#00ffff);
+      color:#000;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+      transition:transform 0.2s,box-shadow 0.2s;
+      box-shadow:0 0 10px rgba(0,255,136,0.5)
+    }
+    .btn-game:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(0,255,136,0.8)}
+    .btn-game:active{transform:scale(0.95)}
+    .dragon-animation{font-size:60px;animation:dragon-fly 3s infinite;display:inline-block}
+    @keyframes dragon-fly{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin:20px 0}
+    .stat-box{background:rgba(0,255,136,0.1);border:1px solid #00ff88;border-radius:8px;padding:15px;text-align:center}
+    .stat-box .number{font-size:28px;color:#00ff88;font-weight:bold}
+    .stat-box .label{color:#fff;font-size:12px;margin-top:5px}
+    .code-box{background:rgba(0,0,0,0.8);border:1px solid #00ff88;border-radius:8px;padding:12px;margin:15px 0;font-family:monospace;color:#00ff88;font-size:12px;text-align:left;overflow-x:auto}
+    .back-btn{display:inline-block;margin:20px 0;padding:10px 20px;background:#00ff88;color:#000;text-decoration:none;border-radius:8px;font-weight:bold;transition:background 0.3s}
+    .back-btn:hover{background:#00ffff}
+    footer{background:rgba(0,0,0,0.9);color:#fff;text-align:center;padding:20px;margin-top:40px;border-top:2px solid #00ff88}
+    footer a{color:#00ff88;text-decoration:none}
+    footer a:hover{color:#ffff00}
+    #trophyBtn{position:fixed;top:12px;right:12px;z-index:1201;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff9800);box-shadow:0 6px 18px rgba(0,0,0,0.5);cursor:pointer;text-decoration:none;color:#333;opacity:0.9;font-size:18px}
+    #trophyBtn:hover{transform:scale(1.06)}
+    @media(max-width:768px){
+      .hero-banner h1{font-size:32px}
+      .dragon-animation{font-size:40px}
+      .stats{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+  <!-- Trophy button -->
+  <a id="trophyBtn" href="../trophe.html" title="Trophées">🏆</a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <a href="../index.html">✈️ TravelVLM</a>
+      <nav>
+        <a href="../index.html">Accueil</a>
+        <a href="../rendezvous.html">Rendez-vous</a>
+        <a href="../commentaire.html">Commentaires</a>
+        <a href="../trophe.html">Trophées</a>
+        <a href="bonus_easter.html" style="color:#00ff88">🎮 Easter Egg</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero-banner">
+      <h1>🎮 EASTER EGG MODE 🎮</h1>
+      <p>Tu as trouvé la zone secrète! Débloquez des succès et remportez des trophées!</p>
+    </div>
+
+    <div class="easter-box">
+      <div class="dragon-animation">🐉</div>
+      <h2>Bienvenue, Explorateur Secret!</h2>
+      <p>Vous avez découvert une page cachée contenant des mini-jeux, des succès et des secrets TravelVLM.</p>
+      <p style="font-size:12px;margin-top:15px;opacity:0.8">Cette page n'existe que si vous la trouvez... Vous l'avez trouvée! 🎉</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="number" id="visitCount">0</div>
+        <div class="label">Visites secrètes</div>
+      </div>
+      <div class="stat-box">
+        <div class="number" id="achieveCount">0</div>
+        <div class="label">Succès débloqués</div>
+      </div>
+      <div class="stat-box">
+        <div class="number" id="timeSpent">0</div>
+        <div class="label">Secondes ici</div>
+      </div>
+      <div class="stat-box">
+        <div class="number" id="eggState">🥚</div>
+        <div class="label">État œuf dragon</div>
+      </div>
+    </div>
+
+    <div class="game-area">
+      <h3>🎯 Mini-Jeux & Défis</h3>
+      <button class="btn-game" onclick="clickerGame()">⚡ Clicker Dragon (5s)</button>
+      <button class="btn-game" onclick="trivia()">❓ Trivia TravelVLM</button>
+      <button class="btn-game" onclick="unlockSecret()">🔓 Débloquer Secret</button>
+      <button class="btn-game" onclick="resetProgress()">🔄 Réinitialiser</button>
+    </div>
+
+    <div id="achievementContainer"></div>
+
+    <div class="easter-box" style="margin-top:40px">
+      <h3>🎁 Succès Disponibles</h3>
+      <div class="stats" style="margin-top:15px">
+        <div class="achievement" id="ach1">
+          <h3>🔍 Explorateur</h3>
+          <p>Trouvez la page Easter Egg</p>
+        </div>
+        <div class="achievement" id="ach2">
+          <h3>⚡ Clicker Master</h3>
+          <p>Score > 50 au jeu clicker</p>
+        </div>
+        <div class="achievement" id="ach3">
+          <h3>🧠 Génie TravelVLM</h3>
+          <p>Répondez correctement 3 questions</p>
+        </div>
+        <div class="achievement" id="ach4">
+          <h3>🐉 Dragon Ultime</h3>
+          <p>Débloquez tous les succès</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-box" id="secretCode" style="display:none">
+      SECRET_CODE: TravelVLM_2025_Easter_Egg
+      achievement_points: 999
+      dragon_form: ultimate_🐉
+    </div>
+
+    <div style="text-align:center;margin:40px 0">
+      <a href="../index.html" class="back-btn">← Retour Secret à l'Accueil</a>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 TravelVLM - Zone Easter Egg Secrète</p>
+    <div style="margin-top:12px;font-size:13px">
+      <a href="../index.html">Accueil</a> | 
+      <a href="../bonus/voyages_surprise.html">Voyages Surprise</a> | 
+      <a href="../commentaire.html">Commentaires</a>
+    </div>
+    <p style="margin-top:12px;font-size:11px;opacity:0.6">« Les vrais voyageurs explorent chaque coin du site »</p>
+  </footer>
+
+  <script>
+    // Initialize
+    let clickerScore = 0;
+    let triviaCorrect = 0;
+    let startTime = Date.now();
+
+    // Track visit
+    function initStats() {
+      const visits = parseInt(localStorage.getItem('travelvlm_easter_visits') || '0') + 1;
+      localStorage.setItem('travelvlm_easter_visits', visits.toString());
+      document.getElementById('visitCount').textContent = visits;
+      
+      const eggState = localStorage.getItem('travelvlm_easter_egg_v1') || '0';
+      const states = ['🥚', '🐲', '🐉'];
+      document.getElementById('eggState').textContent = states[parseInt(eggState)] || '🥚';
+      
+      setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        document.getElementById('timeSpent').textContent = elapsed;
+      }, 1000);
+      
+      checkAchievements();
+    }
+
+    // Clicker game
+    function clickerGame() {
+      clickerScore = 0;
+      const btn = event.target;
+      const oldText = btn.textContent;
+      btn.textContent = '🎮 Cliquez vite! (5s)';
+      btn.disabled = true;
+
+      const interval = setInterval(() => {
+        clickerScore++;
+        btn.textContent = `⚡ ${clickerScore} clics!`;
+      }, 10);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        btn.disabled = false;
+        btn.textContent = oldText;
+        alert(`🎮 Score: ${clickerScore}!\n${clickerScore > 50 ? '🏆 Succès Clicker Master débloqué!' : 'Continuez...'}`);
+        if (clickerScore > 50) {
+          unlockAchievement('ach2');
+        }
+      }, 5000);
+    }
+
+    // Trivia
+    function trivia() {
+      const questions = [
+        { q: 'Combien de collections TravelVLM a-t-il?', a: 'cinq' },
+        { q: 'Quel est le nom de la page bonus?', a: 'easter' },
+        { q: 'En quelle année le site a-t-il été créé?', a: '2025' }
+      ];
+      const q = questions[Math.floor(Math.random() * questions.length)];
+      const answer = prompt(`❓ ${q.q}`);
+      if (answer && answer.toLowerCase().includes(q.a)) {
+        triviaCorrect++;
+        alert('✅ Correct!');
+        if (triviaCorrect >= 3) {
+          unlockAchievement('ach3');
+        }
+      } else {
+        alert('❌ Faux! Réessayez.');
+      }
+    }
+
+    // Unlock secret
+    function unlockSecret() {
+      const code = document.getElementById('secretCode');
+      code.style.display = code.style.display === 'none' ? 'block' : 'none';
+      alert('🔓 Code secret révélé!');
+      unlockAchievement('ach1');
+    }
+
+    // Achievement system
+    function unlockAchievement(id) {
+      const elem = document.getElementById(id);
+      if (elem && !elem.classList.contains('unlocked')) {
+        elem.classList.add('unlocked');
+        localStorage.setItem(`travelvlm_ach_${id}`, 'true');
+        checkAchievements();
+      }
+    }
+
+    function checkAchievements() {
+      let count = 0;
+      for (let i = 1; i <= 4; i++) {
+        if (localStorage.getItem(`travelvlm_ach_ach${i}`) === 'true') {
+          count++;
+          document.getElementById(`ach${i}`).classList.add('unlocked');
+        }
+      }
+      document.getElementById('achieveCount').textContent = count;
+      
+      if (count >= 4) {
+        unlockAchievement('ach4');
+      }
+    }
+
+    function resetProgress() {
+      if (confirm('Réinitialiser tous les progrès?')) {
+        localStorage.removeItem('travelvlm_easter_visits');
+        for (let i = 1; i <= 4; i++) {
+          localStorage.removeItem(`travelvlm_ach_ach${i}`);
+        }
+        location.reload();
+      }
+    }
+
+    // Initialize on load
+    window.addEventListener('load', initStats);
+  </script>
+</body>
+</html>
