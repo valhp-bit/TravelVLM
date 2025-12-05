@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prendre Rendez-vous — TravelVLM</title>
+  <link rel="stylesheet" href="style/style.css">
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:0;background:#f6f8fb;color:#222}
+    header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:16px 20px;box-shadow:0 4px 15px rgba(0,0,0,0.2);position:sticky;top:0;z-index:100}
+    .header-top{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .header-top a{color:#fff;text-decoration:none;font-weight:bold;display:flex;align-items:center;gap:8px}
+    .header-top nav{display:flex;gap:16px;align-items:center}
+    .header-top nav a{font-weight:500;padding:6px 12px;border-radius:4px;transition:background 0.3s}
+    .header-top nav a:hover{background:rgba(255,255,255,0.2)}
+    #secretEgg{position:fixed;top:12px;right:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:20px;border-radius:50%;cursor:pointer;z-index:1200;opacity:0.06;transition:opacity .18s ease, transform .18s ease;user-select:none}
+    #secretEgg:hover{opacity:0.95;transform:scale(1.08)}
+    #secretEgg.revealed{opacity:0.95}
+    #trophyBtn{position:fixed;top:12px;right:64px;z-index:1201;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff9800);box-shadow:0 6px 18px rgba(0,0,0,0.15);cursor:pointer;text-decoration:none;color:#333;opacity:0.9;font-size:18px}
+    #trophyBtn:hover{transform:scale(1.06)}
+    main{max-width:1100px;margin:20px auto;padding:16px;display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:#fff;padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .month-nav{display:flex;gap:8px;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+    .day{min-height:80px;padding:8px;border-radius:8px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #eee;position:relative}
+    .day.other{opacity:0.45}
+    .day .date{font-weight:700;color:#333}
+    .day .count{position:absolute;right:8px;bottom:8px;background:#ffebc6;padding:4px 6px;border-radius:12px;font-size:12px}
+    .controls{display:flex;gap:8px}
+    form label{display:block;margin-top:8px;font-weight:600}
+    input,textarea,select{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:6px}
+    button.btn{padding:10px 12px;border-radius:8px;border:none;cursor:pointer}
+    .btn-primary{background:#667eea;color:#fff}
+    .appt-list{max-height:420px;overflow:auto;margin-top:10px;display:flex;flex-direction:column;gap:8px}
+    .appt{padding:10px;border-radius:8px;border:1px solid #eee;background:#fff;display:flex;justify-content:space-between;gap:8px}
+    .small{font-size:13px;color:#666}
+    footer{background:#333;color:#fff;text-align:center;padding:30px 20px;margin-top:40px}
+    footer a{color:#667eea;text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    #secretPhrase{cursor:pointer;transition:all 0.3s ease;user-select:none}
+    @media(max-width:980px){main{grid-template-columns:1fr;padding:12px}}
+</head>
+<body>
+  <!-- Easter egg -->
+  <div id="secretEgg" role="button" aria-label="Oeuf secret">🥚</div>
+  <a id="trophyBtn" href="trophe.html" title="Trophées">🏆</a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <a href="index.html">✈️ TravelVLM</a>
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="rendezvous.html">Rendez-vous</a>
+        <a href="trophe.html">Trophées</a>
+        <a href="commentaire.html">Commentaires</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="card" style="grid-column:1/-1">
+      <h1>Prendre Rendez-vous — TravelVLM</h1>
+      <p style="opacity:.9;margin-top:6px">Choisissez une date et ajoutez un rendez-vous ; ils sont stockés localement sur votre appareil.</p>
+    </section>
+      <div class="calendar-header">
+        <div class="month-nav">
+          <button id="prevMonth" class="btn">◀</button>
+          <strong id="monthLabel">Mois Année</strong>
+          <button id="nextMonth" class="btn">▶</button>
+        </div>
+        <div class="controls">
+          <button id="todayBtn" class="btn">Aujourd'hui</button>
+        </div>
+      </div>
+
+      <div class="grid" id="weekdayNames">
+        <div class="small">Lun</div><div class="small">Mar</div><div class="small">Mer</div><div class="small">Jeu</div><div class="small">Ven</div><div class="small">Sam</div><div class="small">Dim</div>
+      </div>
+
+      <div class="grid" id="daysGrid"></div>
+    </section>
+
+    <aside class="card">
+      <h3 id="selectedDateLabel">Sélectionnez une date</h3>
+      <form id="apptForm">
+        <label for="dateInput">Date</label>
+        <input type="date" id="dateInput" required>
+
+        <label for="timeInput">Heure</label>
+        <input type="time" id="timeInput" required>
+
+        <label for="nameInput">Nom</label>
+        <input type="text" id="nameInput" placeholder="Votre nom" required>
+
+        <label for="notesInput">Notes</label>
+        <textarea id="notesInput" placeholder="Objet, lieu... (optionnel)"></textarea>
+
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn btn-primary" type="submit">Ajouter rendez-vous</button>
+          <button class="btn" type="button" id="clearDate">Vider la date</button>
+        </div>
+      </form>
+
+      <div style="margin-top:12px">
+        <strong>Rendez‑vous pour cette date :</strong>
+        <div class="appt-list" id="apptList"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'traveldream_appts_v1';
+    let appts = [];
+    function load(){ try{ appts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }catch(e){ appts = []; } }
+    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(appts)); }
+
+    // Calendar state
+    const now = new Date();
+    let viewYear = now.getFullYear();
+    let viewMonth = now.getMonth(); // 0-based
+    let selectedDate = formatISODate(now);
+
+    function formatISODate(d){ if(typeof d === 'string') return d; const D = new Date(d); return D.toISOString().slice(0,10); }
+
+    function monthLabel(y,m){ return new Date(y,m,1).toLocaleString('fr-FR',{month:'long',year:'numeric'}); }
+
+    function renderCalendar(){
+      document.getElementById('monthLabel').textContent = monthLabel(viewYear,viewMonth);
+      const grid = document.getElementById('daysGrid'); grid.innerHTML='';
+      // first day of month (0=Sun), need Monday-first => convert
+      const first = new Date(viewYear,viewMonth,1);
+      const startDay = (first.getDay()+6)%7; // 0 = Monday
+      const daysInMonth = new Date(viewYear,viewMonth+1,0).getDate();
+      // previous month tail
+      const prevDays = startDay;
+      const prevMonthLast = new Date(viewYear,viewMonth,0).getDate();
+      // total cells: maybe 42
+      const total = 42;
+      for(let i=0;i<total;i++){
+        const cell = document.createElement('div'); cell.className='day';
+        let dayNum, cellDate, other=false;
+        if(i < prevDays){ dayNum = prevMonthLast - (prevDays -1) + i; other=true; const d = new Date(viewYear,viewMonth-1,dayNum); cellDate = formatISODate(d); }
+        else if(i >= prevDays + daysInMonth){ dayNum = i - (prevDays + daysInMonth) +1; other=true; const d = new Date(viewYear,viewMonth+1,dayNum); cellDate = formatISODate(d); }
+        else { dayNum = i - prevDays +1; const d = new Date(viewYear,viewMonth,dayNum); cellDate = formatISODate(d); }
+        if(other) cell.classList.add('other');
+        cell.innerHTML = `<div class="date">${dayNum}</div>`;
+        const count = appts.filter(a => a.date === cellDate).length;
+        if(count>0) cell.innerHTML += `<div class="count">${count}</div>`;
+        cell.addEventListener('click', ()=>{ onSelectDate(cellDate); });
+        grid.appendChild(cell);
+      }
+      // ensure selected date visible
+      highlightSelected();
+    }
+
+    function highlightSelected(){ const label = document.getElementById('selectedDateLabel'); label.textContent = 'Sélectionné : ' + selectedDate; document.getElementById('dateInput').value = selectedDate; renderApptsForDate(selectedDate); }
+
+    function onSelectDate(dateStr){ selectedDate = dateStr; // adjust view if other month
+      const d = new Date(dateStr);
+      if(d.getFullYear() !== viewYear || d.getMonth() !== viewMonth){ viewYear = d.getFullYear(); viewMonth = d.getMonth(); }
+      renderCalendar(); highlightSelected(); }
+
+    function renderApptsForDate(dateStr){ const list = document.getElementById('apptList'); list.innerHTML=''; const items = appts.filter(a=>a.date===dateStr).sort((a,b)=>a.time.localeCompare(b.time));
+      if(items.length===0) list.innerHTML = '<div class="small">Aucun rendez-vous</div>';
+      for(const a of items){ const el = document.createElement('div'); el.className='appt'; el.innerHTML = `<div><div><strong>${escapeHtml(a.name)}</strong> <span class="small">${a.time}</span></div><div class="small">${escapeHtml(a.notes||'')}</div></div><div style="text-align:right"><button class="btn" data-id="${a.id}">Suppr</button></div>`; list.appendChild(el); el.querySelector('button').addEventListener('click', ()=>{ if(confirm('Supprimer ce rendez-vous ?')){ appts = appts.filter(x=>x.id!==a.id); save(); renderCalendar(); renderApptsForDate(dateStr); } }); }
+    }
+
+    function escapeHtml(s){ if(!s) return ''; return s.replace(/[&<>'"`]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;','`':'&#96;'}[c]||c)); }
+
+    // form
+    document.addEventListener('DOMContentLoaded', ()=>{
+      load();
+      renderCalendar();
+      document.getElementById('prevMonth').addEventListener('click', ()=>{ viewMonth--; if(viewMonth<0){ viewMonth=11; viewYear--; } renderCalendar(); });
+      document.getElementById('nextMonth').addEventListener('click', ()=>{ viewMonth++; if(viewMonth>11){ viewMonth=0; viewYear++; } renderCalendar(); });
+      document.getElementById('todayBtn').addEventListener('click', ()=>{ const t = new Date(); viewYear = t.getFullYear(); viewMonth = t.getMonth(); selectedDate = formatISODate(t); renderCalendar(); highlightSelected(); });
+
+      const form = document.getElementById('apptForm');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const date = document.getElementById('dateInput').value;
+        const time = document.getElementById('timeInput').value;
+        const name = document.getElementById('nameInput').value.trim();
+        const notes = document.getElementById('notesInput').value.trim();
+        if(!date || !time || !name){ alert('Date, heure et nom sont requis'); return; }
+        const ap = { id: 'a'+Date.now()+Math.random().toString(36).slice(2,6), date, time, name, notes, createdAt: Date.now() };
+        appts.push(ap); save(); renderCalendar(); renderApptsForDate(selectedDate); form.reset(); document.getElementById('dateInput').value = selectedDate; });
+
+      document.getElementById('clearDate').addEventListener('click', ()=>{
+        if(!confirm('Supprimer tous les rendez-vous pour cette date ?')) return; appts = appts.filter(a=>a.date!==selectedDate); save(); renderCalendar(); renderApptsForDate(selectedDate);
+      });
+
+      // init selected
+      highlightSelected();
+    });
+
+    // Triple-click on secret phrase to go to boss login
+    const secretPhrase = document.getElementById('secretPhrase');
+    let clickCount = 0;
+    let lastClickTime = 0;
+    secretPhrase.addEventListener('click', function(e) {
+      e.preventDefault();
+      const now = Date.now();
+      if (now - lastClickTime > 2000) { clickCount = 0; }
+      clickCount++;
+      lastClickTime = now;
+      secretPhrase.style.color = '#ff1493';
+      secretPhrase.style.textShadow = '0 0 8px rgba(255, 20, 147, 0.8)';
+      setTimeout(() => {
+        if (clickCount < 3) { secretPhrase.style.color = '#777'; secretPhrase.style.textShadow = 'none'; }
+      }, 200);
+      if (clickCount === 3) {
+        secretPhrase.style.color = '#00ff88';
+        secretPhrase.style.textShadow = '0 0 12px rgba(0, 255, 136, 0.8)';
+        setTimeout(() => { window.location.href = 'boss_login.html'; }, 300);
+      }
+    });
+    secretPhrase.addEventListener('mouseenter', function() {
+      if (clickCount > 0) { this.style.color = '#ff1493'; } else { this.style.color = '#999'; }
+    });
+    secretPhrase.addEventListener('mouseleave', function() {
+      if (clickCount < 3) { this.style.color = '#777'; }
+    });
+  </script>
+
+  <!-- Easter egg script -->
+  <script>
+    (function(){
+      const EGG_KEY = 'traveldream_easter_egg_v1';
+      const el = document.getElementById('secretEgg');
+      if(!el) return;
+      let state = parseInt(localStorage.getItem(EGG_KEY) || '0', 10);
+      const labels = ['🥚','🐲','🐉'];
+      function render(){ el.textContent = labels[state] || labels[0]; if(state>0) el.classList.add('revealed'); else el.classList.remove('revealed'); }
+      function animatePop(){ el.style.transform='scale(1.25)'; setTimeout(()=>el.style.transform='scale(1)',160); }
+      el.addEventListener('click', function(e){ e.preventDefault(); state = (state + 1) % labels.length; localStorage.setItem(EGG_KEY, String(state)); render(); animatePop(); });
+      let pressTimer=null;
+      el.addEventListener('pointerdown', ()=>{ pressTimer = setTimeout(()=>{ state=0; localStorage.setItem(EGG_KEY,'0'); render(); alert('Oeuf réinitialisé'); }, 1600); });
+      el.addEventListener('pointerup', ()=>{ if(pressTimer){ clearTimeout(pressTimer); pressTimer=null } });
+      render();
+    })();
+  </script>
+
+  <!-- Cookie banner -->
+  <style>
+    #cookieBanner{position:fixed;left:20px;right:20px;bottom:18px;background:rgba(255,255,255,0.98);border-radius:12px;padding:14px 18px;box-shadow:0 12px 40px rgba(0,0,0,0.2);display:flex;gap:12px;align-items:center;z-index:2000}
+    #cookieBanner p{margin:0;color:#333}
+    #cookieBanner .actions{margin-left:auto;display:flex;gap:8px}
+    @media(max-width:480px){#cookieBanner{flex-direction:column;align-items:stretch}}
+  </style>
+  <div id="cookieBanner" style="display:none" aria-live="polite">
+    <div style="max-width:720px">
+      <strong>TravelVLM utilise des cookies</strong>
+      <p style="margin-top:6px;">Nous utilisons des cookies pour améliorer votre expérience et afficher des publicités. En continuant, vous acceptez notre utilisation des cookies.</p>
+    </div>
+    <div class="actions">
+      <button id="cookieReject" class="btn" style="background:#fff;border:1px solid #ddd">Refuser</button>
+      <button id="cookieAccept" class="btn btn-primary">Accepter</button>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const key='traveldream_cookies_v1';
+      const banner = document.getElementById('cookieBanner');
+      function show(){ if(banner) banner.style.display='flex' }
+      function hide(){ if(banner) banner.style.display='none' }
+      const v = localStorage.getItem(key);
+      if(!v){ show(); }
+      const acceptBtn = document.getElementById('cookieAccept');
+      const rejectBtn = document.getElementById('cookieReject');
+      if(acceptBtn) acceptBtn.addEventListener('click', ()=>{ localStorage.setItem(key,'accepted'); hide(); });
+      if(rejectBtn) rejectBtn.addEventListener('click', ()=>{ localStorage.setItem(key,'rejected'); hide(); });
+      try{ localStorage.setItem('traveldream_visited','1'); }catch(e){}
+    });
+    function recordAdClick(e, id){
+      try{ if(e && e.preventDefault) e.preventDefault(); }catch(err){}
+      const key = 'traveldream_cookies_v1';
+      const v = localStorage.getItem(key);
+      const href = (e && e.currentTarget && e.currentTarget.href) ? e.currentTarget.href : (e && e.target && e.target.closest && e.target.closest('a') ? e.target.closest('a').href : null);
+      const doNav = () => { if(href) window.location.href = href; return false; };
+      if(v === 'accepted'){
+        const ck = 'traveldream_ad_clicks_' + id;
+        const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
+        localStorage.setItem(ck, String(n));
+        return doNav();
+      } else {
+        const ok = confirm('TravelVLM utilise des cookies pour suivre les clics publicitaires. Acceptez-vous les cookies pour activer ce suivi ?');
+        if(ok){
+          localStorage.setItem(key, 'accepted');
+          try{ document.getElementById('cookieBanner').style.display='none'; }catch(e){}
+          const ck = 'traveldream_ad_clicks_' + id;
+          const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
+          localStorage.setItem(ck, String(n));
+          return doNav();
+        } else {
+          return doNav();
+        }
+      }
+    }
+  </script>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="margin-bottom:20px">
+        <a href="index.html">Accueil</a> |
+        <a href="rendezvous.html">Rendez-vous</a> |
+        <a href="commentaire.html">Commentaires</a> |
+        <a href="trophe.html">Trophées</a>
+      </div>
+      <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+      <p style="margin-top:15px;font-size:13px;color:#999" id="secretPhrase">
+        Gérée par une équipe de passionnés qui rêvent de voyages, destinée à tous ceux qui cherchent l'aventure, la découverte et le confort.<span id="secretDot" style="cursor:pointer;font-weight:bold;color:#666;transition:all 0.3s ease;padding:0 2px">.</span>
+      </p>
+    </div>
+  </footer>

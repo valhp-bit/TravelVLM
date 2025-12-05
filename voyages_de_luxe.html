@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Voyages de Luxe - Agence Touristique</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <style>
+      .luxe-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: gold;
+        text-align: center;
+        padding: 40px 20px;
+        border-bottom: 3px solid gold;
+      }
+
+      .luxe-header h1 {
+        font-size: 48px;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: gold;
+      }
+
+      .luxe-header p {
+        font-size: 18px;
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      .luxe-intro {
+        background: #f5f5dc;
+        border-left: 6px solid gold;
+        padding: 25px;
+        margin: 30px auto;
+        max-width: 900px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .luxe-intro h2 {
+        color: #1a1a2e;
+        margin-top: 0;
+      }
+
+      .luxe-intro p {
+        color: #333;
+        line-height: 1.8;
+      }
+
+      .package-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin: 40px 20px;
+      }
+
+      .package-card {
+        background: white;
+        border: 2px solid gold;
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 350px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+      }
+
+      .package-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(215, 175, 0, 0.4);
+      }
+
+      .package-card img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+      }
+
+      .package-card h3 {
+        color: gold;
+        font-size: 24px;
+        margin: 15px 0;
+      }
+
+      .package-price {
+        font-size: 28px;
+        color: #1a1a2e;
+        font-weight: bold;
+        margin: 15px 0;
+      }
+
+      .package-price span {
+        color: gold;
+      }
+
+      .package-features {
+        text-align: left;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        min-height: 120px;
+      }
+
+      .package-features ul {
+        margin: 0;
+        padding-left: 20px;
+        color: #333;
+      }
+
+      .package-features li {
+        margin: 8px 0;
+        font-size: 14px;
+      }
+
+      .btn-luxe {
+        background: linear-gradient(135deg, gold, #d4af37);
+        color: #1a1a2e;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 15px;
+      }
+
+      .btn-luxe:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(215, 175, 0, 0.5);
+      }
+
+      .benefits-section {
+        background: linear-gradient(135deg, #f5f5dc 0%, #fff8dc 100%);
+        padding: 40px 20px;
+        margin: 40px 0;
+      }
+
+      .benefits-section h2 {
+        text-align: center;
+        color: #1a1a2e;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .benefit-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-top: 4px solid gold;
+      }
+
+      .benefit-card h4 {
+        color: gold;
+        font-size: 20px;
+        margin-top: 0;
+      }
+
+      .benefit-card p {
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .gallery-section {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .gallery-section h2 {
+        text-align: center;
+        color: #1a1a2e;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        height: 250px;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: gold;
+        padding: 15px;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+      }
+
+      .testimonials-section {
+        background: #1a1a2e;
+        color: white;
+        padding: 40px 20px;
+        margin: 40px 0;
+      }
+
+      .testimonials-section h2 {
+        text-align: center;
+        color: gold;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-left: 4px solid gold;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 700px;
+        border-radius: 8px;
+      }
+
+      .testimonial-card p {
+        margin: 10px 0;
+        line-height: 1.6;
+      }
+
+      .testimonial-author {
+        color: gold;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+
+      .cta-section {
+        background: linear-gradient(135deg, gold, #d4af37);
+        color: #1a1a2e;
+        padding: 40px 20px;
+        text-align: center;
+        margin: 40px auto;
+        border-radius: 10px;
+        max-width: 900px;
+      }
+
+      .cta-section h2 {
+        color: #1a1a2e;
+        font-size: 32px;
+        margin-top: 0;
+      }
+
+      .cta-section p {
+        font-size: 18px;
+        margin: 20px 0;
+      }
+
+      .nav-links {
+        text-align: center;
+        padding: 30px 20px;
+        background: #f5f5f5;
+        margin-top: 40px;
+      }
+
+      .nav-links a {
+        display: inline-block;
+        margin: 10px 15px;
+        padding: 12px 25px;
+        background: #18ae48;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: background 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        background: #0d7a3a;
+      }
+
+      .star-rating {
+        color: gold;
+        font-size: 18px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER LUXE -->
+    <div class="luxe-header">
+      <h1>✨ Voyages de Luxe Exceptionnels ✨</h1>
+      <p>Découvrez nos packages premium pour une expérience inoubliable</p>
+    </div>
+
+    <!-- INTRODUCTION -->
+    <div class="luxe-intro">
+      <h2>Bienvenue dans l'Univers du Luxe et de l'Élégance</h2>
+      <p>
+        Notre agence touristique vous propose une sélection exclusive de voyages de luxe conçus
+        pour les voyageurs les plus exigeants. Chaque destination, chaque hôtel, chaque expérience
+        a été soigneusement sélectionnée pour vous offrir le summum de l'élégance et du confort.
+        Partir avec nous, c'est choisir l'excellence et la qualité sans compromis.
+      </p>
+    </div>
+
+    <!-- PACKAGES DE LUXE -->
+    <h2 style="text-align: center; color: #1a1a2e; font-size: 32px; margin-top: 40px;">
+      Nos Packages Exclusifs
+    </h2>
+
+    <div class="package-container">
+      <!-- PACKAGE 1: ASIE ROYALE -->
+      <div class="package-card">
+        <img src="images/japon.jpeg" alt="Japon Luxe" />
+        <h3>Asie Royale</h3>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>2,499€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🏯 Temples japonais exclusifs</li>
+            <li>🏨 Hôtels 5 étoiles</li>
+            <li>🍽️ Gastronomie raffinée</li>
+            <li>✈️ Vol première classe</li>
+            <li>🚗 Chauffeur privé</li>
+            <li>📅 14 jours tout compris</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Réserver</button>
+      </div>
+
+      <!-- PACKAGE 2: PLAGES PARADISIAQUES -->
+      <div class="package-card">
+        <img src="images/palmier.webp" alt="Plage Luxe" />
+        <h3>Paradis Tropical</h3>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>3,199€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🏝️ Île privée exclusive</li>
+            <li>🏖️ Plages de sable blanc</li>
+            <li>🤿 Plongée sous-marine</li>
+            <li>🛥️ Yacht privé inclus</li>
+            <li>🌅 Massages et spa</li>
+            <li>📅 10 jours de détente</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Réserver</button>
+      </div>
+
+      <!-- PACKAGE 3: AMÉRIQUE GRANDIOSE -->
+      <div class="package-card">
+        <img src="images/amerique_nord.jpg" alt="Amérique Luxe" />
+        <h3>Amérique Grandiose</h3>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>2,899€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🗻 Paysages spectaculaires</li>
+            <li>🦌 Safari en hélicoptère</li>
+            <li>🏨 Lodges de prestige</li>
+            <li>🎭 Spectacles privés</li>
+            <li>👨‍🍳 Chefs étoilés Michelin</li>
+            <li>📅 12 jours d'aventure</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Réserver</button>
+      </div>
+
+      <!-- PACKAGE 4: MÉDITERRANÉE EXCLUSIVE -->
+      <div class="package-card">
+        <img src="images/Cala-Sa-Nau-Mallorca-1.webp" alt="Méditerranée Luxe" />
+        <h3>Méditerranée Exclusive</h3>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>2,199€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>⛵ Croisière de luxe</li>
+            <li>🏖️ Îles méditerranéennes</li>
+            <li>🍷 Dégustations de vins</li>
+            <li>🎨 Musées et galeries</li>
+            <li>🍽️ Restaurant gastronomique</li>
+            <li>📅 8 jours de rêve</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Réserver</button>
+      </div>
+
+      <!-- PACKAGE 5: CHINE IMPÉRIALE -->
+      <div class="package-card">
+        <img src="images/chine.jpg" alt="Chine Luxe" />
+        <h3>Chine Impériale</h3>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>2,699€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🏯 Grande Muraille privée</li>
+            <li>🎭 Spectacles traditionnels</li>
+            <li>🛕 Temples bouddhistes</li>
+            <li>🍽️ Cuisine impériale</li>
+            <li>📸 Guide expert historien</li>
+            <li>📅 11 jours magiques</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Réserver</button>
+      </div>
+
+      <!-- PACKAGE 6: AVENTURE AMÉRICAINE -->
+      <div class="package-card">
+        <img src="images/amerique_sud.jpg" alt="Amérique Sud Luxe" />
+        <h3>Aventure Amazonienne</h3>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>3,399€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🌿 Jungle amazonienne</li>
+            <li>🦜 Observation de la faune</li>
+            <li>🚤 Croisière fluviale VIP</li>
+            <li>🏠 Lodges éco-luxe</li>
+            <li>🎥 Documentaire privé</li>
+            <li>📅 15 jours d'exploration</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Réserver</button>
+      </div>
+    </div>
+
+    <!-- SECTION AVANTAGES -->
+    <div class="benefits-section">
+      <h2>Pourquoi Choisir Nos Voyages de Luxe ?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h4>🎯 Personnalisation Totale</h4>
+          <p>
+            Chaque voyage est adapté à vos préférences personnelles. Notre équipe de concierge
+            24/7 répond à tous vos besoins et envies avant, pendant et après votre voyage.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>✈️ Transports Premium</h4>
+          <p>
+            Première classe aérienne, jets privés disponibles, limousines et chauffeurs
+            expérimentés pour tous vos déplacements terrestres et aériens.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🏨 Accommodations Exclusives</h4>
+          <p>
+            Accès aux plus grands hôtels 5 étoiles du monde, suites royales, villas privées
+            avec piscines infinies et services de conciergerie haut de gamme.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>👨‍🍳 Gastronomie Exceptionnelle</h4>
+          <p>
+            Repas préparés par des chefs étoilés Michelin, dégustations de vins fins, expériences
+            culinaires privées dans les plus beaux restaurants du monde.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🎭 Expériences Uniques</h4>
+          <p>
+            Accès privé à des sites fermés au public, spectacles privés, rencontres avec des
+            personnalités locales, aventures exclusives non disponibles ailleurs.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🛡️ Sécurité et Assurance</h4>
+          <p>
+            Assurance voyage complète, sécurité privée disponible, assistance 24/7 en cas
+            d'urgence, garantie d'annulation sans frais jusqu'à 7 jours avant le départ.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION DESCRIPTION DÉTAILLÉE -->
+    <div class="luxe-intro">
+      <h2>Les Services Inclus dans Tous Nos Packages</h2>
+      <p>
+        <strong>Transport Premium :</strong> Vols en première classe ou business, transferts en
+        limousine privée, et hébergement dans des hôtels 5 étoiles avec suites de luxe.
+      </p>
+      <p>
+        <strong>Gastronomie de Classe Mondiale :</strong> Tous les repas sont inclus et préparés
+        par des chefs renommés. Dégustations de vins fins et expériences culinaires privées.
+      </p>
+      <p>
+        <strong>Concierge Personnel 24/7 :</strong> Une équipe dédiée est à votre entière
+        disposition pour satisfaire vos besoins avant, pendant et après votre voyage.
+      </p>
+    </div>
+
+    <!-- TÉMOIGNAGES -->
+    <div class="testimonials-section">
+      <h2>Témoignages de Nos Clients VIP</h2>
+
+      <div class="testimonial-card">
+        <p>
+          "Mon voyage en Asie a été une pure merveille ! Chaque détail a été pensé avec
+          perfection. Les hôtels, la gastronomie, les guides... tout était impeccable. Je
+          reviendrai sans hésiter !"
+        </p>
+        <div class="testimonial-author">- Prince Xavier, Monaco</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+
+      <div class="testimonial-card">
+        <p>
+          "L'équipe a dépassé toutes nos attentes. Notre lune de miel aux Maldives était
+          magique. Les couchers de soleil privés, le yacht personnel, les massages en couple...
+          Un rêve devenu réalité !"
+        </p>
+        <div class="testimonial-author">- Emma & Thomas, Paris</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+
+      <div class="testimonial-card">
+        <p>
+          "Service irréprochable du début à la fin. Ils ont même arrangé une rencontre surprise
+          avec un chef cuisinier célèbre. C'est ça, le vrai luxe : l'attention aux détails et
+          l'anticipation de vos désirs."
+        </p>
+        <div class="testimonial-author">- François, Businessman International</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+    </div>
+
+    <!-- APPEL À L'ACTION -->
+    <div class="cta-section">
+      <h2>Prêt pour le Voyage de Vos Rêves ?</h2>
+      <p>
+        Contactez notre équipe de concierge premium pour créer votre expérience de voyage
+        sur mesure. Aucune demande n'est impossible, aucun budget n'est trop grand.
+      </p>
+      <p>
+        <strong>Téléphone VIP :</strong> +33 (0)1 ** ** ** 89<br />
+        <strong>Email Premium :</strong> vip@agencetouristique-luxe.fr<br />
+        <strong>Horaires :</strong> 24h/24 - 7j/7
+      </p>
+      <button class="btn-luxe" style="font-size: 18px; padding: 15px 40px; color: #1a1a2e;">
+        Contactez Notre Concierge
+      </button>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-links">
+      <a href="index.html">Retour à l'Accueil</a>
+    </div>
+
+    <br />
+    <br />
+  </body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Se Connecter — TravelVLM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .remember-forgot input {
+            width: auto;
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .remember-forgot a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .remember-forgot a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 10px;
+            color: #999;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .signup-link p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .error {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 38px;
+            cursor: pointer;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 25px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="logo">✈️</div>
+                <h1>Se Connecter</h1>
+                <p>Bienvenue de retour chez TravelVLM</p>
+            </div>
+
+            <div id="error" class="error"></div>
+            <div id="success" class="success"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="votre@email.com" autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mot de passe *</label>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" required placeholder="●●●●●●●●">
+                        <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                    </div>
+                </div>
+
+                <div class="remember-forgot">
+                    <label style="display: flex; align-items: center; font-weight: normal;">
+                        <input type="checkbox" id="remember" name="remember">
+                        Se souvenir de moi
+                    </label>
+                    <a href="reset-password.html">Mot de passe oublié?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Se Connecter</button>
+                <div class="loading" id="loading">⏳ Vérification en cours...</div>
+            </form>
+
+            <div class="divider">
+                <span>OU</span>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn" style="background: #f44336; color: white; flex: 1; border: none; border-radius: 8px; cursor: pointer;">
+                    Google
+                </button>
+                <button type="button" class="btn" style="background: #4267B2; color: white; flex: 1; border: none; border-radius: 8px; cursor: pointer;">
+                    Facebook
+                </button>
+            </div>
+
+            <div class="signup-link">
+                <p>Pas encore de compte? <a href="register.html">Créer un compte</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const errorDiv = document.getElementById('error');
+        const successDiv = document.getElementById('success');
+        const loadingDiv = document.getElementById('loading');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const rememberCheckbox = document.getElementById('remember');
+
+        // Load saved email if "remember me" was checked
+        window.addEventListener('load', () => {
+            const savedEmail = localStorage.getItem('traveldream_remembered_email');
+            if (savedEmail) {
+                emailInput.value = savedEmail;
+                rememberCheckbox.checked = true;
+            }
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            loadingDiv.style.display = 'block';
+
+            setTimeout(() => {
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+
+                if (!email || !password) {
+                    showError('Veuillez remplir tous les champs.');
+                    loadingDiv.style.display = 'none';
+                    return;
+                }
+
+                // Get users from storage
+                const users = JSON.parse(localStorage.getItem('traveldream_users') || '[]');
+                const user = users.find(u => u.email === email);
+
+                if (!user) {
+                    showError('Email ou mot de passe incorrect.');
+                    loadingDiv.style.display = 'none';
+                    return;
+                }
+
+                if (user.password !== hashPassword(password)) {
+                    showError('Email ou mot de passe incorrect.');
+                    loadingDiv.style.display = 'none';
+                    return;
+                }
+
+                // Save email if remember me is checked
+                if (rememberCheckbox.checked) {
+                    localStorage.setItem('traveldream_remembered_email', email);
+                } else {
+                    localStorage.removeItem('traveldream_remembered_email');
+                }
+
+                // Set session
+                sessionStorage.setItem('traveldream_currentUser', JSON.stringify({
+                    id: user.id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    avatar: user.avatar
+                }));
+
+                localStorage.setItem('traveldream_lastLoginTime', new Date().toISOString());
+
+                showSuccess('Connexion réussie! Redirection...');
+                loadingDiv.style.display = 'none';
+
+                setTimeout(() => {
+                    window.location.href = 'account.html';
+                }, 1500);
+            }, 1000);
+        });
+
+        function hashPassword(password) {
+            let hash = 0;
+            for (let i = 0; i < password.length; i++) {
+                const char = password.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return 'hash_' + Math.abs(hash).toString(36);
+        }
+
+        function togglePassword() {
+            passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+        }
+
+        function showError(message) {
+            errorDiv.textContent = '❌ ' + message;
+            errorDiv.style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            successDiv.textContent = '✅ ' + message;
+            successDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

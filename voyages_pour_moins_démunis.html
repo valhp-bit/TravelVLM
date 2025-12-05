@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Voyages pour Moins Démunis - Agence Touristique</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <style>
+      .luxe-header {
+        background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+        color: #2ecc71;
+        text-align: center;
+        padding: 40px 20px;
+        border-bottom: 3px solid #2ecc71;
+      }
+
+      .luxe-header h1 {
+        font-size: 48px;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: #2ecc71;
+      }
+
+      .luxe-header p {
+        font-size: 18px;
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      .luxe-intro {
+        background: #d5f4e6;
+        border-left: 6px solid #27ae60;
+        padding: 25px;
+        margin: 30px auto;
+        max-width: 900px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .luxe-intro h2 {
+        color: #1e8449;
+        margin-top: 0;
+      }
+
+      .luxe-intro p {
+        color: #333;
+        line-height: 1.8;
+      }
+
+      .package-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin: 40px 20px;
+      }
+
+      .package-card {
+        background: white;
+        border: 2px solid #27ae60;
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 350px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+      }
+
+      .package-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(39, 174, 96, 0.4);
+      }
+
+      .package-card img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+      }
+
+      .package-card h3 {
+        color: #27ae60;
+        font-size: 24px;
+        margin: 15px 0;
+      }
+
+      .package-price {
+        font-size: 28px;
+        color: #1e8449;
+        font-weight: bold;
+        margin: 15px 0;
+      }
+
+      .package-price span {
+        color: #27ae60;
+      }
+
+      .package-features {
+        text-align: left;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        min-height: 120px;
+      }
+
+      .package-features ul {
+        margin: 0;
+        padding-left: 20px;
+        color: #333;
+      }
+
+      .package-features li {
+        margin: 8px 0;
+        font-size: 14px;
+      }
+
+      .btn-luxe {
+        background: linear-gradient(135deg, #27ae60, #1e8449);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 15px;
+      }
+
+      .btn-luxe:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(39, 174, 96, 0.5);
+      }
+
+      .benefits-section {
+        background: linear-gradient(135deg, #d5f4e6 0%, #e8f8f5 100%);
+        padding: 40px 20px;
+        margin: 40px 0;
+      }
+
+      .benefits-section h2 {
+        text-align: center;
+        color: #1e8449;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .benefit-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #27ae60;
+      }
+
+      .benefit-card h4 {
+        color: #27ae60;
+        font-size: 20px;
+        margin-top: 0;
+      }
+
+      .benefit-card p {
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .gallery-section {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .gallery-section h2 {
+        text-align: center;
+        color: #1e8449;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        height: 250px;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: #2ecc71;
+        padding: 15px;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+      }
+
+      .testimonials-section {
+        background: #1e8449;
+        color: white;
+        padding: 40px 20px;
+        margin: 40px 0;
+      }
+
+      .testimonials-section h2 {
+        text-align: center;
+        color: #2ecc71;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-left: 4px solid #2ecc71;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 700px;
+        border-radius: 8px;
+      }
+
+      .testimonial-card p {
+        margin: 10px 0;
+        line-height: 1.6;
+      }
+
+      .testimonial-author {
+        color: #2ecc71;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+
+      .cta-section {
+        background: linear-gradient(135deg, #27ae60, #1e8449);
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+        margin: 40px auto;
+        border-radius: 10px;
+        max-width: 900px;
+      }
+
+      .cta-section h2 {
+        color: white;
+        font-size: 32px;
+        margin-top: 0;
+      }
+
+      .cta-section p {
+        font-size: 18px;
+        margin: 20px 0;
+      }
+
+      .nav-links {
+        text-align: center;
+        padding: 30px 20px;
+        background: #f5f5f5;
+        margin-top: 40px;
+      }
+
+      .nav-links a {
+        display: inline-block;
+        margin: 10px 15px;
+        padding: 12px 25px;
+        background: #27ae60;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: background 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        background: #1e8449;
+      }
+
+      .star-rating {
+        color: #27ae60;
+        font-size: 18px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <div class="luxe-header">
+      <h1>🌍 Voyages pour Moins Démunis 🌍</h1>
+      <p>Découvrez le monde sans dépenser une fortune - Des voyages accessibles à tous</p>
+    </div>
+
+    <!-- INTRODUCTION -->
+    <div class="luxe-intro">
+      <h2>Voyager, c'est un Droit pour Tous</h2>
+      <p>
+        Notre agence touristique croit que voyager ne doit pas être un luxe réservé aux riches.
+        Nous proposons des voyages ultra-abordables pour permettre à chacun de découvrir le monde.
+        Des packages budgétaires, des hébergements simples mais confortables, et des expériences
+        authentiques sans les frais excessifs. Voyager devient accessible !
+      </p>
+    </div>
+
+    <!-- PACKAGES DE VOYAGES -->
+    <h2 style="text-align: center; color: #1e8449; font-size: 32px; margin-top: 40px;">
+      Nos Packages Ultra-Économiques
+    </h2>
+
+    <div class="package-container">
+      <!-- PACKAGE 1: WEEK-END ÉCHAPPÉE -->
+      <div class="package-card">
+        <img src="images/avion.jpg" alt="Week-end Échappée" />
+        <h3>Week-end Échappée</h3>
+        <div class="star-rating">⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>249€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>✈️ Transport budget</li>
+            <li>🏨 Auberge simple</li>
+            <li>🚌 Transferts inclus</li>
+            <li>🗺️ Tour guidé gratuit</li>
+            <li>☕ Petit déjeuner</li>
+            <li>📅 3 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 2: BATEAU ÉCONOMIQUE -->
+      <div class="package-card">
+        <img src="images/barque.jpg" alt="Croisière Pas Chère" />
+        <h3>Croisière Pas Chère</h3>
+        <div class="star-rating">⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>399€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🚤 Bateau simple mais propre</li>
+            <li>🏝️ Îles naturelles</li>
+            <li>🍽️ Repas traditionnels</li>
+            <li>🏖️ Baignade libre</li>
+            <li>🎣 Activités simples</li>
+            <li>📅 4 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 3: DÉCOUVERTE LOCALE -->
+      <div class="package-card">
+        <img src="images/déstination.jpg" alt="Découverte Locale" />
+        <h3>Découverte Locale</h3>
+        <div class="star-rating">⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>299€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🏘️ Villages authentiques</li>
+            <li>🏨 Gîtes ruraux</li>
+            <li>🚶 Randonnées libres</li>
+            <li>🌾 Vie locale simple</li>
+            <li>🍲 Cuisine du terroir</li>
+            <li>📅 5 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 4: VOYAGE EN GROUPE -->
+      <div class="package-card">
+        <img src="images/coeur.webp" alt="Voyage en Groupe" />
+        <h3>Voyage en Groupe</h3>
+        <div class="star-rating">⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>329€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>👥 Réductions de groupe</li>
+            <li>🏨 Hébergement partagé</li>
+            <li>🚌 Bus touristique</li>
+            <li>🎒 Activités collectives</li>
+            <li>💰 Tarifs négociés</li>
+            <li>📅 7 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 5: NATURE SAUVAGE -->
+      <div class="package-card">
+        <img src="images/neige.jpg" alt="Nature Sauvage" />
+        <h3>Nature Sauvage</h3>
+        <div class="star-rating">⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>359€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🏔️ Paysages naturels gratuits</li>
+            <li>⛺ Camping ou gîte simple</li>
+            <li>🥾 Randonnées libres</li>
+            <li>📷 Paysages spectaculaires</li>
+            <li>🍽️ Repas simples</li>
+            <li>📅 6 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 6: EXPÉRIENCE PARTAGÉE -->
+      <div class="package-card">
+        <img src="images/voyages.jpg" alt="Expérience Partagée" />
+        <h3>Expérience Partagée</h3>
+        <div class="star-rating">⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>279€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🤝 Avec d'autres voyageurs</li>
+            <li>🏨 Auberges de jeunesse</li>
+            <li>🗺️ Exploration libre</li>
+            <li>💬 Partage d'expériences</li>
+            <li>🍜 Cuisine bon marché</li>
+            <li>📅 4 jours sociaux</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+    </div>
+
+    <!-- SECTION AVANTAGES -->
+    <div class="benefits-section">
+      <h2>Pourquoi Choisir Nos Voyages Économiques ?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h4>💰 Ultra Bon Marché</h4>
+          <p>
+            Nos prix défient toute concurrence. Nous supprimons les frais inutiles et négocions
+            directement avec les hébergements locaux pour vous offrir les meilleurs tarifs.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🏨 Hébergement Simple</h4>
+          <p>
+            Pas de luxe inutile, mais du confort garanti. Auberges, gîtes ruraux, et petits
+            hôtels familiaux propres et accueillants à des prix très accessibles.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🍲 Cuisine Authentique</h4>
+          <p>
+            Goûtez la vraie nourriture locale à bas prix. Restaurants familiaux, petits
+            restaurants de quartier, marchés locaux pour une expérience authentique.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>👥 Communauté de Voyageurs</h4>
+          <p>
+            Rejoignez une communauté de voyageurs économes. Partagez vos expériences,
+            rencontrez d'autres voyageurs et créez des liens durables.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🚌 Transports Basiques</h4>
+          <p>
+            Vols low-cost, bus touristiques, transports locaux. Pas de luxe dans le transport
+            mais une arrivée sure à destination et des tarifs minimes.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>📱 Support Essentiel</h4>
+          <p>
+            Assistance de base disponible. Information sur les sites, contacts d'urgence,
+            et conseils pratiques pour voyager malin et économe.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION DESCRIPTION DÉTAILLÉE -->
+    <div class="luxe-intro">
+      <h2>Comment Rendre les Voyages Accessibles ?</h2>
+      <p>
+        <strong>Hébergement Économique :</strong> Nous travaillons avec des auberges de jeunesse,
+        des gîtes ruraux, et des petits hôtels familiaux qui proposent des tarifs très réduits.
+      </p>
+      <p>
+        <strong>Transports Abordables :</strong> Vols low-cost, bus touristiques, transports
+        locaux gratuits ou très bon marché. Le confort est minimum mais la sécurité est garantie.
+      </p>
+      <p>
+        <strong>Activités Gratuites :</strong> Promenades libres, parcs publics, plages
+        naturelles, randonnées sans guide payant. L'aventure sans frais supplémentaires.
+      </p>
+    </div>
+
+    <!-- TÉMOIGNAGES -->
+    <div class="testimonials-section">
+      <h2>Avis de Nos Voyageurs Économes</h2>
+
+      <div class="testimonial-card">
+        <p>
+          "Incroyable ! J'ai pu partir en vacances pour la première fois grâce à ces prix
+          abordables. La qualité était bonne malgré le bas prix. Je recommande vivement !"
+        </p>
+        <div class="testimonial-author">- Ahmed, Paris</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+
+      <div class="testimonial-card">
+        <p>
+          "Voyage en groupe formidable ! Les gens étaient sympathiques, l'organisation simple
+          mais efficace. Et surtout, c'était vraiment pas cher ! Parfait pour les budgets limités."
+        </p>
+        <div class="testimonial-author">- Lina & Ahmed, Lyon</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+
+      <div class="testimonial-card">
+        <p>
+          "Enfin une agence qui pense aux gens modestes ! J'ai découvert des paysages magnifiques
+          sans dépenser une fortune. C'est ça le vrai voyage : l'expérience, pas la dépense !"
+        </p>
+        <div class="testimonial-author">- Jean, Marseille</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+    </div>
+
+    <!-- APPEL À L'ACTION -->
+    <div class="cta-section">
+      <h2>Prêt à Voyager Pas Cher ?</h2>
+      <p>
+        Contactez-nous pour connaître nos dernières offres super économiques.
+        Nos packages sont limités pour garantir les meilleurs prix à tous.
+      </p>
+      <p>
+        <strong>Téléphone :</strong> +33 (0)1 ** ** ** 89<br />
+        <strong>Email :</strong> contact@voyagespaschers.fr<br />
+        <strong>Horaires :</strong> Lun-Ven 10h-17h | Sam 10h-13h
+      </p>
+      <button class="btn-luxe" style="font-size: 18px; padding: 15px 40px;">
+        Obtenir une Offre Spéciale
+      </button>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-links">
+      <a href="index.html">Retour à l'Accueil</a>
+      <a href="voyages_de_luxe.html">Voyages de Luxe</a>
+      <a href="voyages_du_monde.html">Voyages du Monde</a>
+      <a href="#">Nos Promotions</a>
+    </div>
+
+    <br />
+    <br />
+  </body>
+</html>

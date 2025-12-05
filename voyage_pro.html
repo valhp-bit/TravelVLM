@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyages Professionnels - TravelVLM Business</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a3c5f 0%, #2d5a7b 50%, #1a3c5f 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0d2541 0%, #1a3c5f 100%);
+            color: white;
+            padding: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(13, 37, 65, 0.8), rgba(26, 60, 95, 0.8)), url('images/japon.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 22px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 36px;
+            color: white;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .package-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .package-content {
+            padding: 25px;
+        }
+
+        .package-content h3 {
+            color: #0d2541;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .package-duration {
+            color: #ff9800;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .package-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .features {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature {
+            color: #333;
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff9800;
+            margin-bottom: 15px;
+        }
+
+        .price-details {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .btn-book {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-book:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Modal Booking */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal h2 {
+            color: #0d2541;
+            text-shadow: none;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff9800;
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Modal Paiement */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .payment-content {
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.3s ease;
+        }
+
+        .payment-content h2 {
+            color: #0d2541;
+            text-shadow: none;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .payment-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .payment-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 14px;
+            font-weight: bold;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .payment-tab.active {
+            color: #ff9800;
+            border-bottom-color: #ff9800;
+        }
+
+        .payment-form {
+            display: none;
+        }
+
+        .payment-form.active {
+            display: block;
+        }
+
+        .card-inputs {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card-inputs input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: monospace;
+        }
+
+        /* Champs bancaires BLOQUÉS */
+        .card-inputs input:disabled,
+        .payment-form input:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+            color: #999;
+            opacity: 0.5;
+        }
+
+        .order-summary {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .summary-total {
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #0d2541;
+        }
+
+        .confirmation {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .confirmation.show {
+            display: block;
+        }
+
+        .confirmation-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .confirmation h3 {
+            color: #0d2541;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .confirmation-details {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #0d2541, #1a3c5f);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #ff9800;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #ffb74d;
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 28px;
+            }
+
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">💼</div>
+                <span>TravelVLM Business</span>
+            </a>
+            <nav>
+                <a href="index.html">← Retour</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Voyages Professionnels Premium</h1>
+            <p>Séjours d'affaires optimisés pour votre productivité</p>
+        </div>
+    </div>
+
+    <!-- VOYAGES PROFESSIONNELS -->
+    <section class="section">
+        <div class="container">
+            <h2>📊 Nos Forfaits Professionnels</h2>
+            <div class="packages-grid">
+                <!-- Package 1 -->
+                <div class="package-card">
+                    <img src="images/japon.jpeg" alt="Tokyo Business">
+                    <div class="package-content">
+                        <h3>Tokyo Business Elite</h3>
+                        <div class="package-duration">📅 5 jours / 4 nuits</div>
+                        <p class="package-description">Immersion au cœur du quartier d'affaires tokyoïte avec réunions B2B organisées.</p>
+                        <div class="features">
+                            <div class="feature">Hôtel 5⭐ près de Shinjuku</div>
+                            <div class="feature">Business Center 24h/24</div>
+                            <div class="feature">Réunions organisées</div>
+                            <div class="feature">Transport VIP inclus</div>
+                            <div class="feature">Petit-déjeuner exec</div>
+                        </div>
+                        <div class="price">2,499€</div>
+                        <div class="price-details">Par personne | Taxes incluses</div>
+                        <button class="btn-book" onclick="openBooking('Tokyo Business Elite', 2499)">Réserver</button>
+                    </div>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="package-card">
+                    <img src="images/carte.jpg" alt="Paris Executives">
+                    <div class="package-content">
+                        <h3>Paris Executives Summit</h3>
+                        <div class="package-duration">📅 4 jours / 3 nuits</div>
+                        <p class="package-description">Séminaire d'entreprise aux Champs-Élysées avec salle de conférence premium.</p>
+                        <div class="features">
+                            <div class="feature">Hôtel 5⭐ prestige</div>
+                            <div class="feature">Salle conférence climat</div>
+                            <div class="feature">Dîner gastronomique</div>
+                            <div class="feature">Limousine incluse</div>
+                            <div class="feature">Accès wifi professionnel</div>
+                        </div>
+                        <div class="price">1,899€</div>
+                        <div class="price-details">Par personne | Taxes incluses</div>
+                        <button class="btn-book" onclick="openBooking('Paris Executives Summit', 1899)">Réserver</button>
+                    </div>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="package-card">
+                    <img src="images/chine.jpg" alt="Shanghai Corporate">
+                    <div class="package-content">
+                        <h3>Shanghai Corporate Hub</h3>
+                        <div class="package-duration">📅 6 jours / 5 nuits</div>
+                        <p class="package-description">Centre financier asiatique avec networking international et partenariat B2B.</p>
+                        <div class="features">
+                            <div class="feature">Hôtel 5⭐ Pudong</div>
+                            <div class="feature">Bureaux temporaires</div>
+                            <div class="feature">Networking events</div>
+                            <div class="feature">Traducteurs inclus</div>
+                            <div class="feature">Sécurité VIP</div>
+                        </div>
+                        <div class="price">3,299€</div>
+                        <div class="price-details">Par personne | Taxes incluses</div>
+                        <button class="btn-book" onclick="openBooking('Shanghai Corporate Hub', 3299)">Réserver</button>
+                    </div>
+                </div>
+
+                <!-- Package 4 -->
+                <div class="package-card">
+                    <img src="images/neige.jpg" alt="Davos Summit">
+                    <div class="package-content">
+                        <h3>Davos Executive Summit</h3>
+                        <div class="package-duration">📅 3 jours / 2 nuits</div>
+                        <p class="package-description">Forum économique mondial avec accès aux conférences et networking d'élite.</p>
+                        <div class="features">
+                            <div class="feature">Resort 5⭐ Alpes</div>
+                            <div class="feature">Accès forum complet</div>
+                            <div class="feature">Cocktails VIP</div>
+                            <div class="feature">Concierge dédié</div>
+                            <div class="feature">Privacy rooms</div>
+                        </div>
+                        <div class="price">4,599€</div>
+                        <div class="price-details">Par personne | Taxes incluses</div>
+                        <button class="btn-book" onclick="openBooking('Davos Executive Summit', 4599)">Réserver</button>
+                    </div>
+                </div>
+
+                <!-- Package 5 -->
+                <div class="package-card">
+                    <img src="images/barque.jpg" alt="Dubai Business">
+                    <div class="package-content">
+                        <h3>Dubai Business Prestige</h3>
+                        <div class="package-duration">📅 4 jours / 3 nuits</div>
+                        <p class="package-description">Centre financier du Moyen-Orient avec infrastructures commerciales ultramodernes.</p>
+                        <div class="features">
+                            <div class="feature">Hôtel 7⭐ Burj Khalifa</div>
+                            <div class="feature">Bureau private lounge</div>
+                            <div class="feature">Yacht corporate</div>
+                            <div class="feature">Chauffeur premium</div>
+                            <div class="feature">Téléconférence 4K</div>
+                        </div>
+                        <div class="price">5,199€</div>
+                        <div class="price-details">Par personne | Taxes incluses</div>
+                        <button class="btn-book" onclick="openBooking('Dubai Business Prestige', 5199)">Réserver</button>
+                    </div>
+                </div>
+
+                <!-- Package 6 -->
+                <div class="package-card">
+                    <img src="images/avion.jpg" alt="New York Finance">
+                    <div class="package-content">
+                        <h3>New York Finance Tower</h3>
+                        <div class="package-duration">📅 5 jours / 4 nuits</div>
+                        <p class="package-description">Wall Street et Manhattan avec accès aux plus grands centres financiers américains.</p>
+                        <div class="features">
+                            <div class="feature">Penthouse 5⭐</div>
+                            <div class="feature">Bureau Times Square</div>
+                            <div class="feature">Réunions Wall Street</div>
+                            <div class="feature">Helicopter tour</div>
+                            <div class="feature">Gala corporate</div>
+                        </div>
+                        <div class="price">3,899€</div>
+                        <div class="price-details">Par personne | Taxes incluses</div>
+                        <button class="btn-book" onclick="openBooking('New York Finance Tower', 3899)">Réserver</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TravelVLM Business - Solutions de voyages professionnels</p>
+            <p style="margin-top: 15px; font-size: 14px;">
+                <a href="index.html">Retour à l'accueil</a> | 
+                <a href="voyages_de_luxe.html">Luxe</a> | 
+                <a href="voyages_du_monde.html">Monde</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODAL RÉSERVATION -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBooking()">&times;</span>
+            <h2>Réserver: <span id="packageName"></span></h2>
+            <form id="bookingForm" onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label>Email professionnel</label>
+                    <input type="email" id="email" required placeholder="vous@entreprise.com">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Prénom</label>
+                        <input type="text" id="firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" id="lastname" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Entreprise</label>
+                        <input type="text" id="company" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fonction</label>
+                    <select id="position" required>
+                        <option>PDG / Directeur</option>
+                        <option>Manager</option>
+                        <option>Commercial</option>
+                        <option>Responsable RH</option>
+                        <option>Autre cadre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre de participants</label>
+                    <input type="number" id="participants" min="1" max="50" value="1" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Procéder au Paiement →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PAIEMENT -->
+    <div id="paymentModal" class="modal">
+        <div class="payment-content">
+            <span class="close" onclick="closePayment()">&times;</span>
+            <h2>Finalisez votre Réservation</h2>
+            
+            <div class="order-summary">
+                <div class="summary-row">
+                    <span><span id="summaryPackage"></span> x <span id="summaryParticipants"></span></span>
+                    <span id="summaryPrice"></span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total à payer :</span>
+                    <span id="totalPrice"></span>
+                </div>
+            </div>
+
+            <div class="warning">
+                ⚠️ Note: Les champs bancaires sont désactivés pour cette démo. Le système traite votre demande sans collecte de données sensibles.
+            </div>
+
+            <div class="payment-tabs">
+                <button class="payment-tab active" onclick="switchPaymentMethod('card')">Carte Bancaire</button>
+                <button class="payment-tab" onclick="switchPaymentMethod('virement')">Virement Bancaire</button>
+            </div>
+
+            <!-- Carte Bancaire -->
+            <div id="card" class="payment-form active">
+                <div class="form-group">
+                    <label>Numéro de Carte</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" disabled>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date d'expiration</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" placeholder="•••" maxlength="3" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nom du titulaire</label>
+                    <input type="text" placeholder="Votre nom complet" disabled>
+                </div>
+            </div>
+
+            <!-- Virement Bancaire -->
+            <div id="virement" class="payment-form">
+                <div class="form-group">
+                    <label>IBAN</label>
+                    <input type="text" placeholder="FR76 3000 6000 0123 4567 8901 234" disabled>
+                </div>
+                <div class="form-group">
+                    <label>BIC</label>
+                    <input type="text" placeholder="SOFRFRPP" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Titulaire du compte</label>
+                    <input type="text" placeholder="Votre nom complet" disabled>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="completePayment()">✓ Confirmer la Réservation</button>
+
+            <div class="confirmation" id="confirmation">
+                <div class="confirmation-icon">✅</div>
+                <h3>Réservation Confirmée !</h3>
+                <p>Merci de votre confiance</p>
+                <div class="confirmation-details">
+                    <p><strong>Numéro de réservation :</strong> <span id="confirmationNumber"></span></p>
+                    <p><strong>Package :</strong> <span id="confirmationPackage"></span></p>
+                    <p><strong>Participants :</strong> <span id="confirmationParticipants"></span></p>
+                    <p><strong>Montant :</strong> <span id="confirmationAmount"></span></p>
+                    <p style="margin-top: 15px; color: #666;">Un email de confirmation a été envoyé à <span id="confirmationEmail"></span></p>
+                </div>
+                <button class="btn-submit" onclick="resetAndClose()" style="margin-top: 20px;">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPackage = '';
+        let currentPrice = 0;
+
+        function openBooking(packageName, price) {
+            currentPackage = packageName;
+            currentPrice = price;
+            document.getElementById('packageName').textContent = packageName;
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+
+        function closeBooking() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('confirmation').classList.remove('show');
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const firstname = document.getElementById('firstname').value;
+            const lastname = document.getElementById('lastname').value;
+            const participants = parseInt(document.getElementById('participants').value);
+            const totalPrice = currentPrice * participants;
+
+            // Préparer le résumé de paiement
+            document.getElementById('summaryPackage').textContent = currentPackage;
+            document.getElementById('summaryParticipants').textContent = participants;
+            document.getElementById('summaryPrice').textContent = totalPrice + '€';
+            document.getElementById('totalPrice').textContent = totalPrice + '€';
+            document.getElementById('confirmationEmail').textContent = email;
+
+            closeBooking();
+            document.getElementById('paymentModal').style.display = 'block';
+            switchPaymentMethod('card');
+        }
+
+        function switchPaymentMethod(method) {
+            // Désactiver tous les formulaires
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.querySelectorAll('.payment-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Activer le formulaire demandé
+            const targetForm = document.getElementById(method);
+            if (targetForm) {
+                targetForm.classList.add('active');
+            }
+
+            // Activer l'onglet correspondant (recherche simple par attribut onclick)
+            const tabs = document.querySelectorAll('.payment-tab');
+            for (const tab of tabs) {
+                const onclick = tab.getAttribute('onclick') || '';
+                if (onclick.indexOf("'" + method + "'") !== -1 || onclick.indexOf('"' + method + '"') !== -1) {
+                    tab.classList.add('active');
+                    break;
+                }
+            }
+        }
+
+        function completePayment() {
+            const participants = document.getElementById('summaryParticipants').textContent;
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            const email = document.getElementById('confirmationEmail').textContent;
+
+            // Générer un numéro de réservation
+            const confirmationNumber = 'RES-' + new Date().getTime();
+
+            document.getElementById('confirmationNumber').textContent = confirmationNumber;
+            document.getElementById('confirmationPackage').textContent = currentPackage;
+            document.getElementById('confirmationParticipants').textContent = participants;
+            document.getElementById('confirmationAmount').textContent = totalPrice;
+
+            document.getElementById('confirmation').classList.add('show');
+        }
+
+        function resetAndClose() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('confirmation').classList.remove('show');
+            document.getElementById('bookingForm').reset();
+        }
+
+        // Fermer le modal quand on clique en dehors
+        window.onclick = function(event) {
+            const bookingModal = document.getElementById('bookingModal');
+            const paymentModal = document.getElementById('paymentModal');
+            
+            if (event.target == bookingModal) {
+                closeBooking();
+            }
+            if (event.target == paymentModal) {
+                closePayment();
+            }
+        }
+    </script>
+</body>
+</html>

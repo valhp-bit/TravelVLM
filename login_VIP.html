@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès VIP - TravelVLM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a0033 0%, #2d0052 50%, #1a0033 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .login-container {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4);
+            max-width: 400px;
+            width: 100%;
+            border-top: 5px solid #ff1493;
+            border-bottom: 5px solid #ffd700;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .lock-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+        }
+
+        h1 {
+            color: #1a0033;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 20, 147, 0.2);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1a0033;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ff1493;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff1493, #ffd700);
+            color: #1a0033;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 20, 147, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 10px;
+            background: #fadbd8;
+            border-left: 4px solid #e74c3c;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #ff1493;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+
+        .hint {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            border-left: 4px solid #ffd700;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .lock-icon {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="lock-icon">🔐</div>
+            <h1>Accès VIP Exclusif</h1>
+            <p class="subtitle">Zone réservée aux clients VIP</p>
+        </div>
+
+        <form id="vipForm" onsubmit="checkPassword(event)">
+            <div class="form-group">
+                <label for="password">Mot de passe d'accès :</label>
+                <input type="password" id="password" placeholder="Entrez le mot de passe" autofocus required>
+            </div>
+
+            <button type="submit">🔓 Accéder aux Voyages VIP</button>
+
+            <div class="error-message" id="errorMessage">
+                ❌ Mot de passe incorrect. Veuillez réessayer.
+            </div>
+        </form>
+
+        <div class="back-link">
+            <a href="index.html">← Retour à l'accueil</a>
+        </div>
+
+        <div class="hint">
+            💡 Indice : Le mot de passe est le nom de notre agence (en minuscules)
+        </div>
+    </div>
+
+    <script>
+        function checkPassword(event) {
+            event.preventDefault();
+            
+            const password = document.getElementById('password').value.toLowerCase().trim();
+            const correctPassword = 'traveldream';
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (password === correctPassword) {
+                // Stocker une session pour vérifier l'accès
+                sessionStorage.setItem('vipAccess', 'true');
+                sessionStorage.setItem('vipAccessTime', new Date().getTime());
+                
+                // Rediriger vers la page VIP
+                window.location.href = 'voyages_VIP.html';
+            } else {
+                // Afficher le message d'erreur
+                errorMessage.style.display = 'block';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+                
+                // Animation de secousse
+                errorMessage.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    errorMessage.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Animation de secousse CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Effacer le message d'erreur quand l'utilisateur tape
+        document.getElementById('password').addEventListener('input', () => {
+            document.getElementById('errorMessage').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

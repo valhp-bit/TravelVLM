@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Commentaires - TravelVLM</title>
+  <style>
+    :root{--accent:#667eea;--accent2:#ff9800;--bg:#f7f8fb}
+    body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#222;margin:0;padding:0}
+    header{background:linear-gradient(135deg,var(--accent),#764ba2);color:#fff;padding:16px 20px;box-shadow:0 4px 15px rgba(0,0,0,0.2);position:sticky;top:0;z-index:100}
+    .header-top{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .header-top a{color:#fff;text-decoration:none;font-weight:bold;display:flex;align-items:center;gap:8px}
+    .header-top nav{display:flex;gap:16px;align-items:center}
+    .header-top nav a{font-weight:500;padding:6px 12px;border-radius:4px;transition:background 0.3s}
+    .header-top nav a:hover{background:rgba(255,255,255,0.2)}
+    .header-title{max-width:1200px;margin:12px auto;padding:0 20px;text-align:center}
+    .container{max-width:900px;margin:24px auto;padding:0 16px}
+    .card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,0.06);margin-bottom:18px}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    input[type=text],input[type=email],textarea,select{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
+    textarea{min-height:100px;resize:vertical}
+    .stars{display:flex;gap:6px;align-items:center}
+    .star{font-size:26px;cursor:pointer;color:#ddd;transition:color .15s ease}
+    .star.filled{color:var(--accent2)}
+    .btn{display:inline-block;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-ghost{background:transparent;border:1px solid #ddd;color:#333}
+    .meta{font-size:13px;color:#666;margin-bottom:10px}
+    .comment-list{display:flex;flex-direction:column;gap:12px}
+    .comment-item{padding:12px;border-radius:8px;border:1px solid #eee;background:linear-gradient(180deg,#fff,#fafafa)}
+    .comment-header{display:flex;justify-content:space-between;align-items:center}
+    .comment-author{font-weight:700}
+    .comment-text{white-space:pre-wrap;margin-top:8px}
+    .small{font-size:13px;color:#777}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .export-area{width:100%;height:120px}
+    footer{background:#333;color:#fff;text-align:center;padding:20px;margin-top:40px}
+    footer a{color:var(--accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    #secretEgg{position:fixed;top:12px;right:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:20px;border-radius:50%;cursor:pointer;z-index:1200;opacity:0.06;transition:opacity .18s ease, transform .18s ease;user-select:none}
+    #secretEgg:hover{opacity:0.95;transform:scale(1.08)}
+    #secretEgg.revealed{opacity:0.95}
+    #trophyBtn{position:fixed;top:12px;right:64px;z-index:1201;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff9800);box-shadow:0 6px 18px rgba(0,0,0,0.15);cursor:pointer;text-decoration:none;color:#333;opacity:0.9;font-size:18px}
+    #trophyBtn:hover{transform:scale(1.06)}
+    #cookieBanner{position:fixed;left:20px;right:20px;bottom:18px;background:rgba(255,255,255,0.98);border-radius:12px;padding:14px 18px;box-shadow:0 12px 40px rgba(0,0,0,0.2);display:flex;gap:12px;align-items:center;z-index:2000}
+    #cookieBanner p{margin:0;color:#333}
+    #cookieBanner .actions{margin-left:auto;display:flex;gap:8px}
+    @media(max-width:768px){.header-top{flex-direction:column}}
+    @media(max-width:600px){.controls{flex-direction:column};#cookieBanner{flex-direction:column;align-items:stretch}}
+  </style>
+</head>
+<body>
+  <!-- Easter eggs -->
+  <div id="secretEgg" role="button" aria-label="Oeuf secret">🥚</div>
+  <a id="trophyBtn" href="trophe.html" title="Trophées">🏆</a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <a href="index.html">✈️ TravelVLM</a>
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="rendezvous.html">Rendez-vous</a>
+        <a href="trophe.html">Trophées</a>
+        <a href="commentaire.html">Commentaires</a>
+      </nav>
+    </div>
+    <div class="header-title">
+      <h1>Commentaires & Évaluations</h1>
+      <p style="opacity:.9;margin:6px 0 0">Laissez un commentaire, attribuez 1 à 5 étoiles — visible par tous (sur cet appareil)</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ADS -->
+    <section class="card" style="margin-bottom:18px;text-align:center">
+      <h3 style="margin:6px 0;color:#333">Publicités</h3>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="ad_lycee.html" onclick="return recordAdClick(event,'lycee')" style="background:#fff;padding:10px;border-radius:8px;min-width:180px;box-shadow:0 6px 18px rgba(0,0,0,0.06);display:block;text-decoration:none;color:inherit">
+          <strong>Lycée Japetrois</strong>
+          <div class="small">Voyages scolaires & échanges</div>
+        </a>
+        <a href="ad_garage.html" onclick="return recordAdClick(event,'garage')" style="background:#fff;padding:10px;border-radius:8px;min-width:180px;box-shadow:0 6px 18px rgba(0,0,0,0.06);display:block;text-decoration:none;color:inherit">
+          <strong>Garage PPPPP</strong>
+          <div class="small">Entretien pour voyageurs</div>
+        </a>
+        <a href="ad_console.html" onclick="return recordAdClick(event,'console')" style="background:#fff;padding:10px;border-radius:8px;min-width:180px;box-shadow:0 6px 18px rgba(0,0,0,0.06);display:block;text-decoration:none;color:inherit">
+          <strong>Console La Ppputtvz</strong>
+          <div class="small">Détente en vol</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section class="card" aria-labelledby="form-title">
+      <h2 id="form-title">Laisser un commentaire</h2>
+      <form id="commentForm">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+          <div style="flex:1;min-width:180px">
+            <label>Prénom</label>
+            <input type="text" id="name" placeholder="Votre prénom (ou pseudo)" required>
+          </div>
+          <div style="flex:1;min-width:180px">
+            <label>Email (optionnel)</label>
+            <input type="email" id="email" placeholder="vous@exemple.com">
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label>Note</label>
+          <div class="stars" id="stars" role="radiogroup" aria-label="Notation 1 à 5 étoiles">
+            <span class="star" data-value="1">☆</span>
+            <span class="star" data-value="2">☆</span>
+            <span class="star" data-value="3">☆</span>
+            <span class="star" data-value="4">☆</span>
+            <span class="star" data-value="5">☆</span>
+            <input type="hidden" id="rating" value="5">
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label>Commentaire</label>
+          <textarea id="comment" placeholder="Écrivez votre expérience..." required></textarea>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-primary" type="submit">Publier</button>
+          <button class="btn btn-ghost" type="button" id="clearAll">Effacer tous (local)</button>
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+            <span class="small">Moyenne :</span>
+            <strong id="avgRating">0.0</strong>
+            <span style="margin-left:6px" id="countComments">(0)</span>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- COMMENTS LIST -->
+    <section class="card">
+      <h2>Commentaires publiés</h2>
+      <p class="meta">Tous les commentaires sont stockés dans le navigateur via <code>localStorage</code>.</p>
+
+      <div class="comment-list" id="commentList" aria-live="polite"></div>
+
+      <div style="margin-top:16px">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <button class="btn btn-ghost" id="exportBtn">Exporter JSON</button>
+          <button class="btn btn-ghost" id="importBtn">Importer JSON</button>
+          <input type="file" id="importFile" accept="application/json" style="display:none">
+        </div>
+        <textarea id="exportArea" class="export-area" placeholder="Export JSON..." readonly></textarea>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    <div style="margin-top:12px;font-size:13px">
+      <a href="index.html">Accueil</a> | <a href="rendezvous.html">Rendez-vous</a> | <a href="commentaire.html">Commentaires</a> | <a href="trophe.html">Trophées</a>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:#999" id="secretPhrase">
+      Gérée par une équipe de passionnés qui rêvent de voyages, destinée à tous ceux qui cherchent l'aventure, la découverte et le confort.<span id="secretDot" style="cursor:pointer;font-weight:bold;color:#666;transition:all 0.3s ease;padding:0 2px">.</span>
+    </p>
+  </footer>
+
+  <!-- Cookie banner -->
+  <div id="cookieBanner" style="display:none" aria-live="polite">
+    <div style="max-width:720px">
+      <strong>TravelVLM utilise des cookies</strong>
+      <p style="margin-top:6px;">Nous utilisons des cookies pour améliorer votre expérience et afficher des publicités. En continuant, vous acceptez notre utilisation des cookies.</p>
+    </div>
+    <div class="actions">
+      <button id="cookieReject" class="btn" style="background:#fff;border:1px solid #ddd">Refuser</button>
+      <button id="cookieAccept" class="btn btn-primary">Accepter</button>
+    </div>
+  </div>
+
+  <script>
+    function escapeHtml(str){if(!str) return ''; return str.replace(/[&<>"'`]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s]));}
+    const STORAGE_KEY='traveldream_comments_v1';
+    function loadComments(){try{const raw=localStorage.getItem(STORAGE_KEY);return raw?JSON.parse(raw):[]}catch(e){console.error(e);return []}}
+    function saveComments(list){localStorage.setItem(STORAGE_KEY,JSON.stringify(list));}
+    function formatDate(ts){const d=new Date(ts);return d.toLocaleString();}
+    function renderComments(){const list=loadComments();const container=document.getElementById('commentList');container.innerHTML='';if(list.length===0){container.innerHTML='<div class="small">Aucun commentaire pour le moment. Soyez le premier !</div>';updateStats(list);return}list.sort((a,b)=>b.time-a.time);for(const c of list){const item=document.createElement('div');item.className='comment-item';const stars='★'.repeat(c.rating)+'☆'.repeat(5-c.rating);item.innerHTML=`<div class="comment-header"><div><div class="comment-author">${escapeHtml(c.name)} <span class="small">— ${escapeHtml(c.email||'')}</span></div><div class="small">${formatDate(c.time)}</div></div><div style="text-align:right"><div class="small">${stars}</div></div></div><div class="comment-text">${escapeHtml(c.text)}</div>`;container.appendChild(item);}updateStats(list);}
+    function updateStats(list){const avgEl=document.getElementById('avgRating');const countEl=document.getElementById('countComments');if(!list||list.length===0){avgEl.textContent='0.0';countEl.textContent='(0)';return}const s=list.reduce((a,b)=>a+b.rating,0);const avg=(s/list.length).toFixed(1);avgEl.textContent=avg;countEl.textContent=`(${list.length})`;}
+    (function(){const stars=document.querySelectorAll('#stars .star');const ratingInput=document.getElementById('rating');function setStars(n){stars.forEach(s=>{const v=+s.dataset.value;s.textContent=v<=n?'★':'☆';s.classList.toggle('filled',v<=n)});ratingInput.value=n;}stars.forEach(s=>{s.addEventListener('click',()=>setStars(+s.dataset.value));s.addEventListener('mouseenter',()=>{const v=+s.dataset.value;stars.forEach(x=>x.textContent=+x.dataset.value<=v?'★':'☆');});s.addEventListener('mouseleave',()=>setStars(+ratingInput.value));});setStars(5);})();
+    document.getElementById('commentForm').addEventListener('submit',function(e){e.preventDefault();const name=document.getElementById('name').value.trim()||'Anonyme';const email=document.getElementById('email').value.trim();const text=document.getElementById('comment').value.trim();const rating=Math.max(1,Math.min(5,parseInt(document.getElementById('rating').value||5)));if(!text){alert('Veuillez saisir un commentaire.');return}const list=loadComments();list.push({name,email,text,rating,time:Date.now()});saveComments(list);renderComments();this.reset();document.getElementById('rating').value='5';});
+    document.getElementById('clearAll').addEventListener('click',()=>{if(!confirm('Effacer tous les commentaires ?'))return;localStorage.removeItem(STORAGE_KEY);renderComments();document.getElementById('exportArea').value='';});
+    document.getElementById('exportBtn').addEventListener('click',()=>{const list=loadComments();const txt=JSON.stringify(list,null,2);document.getElementById('exportArea').value=txt;});
+    document.getElementById('importBtn').addEventListener('click',()=>{document.getElementById('importFile').click();});
+    document.getElementById('importFile').addEventListener('change',(ev)=>{const f=ev.target.files&&ev.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=function(){try{const data=JSON.parse(reader.result);if(!Array.isArray(data))throw new Error('Format invalide');const existing=loadComments();const merged=existing.concat(data);saveComments(merged);renderComments();alert('Importation réussie ('+data.length+' commentaires)');}catch(err){alert('Erreur : '+err.message)}};reader.readAsText(f,'utf-8');ev.target.value='';});
+    renderComments();
+    document.addEventListener('DOMContentLoaded',function(){const key='traveldream_cookies_v1';const banner=document.getElementById('cookieBanner');const v=localStorage.getItem(key);if(!v)banner.style.display='flex';document.getElementById('cookieAccept').addEventListener('click',()=>{localStorage.setItem(key,'accepted');banner.style.display='none';});document.getElementById('cookieReject').addEventListener('click',()=>{localStorage.setItem(key,'rejected');banner.style.display='none';});try{localStorage.setItem('traveldream_visited','1');}catch(e){}});
+    function recordAdClick(e,id){try{if(e&&e.preventDefault)e.preventDefault();}catch(err){}const key='traveldream_cookies_v1';const v=localStorage.getItem(key);const href=(e&&e.currentTarget&&e.currentTarget.href)?e.currentTarget.href:null;const doNav=()=>{if(href)window.location.href=href;return false;};if(v==='accepted'){const ck='traveldream_ad_clicks_'+id;const n=parseInt(localStorage.getItem(ck)||'0',10)+1;localStorage.setItem(ck,String(n));return doNav();}else{const ok=confirm('Acceptez les cookies pour activer le suivi des clics ?');if(ok){localStorage.setItem(key,'accepted');try{document.getElementById('cookieBanner').style.display='none';}catch(e){}const ck='traveldream_ad_clicks_'+id;const n=parseInt(localStorage.getItem(ck)||'0',10)+1;localStorage.setItem(ck,String(n));return doNav();}else{return doNav();}}}
+    (function(){const secretPhrase=document.getElementById('secretPhrase');let clickCount=0;let lastClickTime=0;secretPhrase.addEventListener('click',function(e){e.preventDefault();const now=Date.now();if(now-lastClickTime>2000)clickCount=0;clickCount++;lastClickTime=now;secretPhrase.style.color='#ff1493';secretPhrase.style.textShadow='0 0 8px rgba(255, 20, 147, 0.8)';setTimeout(()=>{if(clickCount<3){secretPhrase.style.color='#999';secretPhrase.style.textShadow='none';}},200);if(clickCount===3){secretPhrase.style.color='#00ff88';secretPhrase.style.textShadow='0 0 12px rgba(0, 255, 136, 0.8)';setTimeout(()=>window.location.href='boss_login.html',300);}});secretPhrase.addEventListener('mouseenter',function(){if(clickCount>0)this.style.color='#ff1493';else this.style.color='#999';});secretPhrase.addEventListener('mouseleave',function(){if(clickCount<3)this.style.color='#999';});})();
+    (function(){const EGG_KEY='traveldream_easter_egg_v1';const el=document.getElementById('secretEgg');if(!el)return;let state=parseInt(localStorage.getItem(EGG_KEY)||'0',10);const labels=['🥚','🐲','🐉'];function render(){el.textContent=labels[state]||labels[0];if(state>0)el.classList.add('revealed');else el.classList.remove('revealed');}function animatePop(){el.style.transform='scale(1.25)';setTimeout(()=>el.style.transform='scale(1)',160);}el.addEventListener('click',function(e){e.preventDefault();state=(state+1)%labels.length;localStorage.setItem(EGG_KEY,String(state));render();animatePop();});let pressTimer=null;el.addEventListener('pointerdown',()=>{pressTimer=setTimeout(()=>{state=0;localStorage.setItem(EGG_KEY,'0');render();alert('Oeuf réinitialisé');},1600);});el.addEventListener('pointerup',()=>{if(pressTimer){clearTimeout(pressTimer);pressTimer=null}});render();})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Boss - TravelVLM</title>
+    <script>
+        // Vérifier que l'utilisateur a l'accès Admin
+        function checkBossAccess() {
+            const bossAccess = sessionStorage.getItem('bossAccess');
+            const accessTime = sessionStorage.getItem('bossAccessTime');
+            
+            if (!bossAccess) {
+                // Pas d'accès, rediriger vers le login
+                window.location.href = 'boss_login.html';
+                return;
+            }
+            
+            // Vérifier que la session n'a pas expiré (24h)
+            if (accessTime) {
+                const timeElapsed = new Date().getTime() - parseInt(accessTime);
+                const oneDay = 24 * 60 * 60 * 1000;
+                
+                if (timeElapsed > oneDay) {
+                    // Session expirée
+                    sessionStorage.removeItem('bossAccess');
+                    sessionStorage.removeItem('bossAccessTime');
+                    window.location.href = 'boss_login.html';
+                    return;
+                }
+            }
+        }
+        
+        // Vérifier l'accès au chargement
+        window.addEventListener('load', checkBossAccess);
+        // Aussi vérifier immédiatement
+        checkBossAccess();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff88;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .terminal-header {
+            background: linear-gradient(135deg, #1a1a2e, #0f0f1e);
+            border-bottom: 3px solid #00ff88;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .terminal-header h1 {
+            font-size: 28px;
+            text-shadow: 0 0 10px #00ff88;
+            letter-spacing: 2px;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            background: #1a1a2e;
+            border: 2px solid #00ff88;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .section h2 {
+            color: #ff1493;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ff1493;
+            padding-bottom: 10px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th {
+            background: #0f0f1e;
+            color: #ffd700;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #00ff88;
+            font-weight: bold;
+        }
+
+        table td {
+            padding: 12px;
+            border: 1px solid #00ff88;
+            background: #16213e;
+        }
+
+        table tr:hover td {
+            background: #1a2a3e;
+            color: #ff1493;
+        }
+
+        .password-field {
+            background: #0a0e27;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #ffd700;
+            border: 1px solid #ffd700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .price {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .status.active {
+            background: #00ff88;
+            color: #0a0e27;
+        }
+
+        .status.locked {
+            background: #ff1493;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: #16213e;
+            border: 2px solid #00ff88;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 10px 0;
+        }
+
+        .stat-card .label {
+            color: #00ff88;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #0f0f1e;
+            border-left: 4px solid #ff1493;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .info-box strong {
+            color: #ffd700;
+        }
+
+        .hint {
+            color: #00ff88;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 2px solid #00ff88;
+            color: #00ff88;
+            font-size: 12px;
+        }
+
+        .warning {
+            background: rgba(255, 20, 147, 0.2);
+            border: 2px solid #ff1493;
+            color: #ff1493;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-header">
+        <h1>🔐 ADMIN BOSS PANEL - TravelVLM 🔐</h1>
+        <p style="color: #00ff88; margin-top: 10px;">Système d'Administration - Données Confidentielles</p>
+    </div>
+
+    <div class="admin-container">
+        <!-- STATISTIQUES -->
+        <div class="section">
+            <h2>📊 Statistiques Globales</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">Total Voyages</div>
+                    <div class="number">24</div>
+                    <div class="hint">4 collections × 6 voyages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Fourchette de Prix</div>
+                    <div class="number">249€ - 25K€</div>
+                    <div class="hint">De budget à ultra-luxe</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Pages Sécurisées</div>
+                    <div class="number">1</div>
+                    <div class="hint">Zone VIP protégée</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Utilisateurs VIP</div>
+                    <div class="number">∞</div>
+                    <div class="hint">Tous avec le bon password</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOTS DE PASSE SYSTÈME -->
+        <div class="section">
+            <h2>🔑 Mots de Passe & Accès</h2>
+            <div class="warning">
+                ⚠️ INFORMATIONS CONFIDENTIELLES - ACCÈS ADMINISTRATEUR UNIQUEMENT
+            </div>
+
+            <h3 style="color: #ffd700; margin-top: 20px; margin-bottom: 10px;">🔐 Accès VIP (login_VIP.html)</h3>
+            <table>
+                <tr>
+                    <th>Page</th>
+                    <th>Mot de Passe</th>
+                    <th>Statut</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Voyages VIP Secret</strong></td>
+                    <td><div class="password-field">traveldream</div></td>
+                    <td><span class="status locked">🔒 PROTÉGÉ</span></td>
+                    <td>Zone ultra-exclusive avec 6 packages premium (15K€-25K€)</td>
+                </tr>
+            </table>
+
+            <h3 style="color: #ffd700; margin-top: 20px; margin-bottom: 10px;">🏨 Collections de Voyages Accessibles</h3>
+            <table>
+                <tr>
+                    <th>Collection</th>
+                    <th>Statut</th>
+                    <th>Fichier</th>
+                    <th>Packages</th>
+                    <th>Prix Min-Max</th>
+                </tr>
+                <tr>
+                    <td><strong>Voyages de Luxe</strong></td>
+                    <td><span class="status active">✓ PUBLIC</span></td>
+                    <td>voyages_de_luxe.html</td>
+                    <td>6 packages</td>
+                    <td><span class="price">2,199€ - 3,399€</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Voyages du Monde</strong></td>
+                    <td><span class="status active">✓ PUBLIC</span></td>
+                    <td>voyages_du_monde.html</td>
+                    <td>6 packages</td>
+                    <td><span class="price">599€ - 1,499€</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Voyages pour Moins Démunis</strong></td>
+                    <td><span class="status active">✓ PUBLIC</span></td>
+                    <td>voyages_pour_moins_démunis.html</td>
+                    <td>6 packages</td>
+                    <td><span class="price">249€ - 1,399€</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Voyages VIP (Secret)</strong></td>
+                    <td><span class="status locked">🔒 PROTÉGÉ</span></td>
+                    <td>voyages_VIP.html</td>
+                    <td>6 packages</td>
+                    <td><span class="price">15,999€ - 25,499€</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- DÉTAILS VOYAGES LUXE -->
+        <div class="section">
+            <h2>👑 Voyages de Luxe (6 Packages)</h2>
+            <table>
+                <tr>
+                    <th>N°</th>
+                    <th>Nom du Package</th>
+                    <th>Prix</th>
+                    <th>Durée</th>
+                    <th>Points Clés</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>Méditerranée Exclusive</strong></td>
+                    <td><span class="price">2,199€</span></td>
+                    <td>10 jours</td>
+                    <td>Croisière luxe, plages privées, champagne</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>Asie Royale</strong></td>
+                    <td><span class="price">2,599€</span></td>
+                    <td>12 jours</td>
+                    <td>Palais, temples, spa luxe 5-étoiles</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>Amérique Grandiose</strong></td>
+                    <td><span class="price">2,399€</span></td>
+                    <td>14 jours</td>
+                    <td>New York, Vegas, Chutes du Niagara</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>Chine Impériale</strong></td>
+                    <td><span class="price">2,899€</span></td>
+                    <td>15 jours</td>
+                    <td>Cité Interdite, Grande Muraille, Shanghai</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><strong>Aventure Amazonienne</strong></td>
+                    <td><span class="price">2,799€</span></td>
+                    <td>10 jours</td>
+                    <td>Jungle exclusive, lodges de luxe, faune</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td><strong>Paradis Tropical</strong></td>
+                    <td><span class="price">3,399€</span></td>
+                    <td>12 jours</td>
+                    <td>Îles privées, resort 5-étoiles, loisirs aquatiques</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- DÉTAILS VOYAGES MONDE -->
+        <div class="section">
+            <h2>🌍 Voyages du Monde (6 Packages)</h2>
+            <table>
+                <tr>
+                    <th>N°</th>
+                    <th>Nom du Package</th>
+                    <th>Prix</th>
+                    <th>Durée</th>
+                    <th>Points Clés</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>Tour du Monde</strong></td>
+                    <td><span class="price">1,499€</span></td>
+                    <td>21 jours</td>
+                    <td>Carte, Asie, Europe - Multi-continents</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>Aventure Hivernale</strong></td>
+                    <td><span class="price">899€</span></td>
+                    <td>8 jours</td>
+                    <td>Neige, montagnes, sports d'hiver</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>Destination Mystérieuse</strong></td>
+                    <td><span class="price">699€</span></td>
+                    <td>7 jours</td>
+                    <td>Surprise, endroits secrets, découverte</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>Voyage Romantique</strong></td>
+                    <td><span class="price">799€</span></td>
+                    <td>5 jours</td>
+                    <td>Cœur, couples, ambiance magique</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><strong>Découverte d'Asie Centrale</strong></td>
+                    <td><span class="price">999€</span></td>
+                    <td>10 jours</td>
+                    <td>Kazakhstan, Steppes, culture locale</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td><strong>Galerie de Souvenirs</strong></td>
+                    <td><span class="price">599€</span></td>
+                    <td>5 jours</td>
+                    <td>Photos, mémoires, destinations photo-friendly</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- DÉTAILS VOYAGES ÉCONOMIQUES -->
+        <div class="section">
+            <h2>💚 Voyages pour Moins Démunis (6 Packages)</h2>
+            <table>
+                <tr>
+                    <th>N°</th>
+                    <th>Nom du Package</th>
+                    <th>Prix</th>
+                    <th>Durée</th>
+                    <th>Points Clés</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>Week-end Échappée</strong></td>
+                    <td><span class="price">249€</span></td>
+                    <td>3 jours</td>
+                    <td>Courte escapade, budget mini, local</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>Croisière Pas Chère</strong></td>
+                    <td><span class="price">399€</span></td>
+                    <td>5 jours</td>
+                    <td>Mer, cabine simple, activités incluses</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>Découverte Locale</strong></td>
+                    <td><span class="price">299€</span></td>
+                    <td>4 jours</td>
+                    <td>Région proche, gîte, tradition locale</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>Voyage en Groupe</strong></td>
+                    <td><span class="price">329€</span></td>
+                    <td>6 jours</td>
+                    <td>Réduction groupe, convivialité, partage</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><strong>Nature Sauvage</strong></td>
+                    <td><span class="price">359€</span></td>
+                    <td>5 jours</td>
+                    <td>Camping, randonnée, nature gratuite</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td><strong>Expérience Partagée</strong></td>
+                    <td><span class="price">279€</span></td>
+                    <td>4 jours</td>
+                    <td>Covoiturage, hostel, rencontres locales</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- DÉTAILS VOYAGES VIP SECRET -->
+        <div class="section">
+            <h2>✨ Voyages VIP Secret (6 Packages ULTRA-PREMIUM) ✨</h2>
+            <div class="warning">
+                🔐 Ces voyages sont protégés par mot de passe : <strong>traveldream</strong>
+            </div>
+            <table>
+                <tr>
+                    <th>N°</th>
+                    <th>Nom du Package</th>
+                    <th>Prix ULTRA</th>
+                    <th>Durée</th>
+                    <th>Exclusivité Maximale</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><strong>🏰 Palais Oriental</strong></td>
+                    <td><span class="price">15,999€</span></td>
+                    <td>14 jours</td>
+                    <td>Palais privés, princes hôtes, banquets royaux</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>⛵ Yacht Privé Méditerranée</strong></td>
+                    <td><span class="price">25,499€</span></td>
+                    <td>10 jours</td>
+                    <td>Yacht personnel, îles secrètes, chef michelin</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>🦁 Safari Royal Africain</strong></td>
+                    <td><span class="price">19,999€</span></td>
+                    <td>12 jours</td>
+                    <td>Réserve privée, guides VIP, photo safaris exclusifs</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>💎 Romance Superlative</strong></td>
+                    <td><span class="price">21,999€</span></td>
+                    <td>7 jours</td>
+                    <td>Lune de miel ultime, resort privé, spa couples</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><strong>⛩️ Montagne Sacrée</strong></td>
+                    <td><span class="price">18,499€</span></td>
+                    <td>10 jours</td>
+                    <td>Temples secrets, moines guides, méditation exclusive</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td><strong>🌃 Découverte Métropole Ultime</strong></td>
+                    <td><span class="price">16,999€</span></td>
+                    <td>8 jours</td>
+                    <td>New York VIP, front row spectacles, chefs réputés</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- STRUCTURE DU SITE -->
+        <div class="section">
+            <h2>📁 Structure du Site TravelVLM</h2>
+            <div style="margin: 20px 0;">
+                <div class="info-box">
+                    <strong>📄 Pages Principales :</strong><br>
+                    • index.html - Accueil principal avec navigation<br>
+                    • voyages_de_luxe.html - Collection Luxe (PUBLIC)<br>
+                    • voyages_du_monde.html - Collection Monde (PUBLIC)<br>
+                    • voyages_pour_moins_démunis.html - Collection Budget (PUBLIC)<br>
+                    • voyages_VIP.html - Collection VIP Secret (🔒 PROTÉGÉ)<br>
+                    • login_VIP.html - Portail d'authentification VIP
+                </div>
+
+                <div class="info-box">
+                    <strong>🎨 Dossiers :</strong><br>
+                    • /images/ - 18+ photos de destinations<br>
+                    • /style/ - style.css (feuille de style principale)
+                </div>
+
+                <div class="info-box">
+                    <strong>🔧 Système d'Accès VIP :</strong><br>
+                    • Utilisateur clique "Accès Secret" dans index.html<br>
+                    • Redirigé vers login_VIP.html<br>
+                    • Entre le mot de passe : <span class="password-field">traveldream</span><br>
+                    • Session créée via sessionStorage (24h)<br>
+                    • Accès à voyages_VIP.html déverrouillé<br>
+                    • Bouton "Déconnexion" efface la session
+                </div>
+            </div>
+        </div>
+
+        <!-- INFORMATIONS TECHNIQUES -->
+        <div class="section">
+            <h2>⚙️ Informations Techniques</h2>
+            <table>
+                <tr>
+                    <th>Élément</th>
+                    <th>Détails</th>
+                </tr>
+                <tr>
+                    <td><strong>Framework CSS</strong></td>
+                    <td>CSS3 pur (Flexbox, CSS Grid, Gradients)</td>
+                </tr>
+                <tr>
+                    <td><strong>JavaScript</strong></td>
+                    <td>Vanilla JS (sessionStorage, event listeners)</td>
+                </tr>
+                <tr>
+                    <td><strong>Responsive</strong></td>
+                    <td>Mobile-first, breakpoints 768px & 480px</td>
+                </tr>
+                <tr>
+                    <td><strong>Couleurs Principales</strong></td>
+                    <td>Purple (#667eea, #764ba2), Gold (#ffd700), Pink (#ff1493)</td>
+                </tr>
+                <tr>
+                    <td><strong>Police</strong></td>
+                    <td>Arial, Segoe UI, Courier New (monospace)</td>
+                </tr>
+                <tr>
+                    <td><strong>Animations</strong></td>
+                    <td>CSS transitions, hover effects, pulse effects VIP</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CONSEILS ADMIN -->
+        <div class="section">
+            <h2>💡 Conseils d'Administration</h2>
+            <div class="info-box">
+                <strong>🔒 Sécurité :</strong><br>
+                • Le mot de passe VIP est simple par pédagogie (traveldream)<br>
+                • Pour production, utiliser une vraie authentification (backend)<br>
+                • Les données VIP sont protégées par sessionStorage<br>
+                • Session expire après 24h
+            </div>
+
+            <div class="info-box">
+                <strong>📱 Optimisations :</strong><br>
+                • Tous les pages sont responsive<br>
+                • Images optimisées du dossier /images/<br>
+                • CSS consolidé pour performance<br>
+                • Pas de dépendances externes (pure HTML/CSS/JS)
+            </div>
+
+            <div class="info-box">
+                <strong>🎯 Prochaines Améliorations Possibles :</strong><br>
+                • Intégration avec un backend (Node.js, Python, PHP)<br>
+                • Base de données pour les réservations<br>
+                • Système de paiement (Stripe, PayPal)<br>
+                • Email de confirmation automatique<br>
+                • Dashboard statistiques en temps réel<br>
+                • Multi-langue support
+            </div>
+        </div>
+
+        <!-- OUTIL DÉBUG -->
+        <div class="section">
+            <h2>🛠️ Débugger</h2>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+                <button style="padding:10px 12px;border-radius:6px;background:#00ff88;border:none;cursor:pointer" onclick="openDebugger()">Ouvrir Débugger</button>
+                <button style="padding:10px 12px;border-radius:6px;background:#ffd700;border:none;cursor:pointer" onclick="exportLocal()">Exporter localStorage</button>
+                <button style="padding:10px 12px;border-radius:6px;background:#ff9800;border:none;cursor:pointer" onclick="exportSession()">Exporter sessionStorage</button>
+                <button style="padding:10px 12px;border-radius:6px;background:#ff1493;border:none;color:#fff;cursor:pointer" onclick="clearTrophies()">Effacer trophées</button>
+                <button style="padding:10px 12px;border-radius:6px;background:#ff4444;border:none;color:#fff;cursor:pointer" onclick="clearComments()">Effacer commentaires</button>
+                <button style="padding:10px 12px;border-radius:6px;background:#cc3366;border:none;color:#fff;cursor:pointer" onclick="clearBookings()">Effacer rendez‑vous</button>
+            </div>
+            <div style="margin-top:12px">
+                <button style="padding:8px 10px;border-radius:6px;background:#667eea;border:none;color:#fff;cursor:pointer" onclick="simulateAdClick()">Simuler clic pub</button>
+                <button style="padding:8px 10px;border-radius:6px;background:#764ba2;border:none;color:#fff;cursor:pointer;margin-left:10px" onclick="markBug()">Marquer bug reporté</button>
+                <button style="padding:8px 10px;border-radius:6px;background:#ff9800;border:none;color:#000;cursor:pointer;margin-left:10px" onclick="unlockVIP()">Forcer VIP</button>
+                <button style="padding:8px 10px;border-radius:6px;background:#00aa66;border:none;color:#fff;cursor:pointer;margin-left:10px" onclick="setBoss()">Forcer Boss Access</button>
+            </div>
+            <div class="info-box" style="margin-top:12px">
+                <strong>Astuce :</strong> Le débugger ouvre `debugger.html` qui permet d'inspecter et modifier `localStorage` et `sessionStorage`.
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🔐 ADMIN BOSS PANEL - TravelVLM 🔐</p>
+            <p>Toutes les informations de ce panneau sont CONFIDENTIELLES</p>
+            <p>Date: 3 décembre 2025 | Version: 1.0 | Statut: ✓ Opérationnel</p>
+            <p style="margin-top: 15px;">
+                <a href="index.html" style="color: #00ff88; text-decoration: none; border: 1px solid #00ff88; padding: 8px 15px; border-radius: 4px; display: inline-block; transition: all 0.3s ease;" onmouseover="this.style.background='#00ff88'; this.style.color='#0a0e27';" onmouseout="this.style.background='transparent'; this.style.color='#00ff88';">← Retour à l'Accueil</a>
+                <span style="margin: 0 10px; color: #666;">|</span>
+                <a href="#" onclick="openSecretAccess()" style="color: #ff4444; text-decoration: none; border: 1px solid #ff4444; padding: 8px 15px; border-radius: 4px; display: inline-block; transition: all 0.3s ease;" onmouseover="this.style.background='#ff4444'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ff4444';">⚠️ The Truth</a>
+                <span style="margin: 0 10px; color: #666;">|</span>
+                <a href="#" onclick="logoutBoss()" style="color: #ff1493; text-decoration: none; border: 1px solid #ff1493; padding: 8px 15px; border-radius: 4px; display: inline-block; transition: all 0.3s ease;" onmouseover="this.style.background='#ff1493'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ff1493';">🔐 Déconnexion Admin</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- MODAL ACCÈS SECRET -->
+    <div id="secretModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); animation: fadeIn 0.3s ease;">
+        <div style="background-color: #1a1a2e; margin: 10% auto; padding: 30px; border: 3px solid #ff4444; width: 90%; max-width: 400px; border-radius: 12px; box-shadow: 0 0 30px rgba(255, 68, 68, 0.6); animation: slideIn 0.3s ease;">
+            <span style="color: #ff4444; float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeSecretModal()">&times;</span>
+            <h2 style="color: #ff4444; margin-bottom: 20px; text-align: center; text-shadow: 0 0 10px #ff0000;">⚠️ LA VÉRITÉ ⚠️</h2>
+            <p style="color: #ff8888; text-align: center; margin-bottom: 20px; font-size: 14px;">
+                Accès à la zone ultra-confidentielle
+            </p>
+            <form onsubmit="checkSecretPassword(event)">
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; color: #00ff88; margin-bottom: 10px; font-weight: bold;">Mot de passe secret :</label>
+                    <input type="password" id="secretPassword" style="width: 100%; padding: 12px; border: 2px solid #ff4444; border-radius: 8px; background: #0a0e27; color: #00ff88; font-family: monospace; font-weight: bold;" placeholder="?????">
+                </div>
+                <button type="submit" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 16px;">🔓 Accéder à la Vérité</button>
+            </form>
+            <div id="secretErrorMsg" style="color: #ff4444; margin-top: 15px; text-align: center; display: none; font-weight: bold;">
+                ❌ Mot de passe incorrect!
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script>
+        function openSecretAccess() {
+            document.getElementById('secretModal').style.display = 'block';
+            document.getElementById('secretPassword').focus();
+        }
+
+        function closeSecretModal() {
+            document.getElementById('secretModal').style.display = 'none';
+            document.getElementById('secretPassword').value = '';
+            document.getElementById('secretErrorMsg').style.display = 'none';
+        }
+
+        function checkSecretPassword(event) {
+            event.preventDefault();
+            
+            const password = document.getElementById('secretPassword').value;
+            const errorMsg = document.getElementById('secretErrorMsg');
+            
+            if (password === 'secret') {
+                // Accès approuvé
+                sessionStorage.setItem('secretAccess', 'true');
+                sessionStorage.setItem('secretAccessTime', new Date().getTime());
+                window.location.href = 'secret.html';
+            } else {
+                // Mot de passe incorrect
+                errorMsg.style.display = 'block';
+                document.getElementById('secretPassword').value = '';
+                document.getElementById('secretPassword').focus();
+                
+                // Animation de tremblement
+                const modal = document.getElementById('secretModal').querySelector('div');
+                modal.style.animation = 'none';
+                setTimeout(() => {
+                    modal.style.animation = 'slideIn 0.3s ease';
+                }, 10);
+            }
+        }
+
+        // Fermer le modal quand on clique en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('secretModal');
+            if (event.target == modal) {
+                closeSecretModal();
+            }
+        }
+
+        // Fermer avec Échap
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSecretModal();
+            }
+        });
+
+        function logoutBoss() {
+            // Effacer les données de session Admin
+            sessionStorage.removeItem('bossAccess');
+            sessionStorage.removeItem('bossAccessTime');
+            
+            // Afficher un message et rediriger
+            alert('🔐 Vous avez été déconnecté de la zone Admin.');
+            window.location.href = 'index.html';
+        }
+    </script>
+    <script>
+        // Debug helper functions called by buttons
+        function openDebugger(){ window.open('debugger.html','_blank'); }
+        function exportLocal(){ try{ const obj = {}; for(const k in localStorage){ obj[k]=localStorage.getItem(k); } const data = JSON.stringify(obj,null,2); download('localStorage.json',data); }catch(e){alert('Erreur export local: '+e.message)} }
+        function exportSession(){ try{ const obj = {}; for(const k in sessionStorage){ obj[k]=sessionStorage.getItem(k); } const data = JSON.stringify(obj,null,2); download('sessionStorage.json',data); }catch(e){alert('Erreur export session: '+e.message)} }
+        function download(filename, text){ const a=document.createElement('a'); a.href='data:application/json;charset=utf-8,'+encodeURIComponent(text); a.download=filename; document.body.appendChild(a); a.click(); a.remove(); }
+        function clearTrophies(){ if(!confirm('Effacer toutes les clés liées aux trophées ?')) return; try{ Object.keys(localStorage).forEach(k=>{ if(k.startsWith('traveldream_easter')||k.startsWith('traveldream_')&&k.includes('trophy')) localStorage.removeItem(k); }); alert('Trophées effacés (si présents).'); }catch(e){alert(e.message)} }
+        function clearComments(){ if(!confirm('Effacer tous les commentaires stockés localement ?')) return; localStorage.removeItem('traveldream_comments_v1'); alert('Commentaires effacés'); }
+        function clearBookings(){ if(!confirm('Effacer tous les rendez-vous stockés localement ?')) return; localStorage.removeItem('traveldream_appts_v1'); alert('Rendez‑vous effacés'); }
+        function simulateAdClick(){ try{ localStorage.setItem('traveldream_ad_clicks_debug', String((parseInt(localStorage.getItem('traveldream_ad_clicks_debug')||'0',10)+1))); alert('Clic pub simulé'); }catch(e){alert(e.message);} }
+        function markBug(){ localStorage.setItem('traveldream_bug_reported','1'); alert('Bug marké (traveldream_bug_reported=1)'); }
+        function unlockVIP(){ sessionStorage.setItem('vipAccess','true'); alert('VIP forcé (sessionStorage.vipAccess=true)'); }
+        function setBoss(){ sessionStorage.setItem('bossAccess','true'); sessionStorage.setItem('bossAccessTime',String(new Date().getTime())); alert('Boss Access forcé (24h)'); }
+    </script>
+</body>
+</html>

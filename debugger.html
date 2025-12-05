@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Débugger - TravelVLM</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#111;margin:0;padding:16px}
+    header{background:#667eea;color:#fff;padding:12px;border-radius:8px;margin-bottom:12px}
+    .panel{background:#fff;border:1px solid #ddd;padding:12px;border-radius:8px;margin-bottom:12px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    textarea{width:100%;height:160px;font-family:monospace;padding:8px}
+    .small{font-size:13px;color:#666}
+    button{padding:8px 10px;border-radius:6px;border:none;cursor:pointer}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Outil Débug - TravelVLM</h1>
+    <p class="small">Inspectez et modifiez `localStorage` / `sessionStorage`</p>
+  </header>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>LocalStorage</h3>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button onclick="refreshLocal()">Rafraîchir</button>
+        <button onclick="exportLocal()">Exporter</button>
+        <button onclick="clearLocal()" style="background:#ff4444;color:#fff">Tout effacer</button>
+        <button onclick="importLocal()">Importer</button>
+      </div>
+      <textarea id="localArea" readonly></textarea>
+    </div>
+
+    <div class="panel">
+      <h3>SessionStorage</h3>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button onclick="refreshSession()">Rafraîchir</button>
+        <button onclick="exportSession()">Exporter</button>
+        <button onclick="clearSession()" style="background:#ff4444;color:#fff">Tout effacer</button>
+      </div>
+      <textarea id="sessionArea" readonly></textarea>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Actions Rapides</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="setKeyPrompt()">Ajouter/Modifier clé Local</button>
+      <button onclick="delKeyPrompt()" style="background:#ff6666;color:#fff">Supprimer clé Local</button>
+      <button onclick="runExpr()">Exécuter JS (console)</button>
+      <button onclick="downloadAll()" style="background:#ffd700">Télécharger tout</button>
+      <button onclick="resetEgg()">Réinitialiser oeuf</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Import JSON</h3>
+    <input type="file" id="importFile" accept="application/json">
+  </div>
+
+  <script>
+    function refreshLocal(){ try{ const obj = {}; for(const k in localStorage){ obj[k]=localStorage.getItem(k); } document.getElementById('localArea').value = JSON.stringify(obj,null,2); }catch(e){alert(e.message);} }
+    function refreshSession(){ try{ const obj = {}; for(const k in sessionStorage){ obj[k]=sessionStorage.getItem(k); } document.getElementById('sessionArea').value = JSON.stringify(obj,null,2); }catch(e){alert(e.message);} }
+    function exportLocal(){ const data = document.getElementById('localArea').value || '{}'; download('localStorage.json',data); }
+    function exportSession(){ const data = document.getElementById('sessionArea').value || '{}'; download('sessionStorage.json',data); }
+    function clearLocal(){ if(!confirm('Effacer tout le localStorage ?')) return; localStorage.clear(); refreshLocal(); }
+    function clearSession(){ if(!confirm('Effacer tout le sessionStorage ?')) return; sessionStorage.clear(); refreshSession(); }
+    function download(filename, text){ const a=document.createElement('a'); a.href='data:application/json;charset=utf-8,'+encodeURIComponent(text); a.download=filename; document.body.appendChild(a); a.click(); a.remove(); }
+    function setKeyPrompt(){ const k=prompt('Nom de la clé localStorage'); if(!k) return; const v=prompt('Valeur'); localStorage.setItem(k,v); refreshLocal(); }
+    function delKeyPrompt(){ const k=prompt('Nom de la clé à supprimer'); if(!k) return; localStorage.removeItem(k); refreshLocal(); }
+    function runExpr(){ const expr=prompt('Expr JS (renvoie affichée)'); try{ const res = eval(expr); alert(String(res)); }catch(e){alert('Erreur: '+e.message);} }
+    function downloadAll(){ try{ const all={local:{},session:{}}; for(const k in localStorage) all.local[k]=localStorage.getItem(k); for(const k in sessionStorage) all.session[k]=sessionStorage.getItem(k); download('storages.json',JSON.stringify(all,null,2)); }catch(e){alert(e.message);} }
+    function resetEgg(){ if(!confirm('Réinitialiser l\'oeuf (traveldream_easter_egg_v1) ?')) return; localStorage.removeItem('traveldream_easter_egg_v1'); alert('Oeuf réinitialisé'); refreshLocal(); }
+
+    document.getElementById('importFile').addEventListener('change', function(ev){ const f = ev.target.files && ev.target.files[0]; if(!f) return; const reader = new FileReader(); reader.onload = function(){ try{ const data = JSON.parse(reader.result); if(data.local){ for(const k in data.local) localStorage.setItem(k,String(data.local[k])); } if(data.session){ for(const k in data.session) sessionStorage.setItem(k,String(data.session[k])); } refreshLocal(); refreshSession(); alert('Import terminé'); }catch(e){alert('Fichier invalide: '+e.message);} }; reader.readAsText(f,'utf-8'); ev.target.value=''; });
+
+    // initial
+    refreshLocal(); refreshSession();
+  </script>
+</body>
+</html>

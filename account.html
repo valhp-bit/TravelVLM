@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte — TravelVLM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .profile-info h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .profile-info p {
+            color: #666;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            display: none;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-time {
+            color: #999;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                flex-direction: column;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                width: 100%;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">✈️ TravelVLM</a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="rendezvous.html">Rendez-vous</a>
+                <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="avatar" id="avatarDisplay"></div>
+            <div class="profile-info">
+                <h1 id="userFullName"></h1>
+                <p id="userEmail"></p>
+                <span class="status-badge">✅ Connecté</span>
+            </div>
+        </div>
+
+        <div id="successAlert" class="alert alert-success">
+            ✅ Modifications enregistrées avec succès!
+        </div>
+
+        <div class="grid">
+            <!-- Profil -->
+            <div class="card">
+                <h2>👤 Mes Informations</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Prénom</label>
+                        <input type="text" id="firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" id="lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Date de naissance</label>
+                        <input type="date" id="birthdate">
+                    </div>
+                    <div class="form-group">
+                        <label>Pays</label>
+                        <input type="text" id="country">
+                    </div>
+                    <button type="submit" class="btn btn-primary">💾 Enregistrer les modifications</button>
+                </form>
+            </div>
+
+            <!-- Statistiques -->
+            <div class="card">
+                <h2>📊 Mes Statistiques</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="appointmentsCount">0</div>
+                        <div class="stat-label">Rendez-vous</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="commentsCount">0</div>
+                        <div class="stat-label">Commentaires</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="tripsCount">0</div>
+                        <div class="stat-label">Voyages</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sécurité -->
+            <div class="card">
+                <h2>🔒 Sécurité</h2>
+                <div class="info-row">
+                    <span class="info-label">Mot de passe</span>
+                    <span class="info-value">●●●●●●●●</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Authentification 2FA</span>
+                    <span class="info-value">⚪ Désactivée</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Dernière connexion</span>
+                    <span class="info-value" id="lastLogin">-</span>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="changePassword()">Changer le mot de passe</button>
+                <button type="button" class="btn btn-secondary" onclick="enable2FA()">Activer 2FA</button>
+            </div>
+
+            <!-- Préférences -->
+            <div class="card">
+                <h2>⚙️ Préférences</h2>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="emailNotif" checked> Notifications par email
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="smsNotif"> Notifications par SMS
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="promotions" checked> Offres promotionnelles
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Theme</label>
+                    <select id="theme">
+                        <option value="light">Clair</option>
+                        <option value="dark">Sombre</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="savePreferences()">Enregistrer les préférences</button>
+            </div>
+
+            <!-- Activité récente -->
+            <div class="card">
+                <h2>📋 Activité Récente</h2>
+                <div id="activityList">
+                    <div class="activity-item">
+                        <div class="activity-icon">🔐</div>
+                        <div class="activity-content">
+                            <strong>Connexion au compte</strong>
+                            <div class="activity-time" id="firstActivity">À l'instant</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        function checkLogin() {
+            const currentUser = sessionStorage.getItem('traveldream_currentUser');
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            return JSON.parse(currentUser);
+        }
+
+        const user = checkLogin();
+
+        // Load user data
+        function loadUserData() {
+            const users = JSON.parse(localStorage.getItem('traveldream_users') || '[]');
+            const fullUser = users.find(u => u.id === user.id);
+
+            if (!fullUser) return;
+
+            // Display profile header
+            document.getElementById('userFullName').textContent = 
+                `${fullUser.firstname} ${fullUser.lastname}`;
+            document.getElementById('userEmail').textContent = fullUser.email;
+
+            // Avatar
+            const avatarDiv = document.getElementById('avatarDisplay');
+            avatarDiv.style.background = fullUser.avatar.color;
+            avatarDiv.textContent = fullUser.avatar.initials;
+
+            // Form fields
+            document.getElementById('firstname').value = fullUser.firstname;
+            document.getElementById('lastname').value = fullUser.lastname;
+            document.getElementById('email').value = fullUser.email;
+            document.getElementById('phone').value = fullUser.phone || '';
+            document.getElementById('birthdate').value = fullUser.birthdate || '';
+            document.getElementById('country').value = fullUser.country || '';
+
+            // Last login
+            const lastLogin = localStorage.getItem('traveldream_lastLoginTime');
+            if (lastLogin) {
+                const date = new Date(lastLogin);
+                document.getElementById('lastLogin').textContent = date.toLocaleString('fr-FR');
+            }
+
+            // Load stats
+            loadStats();
+        }
+
+        function loadStats() {
+            const appointments = JSON.parse(localStorage.getItem('traveldream_appts_v1') || '[]');
+            const comments = JSON.parse(localStorage.getItem('traveldream_comments_v1') || '[]');
+
+            document.getElementById('appointmentsCount').textContent = appointments.length;
+            document.getElementById('commentsCount').textContent = comments.length;
+            document.getElementById('tripsCount').textContent = Math.floor(Math.random() * 8);
+        }
+
+        // Save profile changes
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const users = JSON.parse(localStorage.getItem('traveldream_users') || '[]');
+            const userIndex = users.findIndex(u => u.id === user.id);
+
+            if (userIndex !== -1) {
+                users[userIndex].firstname = document.getElementById('firstname').value;
+                users[userIndex].lastname = document.getElementById('lastname').value;
+                users[userIndex].phone = document.getElementById('phone').value;
+                users[userIndex].birthdate = document.getElementById('birthdate').value;
+                users[userIndex].country = document.getElementById('country').value;
+
+                localStorage.setItem('traveldream_users', JSON.stringify(users));
+
+                // Show success message
+                const alert = document.getElementById('successAlert');
+                alert.style.display = 'block';
+                setTimeout(() => alert.style.display = 'none', 3000);
+            }
+        });
+
+        function savePreferences() {
+            const prefs = {
+                emailNotif: document.getElementById('emailNotif').checked,
+                smsNotif: document.getElementById('smsNotif').checked,
+                promotions: document.getElementById('promotions').checked,
+                theme: document.getElementById('theme').value
+            };
+            localStorage.setItem('traveldream_preferences_' + user.id, JSON.stringify(prefs));
+            alert('✅ Préférences enregistrées!');
+        }
+
+        function changePassword() {
+            const newPass = prompt('Entrez votre nouveau mot de passe:');
+            if (newPass && newPass.length >= 8) {
+                alert('✅ Mot de passe changé avec succès!');
+            } else if (newPass) {
+                alert('❌ Le mot de passe doit contenir au moins 8 caractères.');
+            }
+        }
+
+        function enable2FA() {
+            alert('🔐 2FA sera bientôt disponible!');
+        }
+
+        function logout() {
+            sessionStorage.removeItem('traveldream_currentUser');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize
+        window.addEventListener('load', loadUserData);
+    </script>
+</body>
+</html>

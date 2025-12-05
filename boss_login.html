@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Connexion Admin — TravelVLM</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#0f1724;color:#e6eef8;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    .card{background:linear-gradient(180deg,#0b1220,#101827);padding:28px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6);width:360px}
+    h1{font-size:20px;margin:0 0 8px;color:#ffd700;text-align:center}
+    label{display:block;margin-top:12px;font-size:13px;color:#cfe8ff}
+    input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:#071022;color:#fff;font-size:14px}
+    .btn{margin-top:16px;width:100%;padding:10px;border-radius:8px;border:none;background:#667eea;color:#fff;font-weight:700;cursor:pointer}
+    .hint{font-size:12px;color:#9fb8ff;margin-top:8px;text-align:center}
+    .error{margin-top:10px;color:#ff8080;text-align:center;display:none}
+    .small{font-size:12px;color:#7f9fbf}
+    .back{display:block;text-align:center;margin-top:12px;color:#9fb8ff;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <h1>Connexion Admin</h1>
+    <p class="small" style="text-align:center">Entrez vos identifiants pour accéder au panneau Boss</p>
+
+    <form id="loginForm">
+      <label for="username">Nom d'utilisateur</label>
+      <input id="username" name="username" placeholder="m.n" autocomplete="username" required>
+
+      <label for="password">Mot de passe</label>
+      <input id="password" name="password" type="password" placeholder="mot de passe" autocomplete="current-password" required>
+
+      <button class="btn" type="submit">Se connecter</button>
+      <div id="error" class="error">Identifiants invalides</div>
+      <div class="hint">Utilisateur: <strong>m.n</strong> &nbsp; Mot de passe: <strong>boos</strong></div>
+    </form>
+
+    <a class="back" href="index.html">← Retour à l'accueil</a>
+  </div>
+
+  <script>
+    (function(){
+      const form = document.getElementById('loginForm');
+      const err = document.getElementById('error');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value;
+        // Credentials
+        if(u === 'm.n' && p === 'boos'){
+          try{
+            sessionStorage.setItem('bossAccess', 'true');
+            sessionStorage.setItem('bossAccessTime', String(new Date().getTime()));
+          }catch(e){ console.error(e); }
+          // redirect to admin
+          window.location.href = 'boss.html';
+        } else {
+          err.style.display = 'block';
+          setTimeout(()=> err.style.display = 'none', 3000);
+        }
+      });
+
+      // UX: focus username
+      document.getElementById('username').focus();
+    })();
+  </script>
+</body>
+</html>

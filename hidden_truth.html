@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 HIDDEN TRUTH 🚨 - TravelVLM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Static glitch effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 255, 0, 0.03),
+                    rgba(0, 255, 0, 0.03) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a0a1a, #0a0a1a);
+            border: 3px solid #ff0000;
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 0, 0.6),
+                inset 0 0 20px rgba(255, 0, 0, 0.1);
+            text-align: center;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 0, 1), inset 0 0 30px rgba(255, 0, 0, 0.3); }
+        }
+
+        header h1 {
+            font-size: 48px;
+            color: #ff0000;
+            text-shadow: 
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+            }
+            20%, 24%, 55% {
+                text-shadow: 0 0 5px #ff0000;
+            }
+        }
+
+        .subtitle {
+            color: #00ff00;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .warning {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff0000;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #ff0000;
+            font-weight: bold;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .data-fragment {
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 4px solid #00ff00;
+            border-right: 4px solid #ff0000;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-fragment::before {
+            content: '> ';
+            color: #00ff00;
+        }
+
+        .data-fragment h3 {
+            color: #00ff00;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px #00ff00;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .data-fragment p {
+            color: #00ff00;
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .corrupted-text {
+            background: rgba(255, 0, 0, 0.3);
+            color: #ff0000;
+            padding: 5px 10px;
+            border-radius: 2px;
+            font-weight: bold;
+            animation: glitch-anim 0.3s infinite;
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            50% { transform: translate(-2px, 2px); }
+            100% { transform: translate(0); }
+        }
+
+        .secret-camera {
+            background: radial-gradient(circle at center, rgba(0, 0, 0, 0), rgba(255, 0, 0, 0.3));
+            border: 2px solid #ff0000;
+            border-radius: 50%;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .secret-camera::before {
+            content: '📹';
+            display: block;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .revelation {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.1));
+            border: 2px dashed #00ff00;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 4px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            animation: reveal 0.5s ease-in-out;
+        }
+
+        @keyframes reveal {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .timestamp {
+            color: #ffff00;
+            font-size: 12px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin: 10px 0;
+        }
+
+        .file-corrupted {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ff0000;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            color: #ff0000;
+            font-size: 14px;
+            font-family: monospace;
+            line-height: 1.4;
+            animation: corrupt 0.5s;
+        }
+
+        @keyframes corrupt {
+            0% { transform: scaleX(1.1) scaleY(0.9); opacity: 0.5; }
+            100% { transform: scaleX(1) scaleY(1); opacity: 1; }
+        }
+
+        .static {
+            background: #0a0a0a;
+            color: #00ff00;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #00ff00;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.6;
+            animation: static-glitch 0.1s infinite;
+            word-break: break-all;
+        }
+
+        @keyframes static-glitch {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: 2px solid;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-exit {
+            background: #ff0000;
+            color: #000;
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-exit:hover {
+            background: #ff3333;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 1);
+            transform: scale(1.05);
+        }
+
+        .btn-explore {
+            background: transparent;
+            color: #00ff00;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn-explore:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            transform: scale(1.05);
+        }
+
+        .distorted-image {
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            border: 2px solid #ff0000;
+            border-radius: 4px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+            font-size: 72px;
+            animation: distort 3s infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        @keyframes distort {
+            0%, 100% { transform: skewX(0deg) skewY(0deg); }
+            25% { transform: skewX(1deg) skewY(1deg); }
+            50% { transform: skewX(-1deg) skewY(-1deg); }
+            75% { transform: skewX(1deg) skewY(-1deg); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 12px;
+        }
+
+        .access-denied {
+            background: rgba(255, 0, 0, 0.3);
+            border: 3px solid #ff0000;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 4px;
+            text-align: center;
+            animation: denied 0.5s;
+        }
+
+        @keyframes denied {
+            0% { transform: translateX(-10px); opacity: 0.5; }
+            50% { transform: translateX(10px); opacity: 0.8; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 32px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚨 HIDDEN TRUTH 🚨</h1>
+            <p class="subtitle">█ █ ▄█▀▀ █ █ █▀▀ █▄ ▄█ ▀█▀ █▄ ▄█ █▄ ▄█ ▀█▀ █ █</p>
+            <div class="timestamp">[TIMESTAMP: <span id="timestamp"></span>]</div>
+        </header>
+
+        <div class="warning">
+            ⚠️ YOU ARE NOT AUTHORIZED TO ACCESS THIS FILE ⚠️<br>
+            THIS SECTOR IS UNDER SURVEILLANCE
+        </div>
+
+        <div class="access-denied">
+            <h2 style="color: #ff0000; margin-bottom: 10px;">🚫 UNAUTHORIZED ACCESS DETECTED 🚫</h2>
+            <p>But you're already here... so let's continue.</p>
+        </div>
+
+        <div class="data-fragment">
+            <h3>[SYSTEM LOG - SECTOR 7]</h3>
+            <p>Employee Records Recovered. Analysis In Progress...</p>
+            <p><span class="corrupted-text">ERROR_FILE_CORRUPTED</span> - Attempting Recovery</p>
+        </div>
+
+        <div class="secret-camera">
+            📹 SURVEILLANCE ACTIVE<br>
+            <small style="color: #ff0000;">Recording Session...</small>
+        </div>
+
+        <div class="revelation">
+            ✦ THE REAL STORY BEHIND TRAVELVLM ✦
+        </div>
+
+        <div class="data-fragment">
+            <h3>[INVESTIGATION REPORT #4789]</h3>
+            <p>Multiple anomalies detected in financial records...</p>
+            <p>Destination coordinates have been <span class="corrupted-text">REDACTED</span></p>
+            <p>Client satisfaction reports show impossible patterns:</p>
+            <p style="margin-left: 20px; margin-top: 15px;">→ 100% satisfaction on non-existent destinations<br>
+                → VIP clients never leave records<br>
+                → Booking system runs on <span class="corrupted-text">UNKNOWN ARCHITECTURE</span></p>
+        </div>
+
+        <div class="static">
+            ▓▒░ CORRUPTED DATA STREAM ░▒▓<br>
+            c0d3_n4m3_cr1pt0: execute_protocol_7<br>
+            status: RUNNING<br>
+            infiltration_level: 87%<br>
+            ▓▒░ END TRANSMISSION ░▒▓
+        </div>
+
+        <div class="distorted-image">
+            🎪🎭🎨
+        </div>
+
+        <div class="revelation">
+            ✧ WHAT THEY DON'T WANT YOU TO KNOW ✧<br>
+            The algorithm that predicts client preferences isn't AI...<br>
+            <span style="color: #ff0000; text-shadow: 0 0 10px #ff0000;">It's watching. Always watching.</span>
+        </div>
+
+        <div class="file-corrupted">
+            FILE: employee_contracts_final.txt<br>
+            STATUS: CORRUPTED - RECOVERY FAILED<br>
+            LAST_MODIFIED: UNKNOWN<br>
+            SIZE: 0 bytes<br>
+            ERROR: The file appears to have been deleted, then undeleted, then deleted again...<br>
+            TIMESTAMP ANOMALY DETECTED
+        </div>
+
+        <div class="data-fragment">
+            <h3>[WARNING] - CRITICAL</h3>
+            <p>Someone has been watching this investigation.</p>
+            <p>Your browser history is being <span class="corrupted-text">TRANSMITTED</span></p>
+            <p>This page is self-destructing in your mind...</p>
+            <p style="color: #ffff00; margin-top: 20px;">Or is it? 👀</p>
+        </div>
+
+        <div class="secret-camera" style="margin-top: 40px;">
+            If you reached this far, something clicked.<br>
+            <span style="color: #ff0000; font-size: 24px; display: block; margin: 10px 0;">Are you ready?</span>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-explore" onclick="exploreDeeper()">DIVE DEEPER 🕳️</button>
+            <button class="btn btn-exit" onclick="escapeNow()">ESCAPE NOW 🏃</button>
+        </div>
+
+        <div class="footer">
+            <p>This page exists in a state of quantum superposition.</p>
+            <p>You are here. You are not here. Both are true.</p>
+            <p style="margin-top: 20px; font-size: 10px; opacity: 0.5;">
+                [All employees are required to forget this conversation]
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Check access
+        function checkAccess() {
+            const secretAccess = sessionStorage.getItem('secretAccess');
+            if (!secretAccess) {
+                window.location.href = 'secret.html';
+                return;
+            }
+        }
+
+        window.addEventListener('load', checkAccess);
+        checkAccess();
+
+        // Real-time timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = 
+                now.toLocaleString('fr-FR') + ' [UTC+' + Math.abs(now.getTimezoneOffset()/60).toString().padStart(2, '0') + ':00]';
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        // Buttons
+        function escapeNow() {
+            sessionStorage.removeItem('secretAccess');
+            sessionStorage.removeItem('secretAccessTime');
+            alert('Escape successful. Your memory is being wiped...');
+            window.location.href = 'index.html';
+        }
+
+        function exploreDeeper() {
+            alert('🚨 DEEPER INVESTIGATION INITIATED 🚨\n\nLayers of reality are peeling away...\n\n(But that\'s all the deeper we go! 😉)');
+        }
+
+        // Eerie effect: random glitch
+        setInterval(() => {
+            if (Math.random() < 0.15) {
+                document.body.style.filter = 'invert(1)';
+                setTimeout(() => document.body.style.filter = 'invert(0)', 50);
+            }
+        }, 3000);
+
+        // Screen distortion
+        window.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'arrowup') {
+                document.querySelector('header').style.transform = 'rotate(-0.5deg)';
+                setTimeout(() => document.querySelector('header').style.transform = 'rotate(0)', 200);
+            }
+        });
+    </script>
+</body>
+</html>

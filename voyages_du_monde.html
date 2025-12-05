@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Voyages du Monde - Agence Touristique</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <style>
+      .luxe-header {
+        background: linear-gradient(135deg, #2c5aa0 0%, #1e3a5f 100%);
+        color: #4da6ff;
+        text-align: center;
+        padding: 40px 20px;
+        border-bottom: 3px solid #4da6ff;
+      }
+
+      .luxe-header h1 {
+        font-size: 48px;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: #4da6ff;
+      }
+
+      .luxe-header p {
+        font-size: 18px;
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      .luxe-intro {
+        background: #e8f4f8;
+        border-left: 6px solid #4da6ff;
+        padding: 25px;
+        margin: 30px auto;
+        max-width: 900px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .luxe-intro h2 {
+        color: #1e3a5f;
+        margin-top: 0;
+      }
+
+      .luxe-intro p {
+        color: #333;
+        line-height: 1.8;
+      }
+
+      .package-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin: 40px 20px;
+      }
+
+      .package-card {
+        background: white;
+        border: 2px solid #4da6ff;
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 350px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+      }
+
+      .package-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(77, 166, 255, 0.4);
+      }
+
+      .package-card img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+      }
+
+      .package-card h3 {
+        color: #2c5aa0;
+        font-size: 24px;
+        margin: 15px 0;
+      }
+
+      .package-price {
+        font-size: 28px;
+        color: #1e3a5f;
+        font-weight: bold;
+        margin: 15px 0;
+      }
+
+      .package-price span {
+        color: #4da6ff;
+      }
+
+      .package-features {
+        text-align: left;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        min-height: 120px;
+      }
+
+      .package-features ul {
+        margin: 0;
+        padding-left: 20px;
+        color: #333;
+      }
+
+      .package-features li {
+        margin: 8px 0;
+        font-size: 14px;
+      }
+
+      .btn-luxe {
+        background: linear-gradient(135deg, #4da6ff, #2c7fd9);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 15px;
+      }
+
+      .btn-luxe:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(77, 166, 255, 0.5);
+      }
+
+      .benefits-section {
+        background: linear-gradient(135deg, #e8f4f8 0%, #f0f8ff 100%);
+        padding: 40px 20px;
+        margin: 40px 0;
+      }
+
+      .benefits-section h2 {
+        text-align: center;
+        color: #1e3a5f;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .benefit-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #4da6ff;
+      }
+
+      .benefit-card h4 {
+        color: #2c5aa0;
+        font-size: 20px;
+        margin-top: 0;
+      }
+
+      .benefit-card p {
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .gallery-section {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .gallery-section h2 {
+        text-align: center;
+        color: #1e3a5f;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        height: 250px;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: #4da6ff;
+        padding: 15px;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+      }
+
+      .testimonials-section {
+        background: #1e3a5f;
+        color: white;
+        padding: 40px 20px;
+        margin: 40px 0;
+      }
+
+      .testimonials-section h2 {
+        text-align: center;
+        color: #4da6ff;
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+
+      .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-left: 4px solid #4da6ff;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 700px;
+        border-radius: 8px;
+      }
+
+      .testimonial-card p {
+        margin: 10px 0;
+        line-height: 1.6;
+      }
+
+      .testimonial-author {
+        color: #4da6ff;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+
+      .cta-section {
+        background: linear-gradient(135deg, #4da6ff, #2c7fd9);
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+        margin: 40px auto;
+        border-radius: 10px;
+        max-width: 900px;
+      }
+
+      .cta-section h2 {
+        color: white;
+        font-size: 32px;
+        margin-top: 0;
+      }
+
+      .cta-section p {
+        font-size: 18px;
+        margin: 20px 0;
+      }
+
+      .nav-links {
+        text-align: center;
+        padding: 30px 20px;
+        background: #f5f5f5;
+        margin-top: 40px;
+      }
+
+      .nav-links a {
+        display: inline-block;
+        margin: 10px 15px;
+        padding: 12px 25px;
+        background: #18ae48;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: background 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        background: #0d7a3a;
+      }
+
+      .star-rating {
+        color: #4da6ff;
+        font-size: 18px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <div class="luxe-header">
+      <h1>🌍 Voyages du Monde 🌍</h1>
+      <p>Découvrez le monde avec des packages accessibles et mémorables</p>
+    </div>
+
+    <!-- INTRODUCTION -->
+    <div class="luxe-intro">
+      <h2>Bienvenue dans l'Aventure Mondiale</h2>
+      <p>
+        Notre agence touristique vous propose une sélection variée de voyages accessibles à tous les budgets.
+        Que vous rêviez d'explorer des temples historiques, de vous détendre sur des plages paradisiaques
+        ou de découvrir des cultures fascinantes, nous avons le voyage parfait pour vous.
+        Voyager, c'est s'enrichir et créer des souvenirs inoubliables.
+      </p>
+    </div>
+
+    <!-- PACKAGES DE VOYAGES -->
+    <h2 style="text-align: center; color: #1e3a5f; font-size: 32px; margin-top: 40px;">
+      Nos Packages Accessibles
+    </h2>
+
+    <div class="package-container">
+      <!-- PACKAGE 1: TOUR DU MONDE -->
+      <div class="package-card">
+        <img src="images/carte.jpg" alt="Tour du Monde" />
+        <h3>Tour du Monde</h3>
+        <div class="star-rating">⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>1,499€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🌍 Plusieurs continents</li>
+            <li>🏨 Hôtels 3-4 étoiles</li>
+            <li>🗺️ Itinéraire planifié</li>
+            <li>✈️ Vol économique</li>
+            <li>🚌 Transport inclus</li>
+            <li>📅 21 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 2: AVENTURE HIVERNALE -->
+      <div class="package-card">
+        <img src="images/neige.jpg" alt="Aventure Hivernale" />
+        <h3>Aventure Hivernale</h3>
+        <div class="star-rating">⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>1,099€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>❄️ Paysages enneigés</li>
+            <li>⛷️ Sports d'hiver</li>
+            <li>🏔️ Montagnes majestueuses</li>
+            <li>🏨 Lodges chauds et confortables</li>
+            <li>☕ Activités en famille</li>
+            <li>📅 8 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 3: DESTINATION MYSTÉRIEUSE -->
+      <div class="package-card">
+        <img src="images/déstination.jpg" alt="Destination Mystérieuse" />
+        <h3>Destination Mystérieuse</h3>
+        <div class="star-rating">⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>799€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🌴 Lieux exotiques inconnus</li>
+            <li>🏨 Hébergement local authentique</li>
+            <li>🗺️ Exploration surprenante</li>
+            <li>🚌 Aventure au cœur de l'exotique</li>
+            <li>📸 Photos inoubliables</li>
+            <li>📅 10 jours de découverte</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 4: VOYAGE ROMANTIQUE -->
+      <div class="package-card">
+        <img src="images/coeur.webp" alt="Voyage Romantique" />
+        <h3>Voyage Romantique</h3>
+        <div class="star-rating">⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>899€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>💕 Couple ou amis proches</li>
+            <li>🏨 Hôtel intime et confortable</li>
+            <li>🍽️ Repas romantiques</li>
+            <li>🌅 Couchers de soleil magiques</li>
+            <li>💑 Activités en couple</li>
+            <li>📅 6 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 5: DÉCOUVERTE D'ASIE CENTRALE -->
+      <div class="package-card">
+        <img src="images/kazakhstan.jpg" alt="Asie Centrale" />
+        <h3>Découverte d'Asie Centrale</h3>
+        <div class="star-rating">⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>1,299€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>🏜️ Déserts et steppes</li>
+            <li>🏔️ Montagnes spectaculaires</li>
+            <li>🛕 Culture nomade unique</li>
+            <li>🚂 Trains pittoresques</li>
+            <li>🌅 Paysages sauvages</li>
+            <li>📅 14 jours</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+
+      <!-- PACKAGE 6: GALERIE DE SOUVENIRS -->
+      <div class="package-card">
+        <img src="images/images.jpg" alt="Galerie de Souvenirs" />
+        <h3>Galerie de Souvenirs</h3>
+        <div class="star-rating">⭐⭐⭐⭐</div>
+        <div class="package-price">À partir de <span>1,399€</span></div>
+        <div class="package-features">
+          <ul>
+            <li>📸 Voyage photo culinaire</li>
+            <li>🎨 Rencontre avec artisans locaux</li>
+            <li>🍽️ Dégustation de spécialités</li>
+            <li>🏛️ Visite de galeries et musées</li>
+            <li>🎭 Spectacles culturels</li>
+            <li>📅 9 jours immersifs</li>
+          </ul>
+        </div>
+        <button class="btn-luxe">Voir détails</button>
+      </div>
+    </div>
+
+    <!-- SECTION AVANTAGES -->
+    <div class="benefits-section">
+      <h2>Pourquoi Voyager Avec Nous ?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h4>💰 Prix Accessibles</h4>
+          <p>
+            Des packages de voyage pour tous les budgets. Nous croyons que voyager ne doit
+            pas être réservé aux riches. Des prix justes et transparents sans frais cachés.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>✈️ Organisation Simple</h4>
+          <p>
+            Vol, hébergement et transport inclus. Nous nous occupons de tous les détails
+            afin que vous profitiez simplement de votre voyage sans souci logistique.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🏨 Hébergements Confortables</h4>
+          <p>
+            Hotels 3 et 4 étoiles sélectionnés, auberges de qualité, et resorts
+            all-inclusive pour un bon rapport qualité-prix.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>👥 Guides Expérimentés</h4>
+          <p>
+            Guides locaux parlant plusieurs langues, passionnés par leur région.
+            Ils vous feront découvrir les vrais secrets de chaque destination.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🎒 Expériences Authentiques</h4>
+          <p>
+            Visite de sites populaires et endroits moins connus. Rencontres avec
+            les habitants et découverte de la culture locale véritable.
+          </p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>📞 Assistance 24/7</h4>
+          <p>
+            Support client disponible durant votre voyage. Assurance voyage incluse
+            et assistance d'urgence pour votre tranquillité d'esprit.
+          </p>
+        </div>
+      </div>
+    </div>
+
+   
+
+    <!-- SECTION DESCRIPTION DÉTAILLÉE -->
+    <div class="luxe-intro">
+      <h2>Qu'est-ce qui est Inclus dans Nos Packages ?</h2>
+      <p>
+        <strong>Transport :</strong> Vols aller-retour, transferts aéroport, et transports
+        locaux durant le voyage.
+      </p>
+      <p>
+        <strong>Hébergement :</strong> Hotels et resorts sélectionnés pour leur qualité
+        et leur bon rapport qualité-prix. Petit déjeuner inclus.
+      </p>
+      <p>
+        <strong>Visites Guidées :</strong> Guides locaux, visites des principaux sites,
+        et certains repas organisés. Des activités optionnelles disponibles à petit prix.
+      </p>
+    </div>
+
+    <!-- TÉMOIGNAGES -->
+    <div class="testimonials-section">
+      <h2>Avis de Nos Voyageurs</h2>
+
+      <div class="testimonial-card">
+        <p>
+          "Un excellent voyage au Japon ! Les guides étaient sympathiques, l'hôtel confortable
+          et les prix vraiment justes. Je recommande cette agence à tous mes amis qui veulent
+          découvrir le monde sans se ruiner !"
+        </p>
+        <div class="testimonial-author">- Marie, Toulouse</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+
+      <div class="testimonial-card">
+        <p>
+          "Notre séjour en Méditerranée était parfait. L'organisation était très bien faite,
+          les gens de l'agence réactifs et utiles. C'est un vrai plaisir de voyager quand
+          tout est organisé sans stress !"
+        </p>
+        <div class="testimonial-author">- Jean & Sophie, Lyon</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+
+      <div class="testimonial-card">
+        <p>
+          "Voyage en Amérique du Sud formidable ! J'ai vraiment apprécié les rencontres avec
+          les habitants et les lieux moins touristiques. Pour un premier voyage loin, c'était
+          l'agence idéale. Merci beaucoup !"
+        </p>
+        <div class="testimonial-author">- Philippe, Bordeaux</div>
+        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+      </div>
+    </div>
+
+    <!-- APPEL À L'ACTION -->
+    <div class="cta-section">
+      <h2>Prêt à Explorer le Monde ?</h2>
+      <p>
+        Contactez notre équipe pour obtenir plus d'informations et réserver votre voyage.
+        Consultez nos offres spéciales du moment pour les meilleures réductions.
+      </p>
+      <p>
+      <strong>Téléphone :</strong> +33 (0)1 ** ** ** 89<br />
+      <strong>Email :</strong> contact@voyagesdumonde.fr<br />
+        <strong>Horaires :</strong> Lun-Ven 9h-18h | Sam 10h-14h
+      </p>
+      <button class="btn-luxe" style="font-size: 18px; padding: 15px 40px;">
+        Demander un Devis Gratuit
+      </button>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-links">
+      <a href="index.html">Retour à l'Accueil</a>
+      <a href="voyages_de_luxe.html">Voyages de Luxe</a>
+      <a href="#">Tous les Voyages</a>
+      <a href="#">Devis Personnalisé</a>
+    </div>
+
+    <br />
+    <br />
+  </body>
+</html>

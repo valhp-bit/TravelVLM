@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelVLM - Agence Touristique Premium</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ffd700, #ff1493);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7)), url('images/voyages.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ff1493);
+            color: #333;
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 20, 147, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.05);
+            background: #f0f0f0;
+        }
+
+        .btn-vip {
+            background: linear-gradient(135deg, #ff1493, #ffd700);
+            color: #333;
+            font-size: 14px;
+            padding: 12px 30px;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 20, 147, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 20, 147, 0.6); }
+        }
+
+        .btn-vip:hover {
+            transform: scale(1.08);
+            animation: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 20px;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 18px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .travel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .travel-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .travel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .travel-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .travel-card-content {
+            padding: 25px;
+        }
+
+        .travel-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .travel-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .travel-card .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .features-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-item-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .feature-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .about-section {
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 28px;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .gallery-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .gallery-section h2 {
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 15px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay-text {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .testimonials-section {
+            background: #f9f9f9;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .testimonial-rating {
+            color: #ffd700;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 15px;
+            margin-top: 60px;
+        }
+
+        .cta-section h2 {
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 80px;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Easter egg: hidden egg that becomes baby dragon then dragon */
+        #secretEgg{
+            position:fixed;
+            top:12px;
+            right:12px;
+            width:40px;
+            height:40px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:20px;
+            border-radius:50%;
+            cursor:pointer;
+            z-index:1200;
+            opacity:0.06;
+            transition:opacity .18s ease, transform .18s ease;
+            user-select:none;
+            backdrop-filter: blur(2px);
+        }
+        #secretEgg:hover{ opacity:0.95; transform:scale(1.08) }
+        #secretEgg.revealed{ opacity:0.95 }
+        /* small trophy button */
+        #trophyBtn{
+            position:fixed; top:12px; right:64px; z-index:1201; width:40px; height:40px; display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff9800);box-shadow:0 6px 18px rgba(0,0,0,0.15);cursor:pointer;text-decoration:none;color:#333;opacity:0.9;font-size:18px}
+        #trophyBtn:hover{transform:scale(1.06)}
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+            <nav>
+                <a href="#voyages">Voyages</a>
+                <a href="#caracteristiques">Caractéristiques</a>
+                <a href="#a-propos">À Propos</a>
+                <a href="#galerie">Galerie</a>
+                <a href="#temoignages">Témoignages</a>
+                <a href="commentaire.html">Commentaires</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hidden easter-egg: oeuf -> bébé dragon -> dragon -->
+    <div id="secretEgg" role="button" aria-label="Oeuf secret">🥚</div>
+    <a id="trophyBtn" href="trophe.html" title="Trophées">🏆</a>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Découvrez le Monde avec TravelVLM</h1>
+            <p>Des voyages inoubliables vous attendent</p>
+            <div class="hero-buttons">
+                <a href="#voyages" class="btn btn-primary">Explorer les Voyages</a>
+                <a href="#contact" class="btn btn-secondary">Nous Contacter</a>
+                <a href="commentaire.html" class="btn btn-secondary">Commentaires</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADS SECTION -->
+    <section class="ads-section container" style="padding:30px 20px;">
+        <div style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:stretch;">
+            <a href="ad_lycee.html" onclick="return recordAdClick(event,'lycee')" style="flex:1;min-width:220px;max-width:300px;background:#fff;border-radius:10px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,0.08);text-align:center;display:block;color:inherit;text-decoration:none">
+                <h3 style="margin:6px 0;color:#333">Lycée Japetrois</h3>
+                <p style="color:#666;font-size:14px">Formations, voyages scolaires et échanges culturels. Programme spécial lycéens.</p>
+                <div style="display:inline-block;margin-top:10px;padding:8px 12px;border-radius:8px;background:#667eea;color:#fff;text-decoration:none">En savoir plus</div>
+            </a>
+
+            <a href="ad_garage.html" onclick="return recordAdClick(event,'garage')" style="flex:1;min-width:220px;max-width:300px;background:#fff;border-radius:10px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,0.08);text-align:center;display:block;color:inherit;text-decoration:none">
+                <h3 style="margin:6px 0;color:#333">Garage PPPPP</h3>
+                <p style="color:#666;font-size:14px">Réparations rapides et entretien pour voyages motorisés. Offres spéciales clients TravelVLM.</p>
+                <div style="display:inline-block;margin-top:10px;padding:8px 12px;border-radius:8px;background:#ff9800;color:#fff;text-decoration:none">Visiter le garage</div>
+            </a>
+
+            <a href="ad_console.html" onclick="return recordAdClick(event,'console')" style="flex:1;min-width:220px;max-width:300px;background:#fff;border-radius:10px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,0.08);text-align:center;display:block;color:inherit;text-decoration:none">
+                <h3 style="margin:6px 0;color:#333">Console La Ppputtvz</h3>
+                <p style="color:#666;font-size:14px">Console portable ultime pour se détendre entre deux vols. Édition spéciale TravelVLM.</p>
+                <div style="display:inline-block;margin-top:10px;padding:8px 12px;border-radius:8px;background:#ff1493;color:#fff;text-decoration:none">Découvrir</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- VOYAGES SECTION -->
+    <section id="voyages" class="container">
+        <h2>🌍 Nos Collections de Voyages</h2>
+        <p class="section-intro">
+            Découvrez nos quatre collections exclusives de voyages, adaptées à tous les budgets et tous les rêves.
+            Que vous cherchiez le luxe ultime, l'aventure mondiale, les voyages économiques ou l'expérience VIP,
+            nous avons ce qu'il vous faut.
+        </p>
+
+        <div class="travel-grid">
+            <!-- VOYAGES PROFESSIONNELS -->
+            <div class="travel-card">
+                <img src="images/japon.jpeg" alt="Voyages Professionnels">
+                <div class="travel-card-content">
+                    <h3>💼 Voyages Professionnels</h3>
+                    <p>
+                        Séjours d'affaires optimisés avec réunions organisées, bureaux temporaires,
+                        et services executives. Pour les professionnels exigeants.
+                    </p>
+                    <p style="color: #ff9800; font-weight: bold;">À partir de 1,899€</p>
+                    <a href="voyage_pro.html" class="btn btn-primary">Découvrir →</a>
+                </div>
+            </div>
+
+            <!-- VOYAGE DE LUXE -->
+            <div class="travel-card">
+                <img src="images/chine.jpg" alt="Voyages de Luxe">
+                <div class="travel-card-content">
+                    <h3>✨ Voyages de Luxe</h3>
+                    <p>
+                        Expérience haut de gamme avec hébergements 5 étoiles, repas gastronomiques,
+                        et services premium. Pour ceux qui cherchent l'excellence absolue.
+                    </p>
+                    <p style="color: #667eea; font-weight: bold;">À partir de 2,499€</p>
+                    <a href="voyages_de_luxe.html" class="btn btn-primary">Découvrir →</a>
+                </div>
+            </div>
+
+            <!-- VOYAGE DU MONDE -->
+            <div class="travel-card">
+                <img src="images/carte.jpg" alt="Voyages du Monde">
+                <div class="travel-card-content">
+                    <h3>🌏 Voyages du Monde</h3>
+                    <p>
+                        Explorez les destinations les plus fascinantes du globe. Packages variés
+                        et accessibles pour découvrir la richesse des cultures mondiales.
+                    </p>
+                    <p style="color: #667eea; font-weight: bold;">À partir de 599€</p>
+                    <a href="voyages_du_monde.html" class="btn btn-primary">Découvrir →</a>
+                </div>
+            </div>
+
+            <!-- VOYAGES POUR MOINS DÉMUNIS -->
+            <div class="travel-card">
+                <img src="images/avion.jpg" alt="Voyages Économiques">
+                <div class="travel-card-content">
+                    <h3>💰 Voyages Économiques</h3>
+                    <p>
+                        Voyager n'est pas un luxe ! Des packages ultra-abordables pour permettre
+                        à chacun de découvrir le monde sans se ruiner.
+                    </p>
+                    <p style="color: #667eea; font-weight: bold;">À partir de 249€</p>
+                    <a href="voyages_pour_moins_démunis.html" class="btn btn-primary">Découvrir →</a>
+                </div>
+            </div>
+
+            <!-- VOYAGES VIP (BOUTON SECRET) -->
+            <div class="travel-card">
+                <img src="images/coeur.webp" alt="Voyages VIP">
+                <div class="travel-card-content">
+                    <h3>👑 Voyages VIP Secrets</h3>
+                    <p>
+                        Accès exclusif aux clients VIP uniquement. Expériences inaccessibles,
+                        services haut de gamme, et souvenirs qui dureront à jamais.
+                    </p>
+                    <p style="color: #ff1493; font-weight: bold;">Sur demande</p>
+                    <a href="login_VIP.html" class="btn btn-vip">🔐 Accès Secret →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARACTÉRISTIQUES SECTION -->
+    <section id="caracteristiques" class="features-section">
+        <div class="container">
+            <h2>Pourquoi Choisir TravelVLM ?</h2>
+            <p class="section-intro">
+                Plus qu'une agence de voyages, nous sommes vos partenaires dans l'aventure.
+                Voici ce qui nous rend unique.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-item-icon">🎯</div>
+                    <h3>Voyages Personnalisés</h3>
+                    <p>
+                        Chaque voyage est unique. Nos experts créent des itinéraires sur mesure
+                        adaptés à vos envies et votre budget.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">💼</div>
+                    <h3>Équipe d'Experts</h3>
+                    <p>
+                        Nos consultants en voyages ont des années d'expérience. Ils connaissent
+                        chaque destination sur le bout des doigts.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">🔒</div>
+                    <h3>100% Assuré</h3>
+                    <p>
+                        Couverture complète assurance voyage. Votre sécurité et votre tranquillité
+                        d'esprit sont notre priorité absolue.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">⭐</div>
+                    <h3>Services 24/7</h3>
+                    <p>
+                        Support client disponible à tout moment. Une question, un problème ?
+                        Notre équipe est toujours là pour vous aider.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">✈️</div>
+                    <h3>Meilleurs Tarifs</h3>
+                    <p>
+                        Grâce à nos partenariats exclusifs, nous offrons les meilleures prix
+                        du marché, sans compromettre la qualité.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">🌟</div>
+                    <h3>Expériences Uniques</h3>
+                    <p>
+                        Au-delà des sites touristiques. Nous organisons des rencontres
+                        authentiques et des expériences inoubliables.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- À PROPOS SECTION -->
+    <section id="a-propos" class="about-section">
+        <div class="container">
+            <h2>À Propos de TravelVLM</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Notre Histoire</h3>
+                    <p>
+                        Fondée en 2015, TravelVLM est née d'une passion simple : faire découvrir
+                        le monde à tous. Nous croyons que voyager ne doit pas être réservé aux riches,
+                        mais accessible à chacun.
+                    </p>
+                    <p>
+                        Au fil des années, nous avons créé quatre collections distinctes pour servir
+                        chaque voyageur, du plus économe au plus exigeant. Notre mission ? Transformer
+                        vos rêves de voyages en réalité.
+                    </p>
+                    <p>
+                        Avec plus de 50,000 voyageurs satisfaits, nous sommes fiers d'être votre
+                        partenaire de confiance pour tous vos voyages. Chaque destination, chaque
+                        expérience est pensée avec amour.
+                    </p>
+                    <p>
+                        <strong>Slogan TravelVLM :</strong> "Là où vos rêves deviennent réalité"
+                    </p>
+                </div>
+                <div class="about-image">
+                    <img src="images/voyages.jpg" alt="À Propos TravelVLM">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIE SECTION -->
+    <section id="galerie" class="gallery-section">
+        <div class="container">
+            <h2>Galerie d'Inspirations</h2>
+            <p class="section-intro" style="color: rgba(255, 255, 255, 0.9);">
+                Laissez-vous inspirer par ces magnifiques destinations à travers le monde.
+                Cliquez sur chaque image pour découvrir une histoire.
+            </p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/japon.jpeg" alt="Japon">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">🏯 Temples du Japon</div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/kazakhstan.jpg" alt="Kazakhstan">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">🏜️ Steppes du Kazakhstan</div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/palmier.webp" alt="Palmier">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">🏝️ Îles Tropicales</div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/neige.jpg" alt="Neige">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">❄️ Aventure Hivernale</div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/amerique_nord.jpg" alt="Amérique du Nord">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">🦌 Amérique du Nord</div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/barque.jpg" alt="Bateau">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">⛵ Croisière Côtière</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TÉMOIGNAGES SECTION -->
+    <section id="temoignages" class="testimonials-section">
+        <div class="container">
+            <h2>Témoignages de Nos Voyageurs</h2>
+            <p class="section-intro">
+                Découvrez les expériences vécues par nos clients. Leurs histoires nous inspirent
+                et nous motivent à continuer d'offrir le meilleur.
+            </p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "TravelVLM a changé ma vie ! Grâce à eux, j'ai pu visiter le Japon pour
+                        la première fois. Un voyage parfaitement organisé, sans stress. Je recommande
+                        vivement !"
+                    </div>
+                    <div class="testimonial-author">Marie Dubois - Paris</div>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "Service extraordinaire du début à la fin. Nos guides étaient passionnants,
+                        les hôtels magnifiques, et les prix super justes. Notre famille a adoré
+                        chaque moment !"
+                    </div>
+                    <div class="testimonial-author">Jean Martin - Marseille</div>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "L'équipe VIP de TravelVLM nous a offert une expérience absolument
+                        inégalée. Chaque détail était parfait. C'est ça, le vrai luxe du voyage.
+                        Merci infiniment !"
+                    </div>
+                    <div class="testimonial-author">Sophie Laurent - Lyon</div>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section id="contact" class="container">
+        <div class="cta-section">
+            <h2>Prêt à Partir en Aventure ?</h2>
+            <p>Contactez-nous dès aujourd'hui pour planifier votre voyage de rêve</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="alert('Téléphone : +33 (0)1 ** ** ** 89')">
+                    📞 Nous Appeler
+                </button>
+                <button class="btn btn-secondary" onclick="alert('Email : contact@travelvlm.fr')">
+                    📧 Nous Écrire
+                </button>
+                <a href="rendezvous.html" class="btn btn-secondary">📅 Prendre RDV</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="voyage_pro.html">Voyages Pro</a>
+                <a href="voyages_de_luxe.html">Voyages de Luxe</a>
+                <a href="voyages_du_monde.html">Voyages du Monde</a>
+                <a href="voyages_pour_moins_démunis.html">Voyages Économiques</a>
+                <a href="login_VIP.html">Voyages VIP (Secret)</a>
+                <a href="commentaire.html">Commentaires</a>
+                <a href="rendezvous.html">Rendez-vous</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+            <p>Agence Touristique Premium | Voyages Mondiaux | Expériences Inoubliables</p>
+            <p style="margin-top: 20px; font-size: 14px; color: #999;">
+                Toutes les images sont stockées dans votre dossier /images/
+            </p>
+            <p style="margin-top: 15px; font-size: 13px; color: #777;" id="secretPhrase">
+                Gérée par une équipe de passionnés qui rêvent de voyages, destinée à tous ceux qui cherchent l'aventure, la découverte et le confort.<span id="secretDot" style="cursor: pointer; font-weight: bold; color: #999; transition: all 0.3s ease; padding: 0 2px;">.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- SECRET ADMIN BUTTON - 3 CLICKS TO BOSS LOGIN -->
+    <script>
+        const secretPhrase = document.getElementById('secretPhrase');
+        let clickCount = 0;
+        let lastClickTime = 0;
+
+        secretPhrase.addEventListener('click', function(e) {
+            e.preventDefault();
+            const now = Date.now();
+            
+            // Réinitialiser si plus de 2 secondes entre les clics
+            if (now - lastClickTime > 2000) {
+                clickCount = 0;
+            }
+            
+            clickCount++;
+            lastClickTime = now;
+
+            // Animation de la phrase
+            secretPhrase.style.color = '#ff1493';
+            secretPhrase.style.textShadow = '0 0 8px rgba(255, 20, 147, 0.8)';
+            
+            setTimeout(() => {
+                if (clickCount < 3) {
+                    secretPhrase.style.color = '#777';
+                    secretPhrase.style.textShadow = 'none';
+                }
+            }, 200);
+
+            // Après 3 clics rapides -> redirection vers boss_login.html
+            if (clickCount === 3) {
+                secretPhrase.style.color = '#00ff88';
+                secretPhrase.style.textShadow = '0 0 12px rgba(0, 255, 136, 0.8)';
+                
+                setTimeout(() => {
+                    window.location.href = 'boss_login.html';
+                }, 300);
+            }
+        });
+
+        // Effet hover
+        secretPhrase.addEventListener('mouseenter', function() {
+            if (clickCount > 0) {
+                this.style.color = '#ff1493';
+            } else {
+                this.style.color = '#999';
+            }
+        });
+
+        secretPhrase.addEventListener('mouseleave', function() {
+            if (clickCount < 3) {
+                this.style.color = '#777';
+            }
+        });
+    </script>
+
+    <!-- Cookie banner & scripts (moved inside body to fix load order) -->
+    <style>
+        #cookieBanner{position:fixed;left:20px;right:20px;bottom:18px;background:rgba(255,255,255,0.98);border-radius:12px;padding:14px 18px;box-shadow:0 12px 40px rgba(0,0,0,0.2);display:flex;gap:12px;align-items:center;z-index:2000}
+        #cookieBanner p{margin:0;color:#333}
+        #cookieBanner .actions{margin-left:auto;display:flex;gap:8px}
+        @media(max-width:480px){#cookieBanner{flex-direction:column;align-items:stretch}}
+    </style>
+    <div id="cookieBanner" style="display:none" aria-live="polite">
+        <div style="max-width:720px">
+            <strong>TravelVLM utilise des cookies</strong>
+            <p style="margin-top:6px;">Nous utilisons des cookies pour améliorer votre expérience et afficher des publicités. En continuant, vous acceptez notre utilisation des cookies.</p>
+        </div>
+        <div class="actions">
+            <button id="cookieReject" class="btn" style="background:#fff;border:1px solid #ddd">Refuser</button>
+            <button id="cookieAccept" class="btn btn-primary">Accepter</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const key='traveldream_cookies_v1';
+            const banner = document.getElementById('cookieBanner');
+            function show(){ if(banner) banner.style.display='flex' }
+            function hide(){ if(banner) banner.style.display='none' }
+            const v = localStorage.getItem(key);
+            if(!v){ show(); } else { /* if accepted, you could init analytics etc. */ }
+            const acceptBtn = document.getElementById('cookieAccept');
+            const rejectBtn = document.getElementById('cookieReject');
+            if(acceptBtn) acceptBtn.addEventListener('click', ()=>{ localStorage.setItem(key,'accepted'); hide(); });
+            if(rejectBtn) rejectBtn.addEventListener('click', ()=>{ localStorage.setItem(key,'rejected'); hide(); });
+            // mark that user visited the site (used for trophies)
+            try{ localStorage.setItem('traveldream_visited','1'); }catch(e){}
+        });
+
+        // Enregistre un clic sur une publicité si les cookies sont acceptés (ou propose d'accepter)
+        function recordAdClick(e, id){
+            try{ if(e && e.preventDefault) e.preventDefault(); }catch(err){}
+            const key = 'traveldream_cookies_v1';
+            const v = localStorage.getItem(key);
+            const href = (e && e.currentTarget && e.currentTarget.href) ? e.currentTarget.href : (e && e.target && e.target.closest && e.target.closest('a') ? e.target.closest('a').href : null);
+            const doNav = () => { if(href) window.location.href = href; return false; };
+            if(v === 'accepted'){
+                const ck = 'traveldream_ad_clicks_' + id;
+                const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
+                localStorage.setItem(ck, String(n));
+                return doNav();
+            } else {
+                const ok = confirm('TravelVLM utilise des cookies pour suivre les clics publicitaires. Acceptez-vous les cookies pour activer ce suivi ?');
+                if(ok){
+                    localStorage.setItem(key, 'accepted');
+                    try{ document.getElementById('cookieBanner').style.display='none'; }catch(e){}
+                    const ck = 'traveldream_ad_clicks_' + id;
+                    const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
+                    localStorage.setItem(ck, String(n));
+                    return doNav();
+                } else {
+                    return doNav();
+                }
+            }
+        }
+    </script>
+    <script>
+        // Egg -> baby dragon -> dragon easter-egg
+        (function(){
+            const EGG_KEY = 'traveldream_easter_egg_v1';
+            const el = document.getElementById('secretEgg');
+            if(!el) return;
+            let state = parseInt(localStorage.getItem(EGG_KEY) || '0', 10);
+            const labels = ['🥚','🐲','🐉'];
+            function render(){ el.textContent = labels[state] || labels[0]; if(state>0) el.classList.add('revealed'); else el.classList.remove('revealed'); }
+            function animatePop(){ el.style.transform='scale(1.25)'; setTimeout(()=>el.style.transform='scale(1)',160); }
+            el.addEventListener('click', function(e){ e.preventDefault(); state = (state + 1) % labels.length; localStorage.setItem(EGG_KEY, String(state)); render(); animatePop(); });
+            // allow reset with long-press (press 2s)
+            let pressTimer=null;
+            el.addEventListener('pointerdown', ()=>{ pressTimer = setTimeout(()=>{ state=0; localStorage.setItem(EGG_KEY,'0'); render(); alert('Oeuf réinitialisé'); }, 1600); });
+            el.addEventListener('pointerup', ()=>{ if(pressTimer){ clearTimeout(pressTimer); pressTimer=null } });
+            // initial render
+            render();
+        })();
+    </script>
+
+    <!-- Authentication UI Management -->
+    <script src="auth-ui.js"></script>
+    </body>
+    </html>
