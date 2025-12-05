@@ -7,76 +7,426 @@
   <style>
     body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#111;margin:0;padding:16px}
     header{background:#667eea;color:#fff;padding:12px;border-radius:8px;margin-bottom:12px}
+    h1{margin:6px 0;font-size:24px}
+    .small{font-size:13px;color:rgba(255,255,255,0.8);margin:0}
     .panel{background:#fff;border:1px solid #ddd;padding:12px;border-radius:8px;margin-bottom:12px}
+    .panel h3{margin:0 0 10px;color:#333}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    textarea{width:100%;height:160px;font-family:monospace;padding:8px}
-    .small{font-size:13px;color:#666}
-    button{padding:8px 10px;border-radius:6px;border:none;cursor:pointer}
+    @media(max-width:800px){.grid{grid-template-columns:1fr}}
+    textarea{width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-family:monospace;font-size:12px;box-sizing:border-box}
+    #localArea,#sessionArea{height:160px}
+    button{padding:8px 12px;border-radius:6px;border:none;cursor:pointer;background:#667eea;color:#fff;font-weight:600;transition:all 0.3s}
+    button:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,0.2)}
+    button.danger{background:#ff6666}
+    button.success{background:#4caf50}
+    button.warning{background:#ffc107;color:#333}
+    div{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+    .info-box{background:#e3f2fd;border-left:4px solid #2196f3;padding:12px;border-radius:0 4px 4px 0;margin:12px 0}
+    .warning-box{background:#fff3e0;border-left:4px solid #ff9800;padding:12px;border-radius:0 4px 4px 0;margin:12px 0}
+    table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px}
+    table th,table td{padding:8px;text-align:left;border-bottom:1px solid #ddd}
+    table th{background:#f5f5f5;font-weight:600}
+    table tr:hover{background:#f9f9f9}
   </style>
 </head>
 <body>
   <header>
-    <h1>Outil Débug - TravelVLM</h1>
-    <p class="small">Inspectez et modifiez `localStorage` / `sessionStorage`</p>
+    <h1>🔧 Débugger TravelVLM</h1>
+    <p class="small">Inspectez et modifiez `localStorage` / `sessionStorage` + Tests système</p>
   </header>
 
+  <div class="warning-box">
+    <strong>⚠️ Outil de développement</strong><br>
+    Cette page est réservée aux développeurs pour tester et déboguer l'application. Elle affiche les données sensibles du navigateur.
+  </div>
+
+  <!-- Storage Viewers -->
   <div class="grid">
     <div class="panel">
-      <h3>LocalStorage</h3>
-      <div style="display:flex;gap:8px;margin-bottom:8px">
+      <h3>📦 LocalStorage</h3>
+      <div>
         <button onclick="refreshLocal()">Rafraîchir</button>
         <button onclick="exportLocal()">Exporter</button>
-        <button onclick="clearLocal()" style="background:#ff4444;color:#fff">Tout effacer</button>
-        <button onclick="importLocal()">Importer</button>
+        <button onclick="clearLocal()" class="danger">Tout effacer</button>
       </div>
       <textarea id="localArea" readonly></textarea>
+      <div class="info-box" style="margin-top:8px;font-size:12px">
+        <strong>Clés détectées :</strong><br>
+        <div id="localKeys"></div>
+      </div>
     </div>
 
     <div class="panel">
-      <h3>SessionStorage</h3>
-      <div style="display:flex;gap:8px;margin-bottom:8px">
+      <h3>📦 SessionStorage</h3>
+      <div>
         <button onclick="refreshSession()">Rafraîchir</button>
         <button onclick="exportSession()">Exporter</button>
-        <button onclick="clearSession()" style="background:#ff4444;color:#fff">Tout effacer</button>
+        <button onclick="clearSession()" class="danger">Tout effacer</button>
       </div>
       <textarea id="sessionArea" readonly></textarea>
+      <div class="info-box" style="margin-top:8px;font-size:12px">
+        <strong>Clés détectées :</strong><br>
+        <div id="sessionKeys"></div>
+      </div>
     </div>
   </div>
 
+  <!-- Status -->
   <div class="panel">
-    <h3>Actions Rapides</h3>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button onclick="setKeyPrompt()">Ajouter/Modifier clé Local</button>
-      <button onclick="delKeyPrompt()" style="background:#ff6666;color:#fff">Supprimer clé Local</button>
-      <button onclick="runExpr()">Exécuter JS (console)</button>
-      <button onclick="downloadAll()" style="background:#ffd700">Télécharger tout</button>
-      <button onclick="resetEgg()">Réinitialiser oeuf</button>
+    <h3>🏥 État du Système</h3>
+    <table>
+      <tr>
+        <td><strong>localStorage disponible</strong></td>
+        <td id="statusLS">❓</td>
+      </tr>
+      <tr>
+        <td><strong>sessionStorage disponible</strong></td>
+        <td id="statusSS">❓</td>
+      </tr>
+      <tr>
+        <td><strong>Utilisateur connecté</strong></td>
+        <td id="statusUser">❓</td>
+      </tr>
+      <tr>
+        <td><strong>Firebase configuré</strong></td>
+        <td id="statusFB">❓</td>
+      </tr>
+      <tr>
+        <td><strong>Cookies acceptés</strong></td>
+        <td id="statusCookies">❓</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Achievements -->
+  <div class="panel">
+    <h3>🏆 Gestion des Achievements</h3>
+    <div>
+      <button onclick="unlockAchievementPrompt()" class="success">Déverrouiller Achievement</button>
+      <button onclick="listAchievements()" class="warning">Voir tous</button>
+      <button onclick="clearAchievements()" class="danger">Effacer tous</button>
+    </div>
+    <textarea id="achievementsArea" readonly style="height:120px"></textarea>
+  </div>
+
+  <!-- Easter Eggs -->
+  <div class="panel">
+    <h3>🥚 Easter Eggs</h3>
+    <div>
+      <button onclick="eggState()" class="warning">État de l'oeuf</button>
+      <button onclick="setEggState()" class="warning">Définir l'oeuf</button>
+      <button onclick="resetEgg()" class="danger">Réinitialiser</button>
+    </div>
+    <div id="eggDisplay" style="margin:12px 0;padding:12px;background:#f5f5f5;border-radius:4px;font-size:12px"></div>
+  </div>
+
+  <!-- Actions Rapides -->
+  <div class="panel">
+    <h3>⚡ Actions Rapides</h3>
+    <div>
+      <button onclick="setKeyPrompt()">Ajouter clé Local</button>
+      <button onclick="delKeyPrompt()" class="danger">Supprimer clé Local</button>
+      <button onclick="testNotification()" class="warning">Test Notification</button>
+      <button onclick="runExpr()">Exécuter JS</button>
     </div>
   </div>
 
+  <!-- Import/Export -->
   <div class="panel">
-    <h3>Import JSON</h3>
-    <input type="file" id="importFile" accept="application/json">
+    <h3>📤 Import/Export</h3>
+    <div>
+      <button onclick="downloadAll()" class="success">Télécharger tout</button>
+      <button onclick="document.getElementById('importFile').click()">Importer JSON</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json" style="display:none">
   </div>
 
+  <script src="auth-ui.js"></script>
   <script>
-    function refreshLocal(){ try{ const obj = {}; for(const k in localStorage){ obj[k]=localStorage.getItem(k); } document.getElementById('localArea').value = JSON.stringify(obj,null,2); }catch(e){alert(e.message);} }
-    function refreshSession(){ try{ const obj = {}; for(const k in sessionStorage){ obj[k]=sessionStorage.getItem(k); } document.getElementById('sessionArea').value = JSON.stringify(obj,null,2); }catch(e){alert(e.message);} }
-    function exportLocal(){ const data = document.getElementById('localArea').value || '{}'; download('localStorage.json',data); }
-    function exportSession(){ const data = document.getElementById('sessionArea').value || '{}'; download('sessionStorage.json',data); }
-    function clearLocal(){ if(!confirm('Effacer tout le localStorage ?')) return; localStorage.clear(); refreshLocal(); }
-    function clearSession(){ if(!confirm('Effacer tout le sessionStorage ?')) return; sessionStorage.clear(); refreshSession(); }
-    function download(filename, text){ const a=document.createElement('a'); a.href='data:application/json;charset=utf-8,'+encodeURIComponent(text); a.download=filename; document.body.appendChild(a); a.click(); a.remove(); }
-    function setKeyPrompt(){ const k=prompt('Nom de la clé localStorage'); if(!k) return; const v=prompt('Valeur'); localStorage.setItem(k,v); refreshLocal(); }
-    function delKeyPrompt(){ const k=prompt('Nom de la clé à supprimer'); if(!k) return; localStorage.removeItem(k); refreshLocal(); }
-    function runExpr(){ const expr=prompt('Expr JS (renvoie affichée)'); try{ const res = eval(expr); alert(String(res)); }catch(e){alert('Erreur: '+e.message);} }
-    function downloadAll(){ try{ const all={local:{},session:{}}; for(const k in localStorage) all.local[k]=localStorage.getItem(k); for(const k in sessionStorage) all.session[k]=sessionStorage.getItem(k); download('storages.json',JSON.stringify(all,null,2)); }catch(e){alert(e.message);} }
-    function resetEgg(){ if(!confirm('Réinitialiser l\'oeuf (traveldream_easter_egg_v1) ?')) return; localStorage.removeItem('traveldream_easter_egg_v1'); alert('Oeuf réinitialisé'); refreshLocal(); }
+    // ===== STORAGE FUNCTIONS =====
+    function refreshLocal(){
+      try{
+        const obj = {};
+        for(const k in localStorage){
+          obj[k] = localStorage.getItem(k);
+        }
+        document.getElementById('localArea').value = JSON.stringify(obj, null, 2);
+        listLocalKeys();
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
 
-    document.getElementById('importFile').addEventListener('change', function(ev){ const f = ev.target.files && ev.target.files[0]; if(!f) return; const reader = new FileReader(); reader.onload = function(){ try{ const data = JSON.parse(reader.result); if(data.local){ for(const k in data.local) localStorage.setItem(k,String(data.local[k])); } if(data.session){ for(const k in data.session) sessionStorage.setItem(k,String(data.session[k])); } refreshLocal(); refreshSession(); alert('Import terminé'); }catch(e){alert('Fichier invalide: '+e.message);} }; reader.readAsText(f,'utf-8'); ev.target.value=''; });
+    function refreshSession(){
+      try{
+        const obj = {};
+        for(const k in sessionStorage){
+          obj[k] = sessionStorage.getItem(k);
+        }
+        document.getElementById('sessionArea').value = JSON.stringify(obj, null, 2);
+        listSessionKeys();
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
 
-    // initial
-    refreshLocal(); refreshSession();
+    function listLocalKeys(){
+      const keys = [];
+      for(const k in localStorage){
+        keys.push('<code>' + escapeHtml(k) + '</code>');
+      }
+      document.getElementById('localKeys').innerHTML = keys.length > 0 ? keys.join(', ') : '(vide)';
+    }
+
+    function listSessionKeys(){
+      const keys = [];
+      for(const k in sessionStorage){
+        keys.push('<code>' + escapeHtml(k) + '</code>');
+      }
+      document.getElementById('sessionKeys').innerHTML = keys.length > 0 ? keys.join(', ') : '(vide)';
+    }
+
+    function exportLocal(){
+      const data = document.getElementById('localArea').value || '{}';
+      download('localStorage_' + new Date().toISOString().split('T')[0] + '.json', data);
+    }
+
+    function exportSession(){
+      const data = document.getElementById('sessionArea').value || '{}';
+      download('sessionStorage_' + new Date().toISOString().split('T')[0] + '.json', data);
+    }
+
+    function clearLocal(){
+      if(!confirm('Effacer TOUT le localStorage ? Cette action ne peut pas être annulée.')) return;
+      try{ localStorage.clear(); refreshLocal(); alert('localStorage vidé'); }
+      catch(e){ alert('Erreur: ' + e.message); }
+    }
+
+    function clearSession(){
+      if(!confirm('Effacer TOUT le sessionStorage ?')) return;
+      try{ sessionStorage.clear(); refreshSession(); alert('sessionStorage vidé'); }
+      catch(e){ alert('Erreur: ' + e.message); }
+    }
+
+    // ===== UTILITIES =====
+    function download(filename, text){
+      const a = document.createElement('a');
+      a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(text);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function escapeHtml(str){
+      if(!str) return '';
+      return str.replace(/[&<>"'`]/g, s => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '`': '&#96;'
+      }[s]));
+    }
+
+    // ===== STATUS CHECK =====
+    function updateStatus(){
+      // localStorage
+      try{
+        localStorage.setItem('__test', '__test');
+        localStorage.removeItem('__test');
+        document.getElementById('statusLS').textContent = '✅ Disponible';
+      }catch(e){
+        document.getElementById('statusLS').textContent = '❌ Indisponible';
+      }
+
+      // sessionStorage
+      try{
+        sessionStorage.setItem('__test', '__test');
+        sessionStorage.removeItem('__test');
+        document.getElementById('statusSS').textContent = '✅ Disponible';
+      }catch(e){
+        document.getElementById('statusSS').textContent = '❌ Indisponible';
+      }
+
+      // User
+      const user = getCurrentUser && getCurrentUser();
+      document.getElementById('statusUser').textContent = user ? ('✅ ' + escapeHtml(user.email || user.firstname)) : '❌ Non connecté';
+
+      // Firebase
+      const fb = typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0;
+      document.getElementById('statusFB').textContent = fb ? '✅ Configuré' : '⚠️ Non configuré';
+
+      // Cookies
+      const cookies = hasLocalStorage && hasLocalStorage() ? localStorage.getItem('traveldream_cookies_v1') : null;
+      document.getElementById('statusCookies').textContent = cookies ? ('✅ ' + cookies) : '⚠️ Non défini';
+    }
+
+    // ===== ACHIEVEMENTS =====
+    function unlockAchievementPrompt(){
+      const name = prompt('Nom de l\'achievement (ex: "first_booking", "boss_found")');
+      if(!name) return;
+      unlockAchievement(name);
+    }
+
+    function unlockAchievement(name){
+      try{
+        const achievements = JSON.parse(localStorage.getItem('travelvlm_achievements') || '{}');
+        achievements[name] = { unlocked: true, unlockedAt: new Date().toISOString() };
+        localStorage.setItem('travelvlm_achievements', JSON.stringify(achievements));
+        listAchievements();
+        alert('Achievement déverrouillé: ' + name);
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    function listAchievements(){
+      try{
+        const achievements = JSON.parse(localStorage.getItem('travelvlm_achievements') || '{}');
+        document.getElementById('achievementsArea').value = JSON.stringify(achievements, null, 2);
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    function clearAchievements(){
+      if(!confirm('Effacer tous les achievements ?')) return;
+      localStorage.removeItem('travelvlm_achievements');
+      listAchievements();
+      alert('Achievements effacés');
+    }
+
+    // ===== EASTER EGG =====
+    function eggState(){
+      try{
+        const state = parseInt(localStorage.getItem('traveldream_easter_egg_v1') || '0');
+        const labels = ['🥚', '🐲', '🐉'];
+        document.getElementById('eggDisplay').innerHTML = '<strong>État actuel:</strong> ' + labels[state] + ' (état #' + state + ')';
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    function setEggState(){
+      const newState = prompt('Entrez l\'état (0=🥚, 1=🐲, 2=🐉)');
+      if(newState === null || newState === '') return;
+      try{
+        localStorage.setItem('traveldream_easter_egg_v1', String(Math.max(0, Math.min(2, parseInt(newState)))));
+        eggState();
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    function resetEgg(){
+      if(!confirm('Réinitialiser l\'oeuf (traveldream_easter_egg_v1)?')) return;
+      try{
+        localStorage.removeItem('traveldream_easter_egg_v1');
+        eggState();
+        alert('Oeuf réinitialisé');
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    // ===== QUICK ACTIONS =====
+    function setKeyPrompt(){
+      const k = prompt('Nom de la clé localStorage');
+      if(!k) return;
+      const v = prompt('Valeur');
+      if(v === null) return;
+      try{
+        localStorage.setItem(k, v);
+        refreshLocal();
+        alert('Clé définie');
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    function delKeyPrompt(){
+      const k = prompt('Nom de la clé à supprimer');
+      if(!k) return;
+      try{
+        localStorage.removeItem(k);
+        refreshLocal();
+        alert('Clé supprimée');
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    function testNotification(){
+      if('Notification' in window){
+        if(Notification.permission === 'granted'){
+          new Notification('Test TravelVLM', { body: 'Ceci est une notification de test' });
+        }else if(Notification.permission !== 'denied'){
+          Notification.requestPermission().then(permission => {
+            if(permission === 'granted'){
+              new Notification('Test TravelVLM', { body: 'Ceci est une notification de test' });
+            }
+          });
+        }
+      }else{
+        alert('Les notifications ne sont pas supportées');
+      }
+    }
+
+    function runExpr(){
+      const expr = prompt('Expression JS (résultat affiché)');
+      if(!expr) return;
+      try{
+        const res = eval(expr);
+        alert('Résultat: ' + String(res));
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    function downloadAll(){
+      try{
+        const all = { local: {}, session: {} };
+        for(const k in localStorage) all.local[k] = localStorage.getItem(k);
+        for(const k in sessionStorage) all.session[k] = sessionStorage.getItem(k);
+        download('storages_' + new Date().toISOString().split('T')[0] + '.json', JSON.stringify(all, null, 2));
+      }catch(e){
+        alert('Erreur: ' + e.message);
+      }
+    }
+
+    // ===== IMPORT =====
+    document.getElementById('importFile').addEventListener('change', function(ev){
+      const f = ev.target.files && ev.target.files[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = function(){
+        try{
+          const data = JSON.parse(reader.result);
+          if(data.local){
+            for(const k in data.local) localStorage.setItem(k, String(data.local[k]));
+          }
+          if(data.session){
+            for(const k in data.session) sessionStorage.setItem(k, String(data.session[k]));
+          }
+          refreshLocal();
+          refreshSession();
+          alert('Import terminé');
+        }catch(e){
+          alert('Fichier invalide: ' + e.message);
+        }
+      };
+      reader.readAsText(f, 'utf-8');
+      ev.target.value = '';
+    });
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', function(){
+      refreshLocal();
+      refreshSession();
+      updateStatus();
+    });
   </script>
 </body>
 </html>
