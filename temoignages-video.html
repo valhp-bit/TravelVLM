@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Témoignages Vidéo | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .testimonials-header h1 {
+            color: #667eea;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .testimonials-header p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.2);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .video-card-content {
+            padding: 25px;
+        }
+
+        .video-card h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .video-author {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .video-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .video-rating {
+            color: #ffd700;
+            font-size: 18px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .testimonials-header h1 {
+                font-size: 28px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+            <nav style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px;">Accueil</a>
+                <a href="temoignages-video.html" style="color: white; text-decoration: none; padding: 10px 15px;">Vidéos</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENU TÉMOIGNAGES VIDÉO -->
+    <div class="testimonials-container">
+        <div class="testimonials-header">
+            <h1>🎬 Témoignages Vidéo de Nos Clients</h1>
+            <p>Écoutez les histoires inspirantes de nos voyageurs satisfaits</p>
+        </div>
+
+        <div class="video-grid">
+            <!-- Vidéo 1 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">▶️</div>
+                </div>
+                <div class="video-card-content">
+                    <h3>Mes vacances rêvées aux Maldives</h3>
+                    <div class="video-author">— Marie Dubois, Paris</div>
+                    <p class="video-description">Marie partage son expérience extraordinaire lors de son séjour luxe aux Maldives. Des plages de rêve, une hospitalité exceptionnelle, et des moments inoubliables.</p>
+                    <div class="video-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+
+            <!-- Vidéo 2 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">▶️</div>
+                </div>
+                <div class="video-card-content">
+                    <h3>Voyager en famille en Asie du Sud-Est</h3>
+                    <div class="video-author">— Jean Martin, Marseille</div>
+                    <p class="video-description">Jean raconte comment TravelVLM a rendu son voyage en famille en Thaïlande parfait. Des hôtels accueillants, des activités adaptées aux enfants, et une organisation sans faille.</p>
+                    <div class="video-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+
+            <!-- Vidéo 3 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">▶️</div>
+                </div>
+                <div class="video-card-content">
+                    <h3>L'expérience VIP : un service incomparable</h3>
+                    <div class="video-author">— Sophie Laurent, Lyon</div>
+                    <p class="video-description">Sophie témoigne de son expérience VIP en Suisse. Services personnalisés, guides privés, et attention aux moindres détails. Une expérience d'excellence totale.</p>
+                    <div class="video-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+
+            <!-- Vidéo 4 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">▶️</div>
+                </div>
+                <div class="video-card-content">
+                    <h3>Voyage économique sans compromis sur la qualité</h3>
+                    <div class="video-author">— Pierre Leclerc, Toulouse</div>
+                    <p class="video-description">Pierre prouve qu'un voyage économique peut être aussi mémorable qu'un voyage haut de gamme. Bons hôtels, expériences authentiques, et prix justes.</p>
+                    <div class="video-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+
+            <!-- Vidéo 5 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">▶️</div>
+                </div>
+                <div class="video-card-content">
+                    <h3>Aventure professionnelle en Europe</h3>
+                    <div class="video-author">— Catherine Moreau, Paris</div>
+                    <p class="video-description">Catherine raconte comment son voyage professionnel s'est transformé en véritable aventure. Organisation impeccable et découverte culturelle en parallèle.</p>
+                    <div class="video-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+
+            <!-- Vidéo 6 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">▶️</div>
+                </div>
+                <div class="video-card-content">
+                    <h3>Safari en Afrique : une rencontre avec la nature</h3>
+                    <div class="video-author">— Laurent Dupont, Bordeaux</div>
+                    <p class="video-description">Laurent nous emmène en safari au Kenya. Rencontres fascinantes avec la faune africaine, couchers de soleil magiques, et guides experts passionnés par leur environnement.</p>
+                    <div class="video-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #f5f7fa; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 40px;">
+            <h2 style="color: #667eea; margin-bottom: 15px;">Partagez Votre Histoire !</h2>
+            <p style="color: #666; margin-bottom: 20px;">Avez-vous vécu une expérience mémorable avec TravelVLM ? Nous adorerions entendre votre histoire et la partager avec nos autres voyageurs !</p>
+            <a href="index.html#contact" style="padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">Nous Contacter</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+        <p style="margin-top: 10px; font-size: 14px; color: #999;">Agence Touristique Premium | Voyages Mondiaux | Expériences Inoubliables</p>
+    </footer>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

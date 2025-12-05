@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magazine Voyages | Blog TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .blog-header h1 {
+            color: #667eea;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .blog-header p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.2);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .blog-card h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .blog-meta {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: #667eea;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #764ba2;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 28px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+            <nav style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px;">Accueil</a>
+                <a href="blog-voyages.html" style="color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px;">Magazine</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENU BLOG -->
+    <div class="blog-container">
+        <div class="blog-header">
+            <h1>📰 Magazine Voyages TravelVLM</h1>
+            <p>Découvrez nos articles, conseils et inspirations pour vos prochaines aventures</p>
+        </div>
+
+        <div class="blog-grid">
+            <!-- Article 1 -->
+            <div class="blog-card">
+                <div class="blog-image">🏯</div>
+                <div class="blog-content">
+                    <span class="blog-category">DESTINATION</span>
+                    <h3>Les Temples Secrets du Japon</h3>
+                    <div class="blog-meta">5 décembre 2025 • 8 min de lecture</div>
+                    <p class="blog-excerpt">Explorez les merveilles architecturales cachées du Japon. Du temple de Fushimi Inari aux jardins zen traditionnels, découvrez l'essence spirituelle et artistique du pays du soleil levant...</p>
+                    <a href="#" class="read-more">Lire la suite →</a>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="blog-card">
+                <div class="blog-image">💰</div>
+                <div class="blog-content">
+                    <span class="blog-category">CONSEIL</span>
+                    <h3>Voyager avec un Budget Limité : Nos Astuces</h3>
+                    <div class="blog-meta">4 décembre 2025 • 6 min de lecture</div>
+                    <p class="blog-excerpt">Vous rêvez de voyager mais avez un budget serré ? Découvrez nos meilleurs conseils pour économiser sur vos voyages sans sacrifier la qualité de l'expérience. De l'hébergement aux transports...</p>
+                    <a href="#" class="read-more">Lire la suite →</a>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="blog-card">
+                <div class="blog-image">🏝️</div>
+                <div class="blog-content">
+                    <span class="blog-category">AVENTURE</span>
+                    <h3>Plongée aux Maldives : Un Rêve Devenu Réalité</h3>
+                    <div class="blog-meta">3 décembre 2025 • 10 min de lecture</div>
+                    <p class="blog-excerpt">Témoignage d'une cliente TravelVLM : vivre l'expérience magique de la plongée aux Maldives, avec ses récifs colorés, ses créatures marines fascinantes et ses couchers de soleil inoubliables...</p>
+                    <a href="#" class="read-more">Lire la suite →</a>
+                </div>
+            </div>
+
+            <!-- Article 4 -->
+            <div class="blog-card">
+                <div class="blog-image">🎒</div>
+                <div class="blog-content">
+                    <span class="blog-category">PRÉPARATION</span>
+                    <h3>Packing Intelligent : Comment Faire la Valise Parfaite</h3>
+                    <div class="blog-meta">2 décembre 2025 • 7 min de lecture</div>
+                    <p class="blog-excerpt">Apprenez à préparer vos bagages de façon intelligente. Nos experts partagent leurs secrets pour voyager léger, organiser votre valise et ne rien oublier, peu importe la durée de votre voyage...</p>
+                    <a href="#" class="read-more">Lire la suite →</a>
+                </div>
+            </div>
+
+            <!-- Article 5 -->
+            <div class="blog-card">
+                <div class="blog-image">🌍</div>
+                <div class="blog-content">
+                    <span class="blog-category">CULTURE</span>
+                    <h3>Respecter les Coutumes Locales : Guide Pratique</h3>
+                    <div class="blog-meta">1er décembre 2025 • 9 min de lecture</div>
+                    <p class="blog-excerpt">Voyager c'est aussi apprendre. Découvrez comment montrer du respect aux cultures locales, éviter les faux pas culturels et créer des connexions authentiques avec les habitants des destinations...</p>
+                    <a href="#" class="read-more">Lire la suite →</a>
+                </div>
+            </div>
+
+            <!-- Article 6 -->
+            <div class="blog-card">
+                <div class="blog-image">📸</div>
+                <div class="blog-content">
+                    <span class="blog-category">PHOTOGRAPHIE</span>
+                    <h3>Capturer les Meilleurs Moments de Votre Voyage</h3>
+                    <div class="blog-meta">30 novembre 2025 • 8 min de lecture</div>
+                    <p class="blog-excerpt">Des conseils photographiques simples pour immortaliser vos souvenirs de voyage. Apprenez à utiliser votre smartphone comme un professionnel et à créer des photos dignes des meilleurs albums...</p>
+                    <a href="#" class="read-more">Lire la suite →</a>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+        <p style="margin-top: 10px; font-size: 14px; color: #999;">Agence Touristique Premium | Voyages Mondiaux | Expériences Inoubliables</p>
+    </footer>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

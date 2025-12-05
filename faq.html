@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Questions Fréquentes | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .faq-header h1 {
+            color: #667eea;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .faq-header p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .faq-item {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #333;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 25px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: #666;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .category-btn {
+            padding: 12px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .faq-header h1 {
+                font-size: 28px;
+            }
+
+            .faq-question {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER (réutilisé du site) -->
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+            <nav style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; transition: background 0.3s ease;">Accueil</a>
+                <a href="faq.html" style="color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; transition: background 0.3s ease;">FAQ</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENU FAQ -->
+    <div class="faq-container">
+        <div class="faq-header">
+            <h1>❓ Foire Aux Questions</h1>
+            <p>Trouvez les réponses aux questions les plus fréquemment posées</p>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Comment réserver un voyage avec TravelVLM ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Réserver avec TravelVLM est simple ! Explorez nos collections de voyages sur notre site, sélectionnez le voyage qui vous plaît, puis cliquez sur « Découvrir » pour accéder aux détails et tarifs. Vous pouvez ensuite planifier votre voyage directement via notre formulaire « Planificateur de Voyage » ou prendre un rendez-vous avec nos consultants. Ils sauront répondre à toutes vos questions et vous proposer les meilleures options.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Quels sont les délais de réservation ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Pour la plupart de nos voyages, nous recommandons une réservation 30 jours avant la date de départ. Cependant, des réservations plus courtes sont possibles selon la destination et la saison. Pour les voyages VIP ou les offres exclusives, contactez notre équipe directement pour connaître les conditions spéciales.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Comment se déroule le paiement ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Actuellement, TravelVLM propose une consultation et planification de voyages sans frais immédiats. Nos consultants travaillent avec vous pour élaborer l'itinéraire parfait, puis vous fourniront un devis détaillé. Les modalités de paiement seront discutées directement avec notre équipe en fonction de votre voyage et de vos préférences.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Y a-t-il une assurance voyage incluse ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Oui ! TravelVLM offre une couverture d'assurance voyage complète avec tous ses packages. Cette assurance couvre les annulations, les retards, les accidents, et bien plus encore. Pour plus de détails sur les termes et conditions spécifiques, n'hésitez pas à contacter notre équipe d'experts.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Qu'est-ce que le programme Fidélité TravelVLM ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Notre programme Fidélité récompense nos clients réguliers avec des avantages exclusifs : réductions progressives, accès prioritaire aux nouvelles offres, points bonus, et bien plus. Plus vous voyagez avec TravelVLM, plus les bénéfices augmentent ! Consultez notre page dédiée au <a href="programme-fidelite.html" style="color: #667eea; text-decoration: none;">Programme Fidélité</a> pour découvrir tous les niveaux.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Comment accéder aux Voyages VIP ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>L'accès aux Voyages VIP est réservé aux clients sélectionnés. Vous pouvez vous identifier sur notre plateforme pour vérifier votre accès, ou contacter directement notre équipe VIP. Les membres VIP bénéficient d'expériences exclusives, de services personnalisés et d'offres inaccessibles aux autres clients.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Les voyages économiques incluent-ils les mêmes services ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Nos voyages économiques offrent une excellente valeur pour votre argent ! Ils incluent hébergement, transports et une assurance voyage complète. Bien que les services puissent être plus simples que nos packages premium, nous garantissons que chaque voyage reste une expérience mémorable et de qualité.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Puis-je modifier ou annuler ma réservation ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Oui ! Les modifications et annulations sont possibles jusqu'à 14 jours avant votre départ (selon les conditions du voyage). Au-delà de ce délai, des frais peuvent s'appliquer. Pour plus d'informations sur les politiques d'annulation spécifiques à votre voyage, contactez notre équipe client qui sera ravie de vous aider.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Comment contacter le support client ?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>Notre équipe de support est disponible 24/7 pour vous aider. Vous pouvez nous joindre par téléphone, email, ou en utilisant notre formulaire de contact sur le site. Nous nous engageons à répondre à toute question ou préoccupation dans les 24 heures. Visitez la page <a href="index.html#contact" style="color: #667eea; text-decoration: none;">Contact</a> pour tous les détails.</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+        <p style="margin-top: 10px; font-size: 14px; color: #999;">Agence Touristique Premium | Voyages Mondiaux | Expériences Inoubliables</p>
+    </footer>
+
+    <script>
+        // Accordion functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    if (i !== item) i.classList.remove('active');
+                });
+                item.classList.toggle('active');
+            });
+        });
+
+        // Ouvrir la première question par défaut
+        document.querySelector('.faq-item').classList.add('active');
+    </script>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

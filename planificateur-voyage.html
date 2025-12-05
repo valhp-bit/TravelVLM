@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificateur de Voyage | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .planner-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .planner-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .planner-header h1 {
+            color: #667eea;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .planner-header p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .planner-form {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            transition: border 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row-three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .budget-slider {
+            width: 100%;
+            height: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .budget-display {
+            background: #f5f7fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            color: #667eea;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: #f5f7fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #666;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #764ba2;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .planner-header h1 {
+                font-size: 28px;
+            }
+
+            .form-row,
+            .form-row-three {
+                grid-template-columns: 1fr;
+            }
+
+            .planner-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+            <nav style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px;">Accueil</a>
+                <a href="planificateur-voyage.html" style="color: white; text-decoration: none; padding: 10px 15px;">Planificateur</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENU PLANIFICATEUR -->
+    <div class="planner-container">
+        <div class="planner-header">
+            <h1>🗺️ Planificateur de Voyage Personnalisé</h1>
+            <p>Remplissez ce formulaire et recevez un devis personnalisé en 24 heures !</p>
+        </div>
+
+        <div class="info-box">
+            <h3>ℹ️ Comment ça marche ?</h3>
+            <p>1. Remplissez vos préférences de voyage. 2. Nos experts les analysent. 3. Vous recevez un devis sur mesure. 4. Vous confirmez votre réservation. Simple et rapide !</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✓ Merci ! Votre demande a été envoyée avec succès. Notre équipe vous contactera dans les 24 heures pour discuter de votre voyage personnalisé.
+        </div>
+
+        <form class="planner-form" id="plannerForm">
+            <!-- Section Identité -->
+            <h2 style="color: #667eea; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 30px;">📋 Vos Informations Personnelles</h2>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">Prénom *</label>
+                    <input type="text" id="firstName" name="firstName" required placeholder="Votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Nom *</label>
+                    <input type="text" id="lastName" name="lastName" required placeholder="Votre nom">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+33 (0)1 XX XX XX XX">
+                </div>
+            </div>
+
+            <!-- Section Voyage -->
+            <h2 style="color: #667eea; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin: 40px 0 30px 0;">✈️ Détails du Voyage Souhaité</h2>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="destination">Destination Préférée *</label>
+                    <select id="destination" name="destination" required>
+                        <option value="">-- Choisir une destination --</option>
+                        <option value="asie">Asie (Japon, Thaïlande, Vietnam)</option>
+                        <option value="europe">Europe (France, Italie, Suisse)</option>
+                        <option value="afrique">Afrique (Kenya, Maroc, Égypte)</option>
+                        <option value="amerique">Amérique (Brésil, Mexique, Canada)</option>
+                        <option value="oceanie">Océanie (Australie, Nouvelle-Zélande)</option>
+                        <option value="maldives">Îles & Plages (Maldives, Seychelles)</option>
+                        <option value="surprise">Pack Surprise (Surprise moi !)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Durée du Voyage *</label>
+                    <select id="duration" name="duration" required>
+                        <option value="">-- Choisir une durée --</option>
+                        <option value="3-5">3-5 jours (weekend)</option>
+                        <option value="6-10">6-10 jours</option>
+                        <option value="11-15">11-15 jours (2 semaines)</option>
+                        <option value="15">Plus de 15 jours</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="startDate">Date de Départ Souhaitée *</label>
+                    <input type="date" id="startDate" name="startDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="travelers">Nombre de Voyageurs *</label>
+                    <select id="travelers" name="travelers" required>
+                        <option value="">-- Choisir --</option>
+                        <option value="1">Seul(e)</option>
+                        <option value="2">2 personnes</option>
+                        <option value="3-4">3-4 personnes</option>
+                        <option value="5+">5 personnes ou plus</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section Budget -->
+            <h2 style="color: #667eea; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin: 40px 0 30px 0;">💰 Budget & Préférences</h2>
+
+            <div class="form-group">
+                <label for="budget">Budget par Personne *</label>
+                <input type="range" id="budget" name="budget" min="500" max="10000" step="500" value="2500" class="budget-slider">
+                <div class="budget-display" id="budgetDisplay">Budget : 2 500€ par personne</div>
+            </div>
+
+            <div class="form-group">
+                <label>Type d'Hébergement Préféré *</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="accommodation" value="5-star" id="acco1">
+                        <label for="acco1">5 étoiles (Luxe)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="accommodation" value="4-star" id="acco2">
+                        <label for="acco2">4 étoiles (Confort)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="accommodation" value="3-star" id="acco3">
+                        <label for="acco3">3 étoiles (Standard)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="accommodation" value="guest-house" id="acco4">
+                        <label for="acco4">Guesthouse/Charme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Centre d'Intérêt Principal *</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="culture" id="int1">
+                        <label for="int1">🏛️ Culture & Histoire</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="nature" id="int2">
+                        <label for="int2">🌿 Nature & Randonnée</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="beach" id="int3">
+                        <label for="int3">🏖️ Plage & Détente</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="adventure" id="int4">
+                        <label for="int4">🎯 Aventure & Sport</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Informations Supplémentaires -->
+            <h2 style="color: #667eea; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin: 40px 0 30px 0;">📝 Informations Supplémentaires</h2>
+
+            <div class="form-group">
+                <label for="specialRequests">Demandes Spéciales ou Besoins Particuliers</label>
+                <textarea id="specialRequests" name="specialRequests" placeholder="Allergie alimentaire, mobilité réduite, voyage de noce, etc..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message Additionnel</label>
+                <textarea id="message" name="message" placeholder="Avez-vous d'autres informations à nous communiquer ?"></textarea>
+            </div>
+
+            <!-- Conditions -->
+            <div class="checkbox-item" style="margin-bottom: 30px;">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">J'accepte que TravelVLM me contacte pour discuter de mon voyage personnalisé. *</label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Recevoir Mon Devis Personnalisé</button>
+        </form>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+        <p style="margin-top: 10px; font-size: 14px; color: #999;">Agence Touristique Premium | Voyages Mondiaux | Expériences Inoubliables</p>
+    </footer>
+
+    <script>
+        // Budget slider display
+        const budgetSlider = document.getElementById('budget');
+        const budgetDisplay = document.getElementById('budgetDisplay');
+
+        budgetSlider.addEventListener('input', () => {
+            const value = parseInt(budgetSlider.value);
+            budgetDisplay.textContent = `Budget : ${value.toLocaleString('fr-FR')}€ par personne`;
+        });
+
+        // Form submission
+        const form = document.getElementById('plannerForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Simple validation
+            if (!form.firstName.value || !form.email.value || !form.destination.value) {
+                alert('Veuillez remplir tous les champs obligatoires (*)');
+                return;
+            }
+
+            // Show success message
+            successMessage.style.display = 'block';
+            successMessage.scrollIntoView({ behavior: 'smooth' });
+
+            // Reset form
+            setTimeout(() => {
+                form.reset();
+                budgetDisplay.textContent = 'Budget : 2 500€ par personne';
+                budgetSlider.value = 2500;
+            }, 2000);
+        });
+    </script>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>
