@@ -514,7 +514,7 @@
     <!-- HEADER -->
     <header>
         <div class="header-container">
-            <a href="#" class="logo">
+            <a href="#" class="logo logo-clickable" id="logoSecret">
                 <div class="logo-icon">✈️</div>
                 <span>TravelVLM</span>
             </a>
@@ -531,7 +531,12 @@
     </header>
 
     <!-- Hidden easter-egg: oeuf -> bébé dragon -> dragon -->
-    <div id="secretEgg" role="button" aria-label="Oeuf secret">🥚</div>
+    <div id="secretEgg" role="button" aria-label="Oeuf secret" style="position:fixed;top:12px;right:120px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:20px;border-radius:50%;cursor:pointer;z-index:1200;opacity:0.6;transition:opacity 0.3s;background:rgba(255,100,0,0.2)">🐉</div>
+    <!-- Logo clickable pour bonus -->
+    <style>
+      .logo-clickable { cursor:pointer; transition:transform 0.3s; }
+      .logo-clickable:active { transform:scale(0.95); }
+    </style>
     <a id="trophyBtn" href="trophe.html" title="Trophées">🏆</a>
 
     <!-- HERO SECTION -->
@@ -1027,6 +1032,48 @@
             // initial render
             render();
         })();
+        
+        // Dragon button secret
+        const dragonBtn = document.getElementById('secretEgg');
+        if(dragonBtn) {
+          let dragonClicks = 0;
+          dragonBtn.addEventListener('click', () => {
+            dragonClicks++;
+            dragonBtn.style.opacity = '0.9';
+            if(dragonClicks === 3) {
+              dragonBtn.style.transform = 'scale(1.2) rotate(10deg)';
+              setTimeout(() => {
+                window.location.href = './bonus/bonus_easter.html';
+              }, 500);
+            }
+            setTimeout(() => {
+              dragonBtn.style.opacity = '0.6';
+              dragonBtn.style.transform = 'scale(1)';
+              dragonClicks = 0;
+            }, 2000);
+          });
+          dragonBtn.addEventListener('mouseenter', () => { dragonBtn.style.opacity = '1'; });
+          dragonBtn.addEventListener('mouseleave', () => { dragonBtn.style.opacity = '0.6'; });
+        }
+        
+        // Logo secret: 5 clics rapides = voyages surprise
+        const logoSecret = document.getElementById('logoSecret');
+        if(logoSecret) {
+          let logoClicks = 0;
+          let logoTimer = null;
+          logoSecret.addEventListener('click', (e) => {
+            e.preventDefault();
+            logoClicks++;
+            if(logoClicks === 1) {
+              logoTimer = setTimeout(() => { logoClicks = 0; }, 2000);
+            }
+            if(logoClicks === 5) {
+              clearTimeout(logoTimer);
+              logoClicks = 0;
+              window.location.href = './bonus/voyages_surprise.html';
+            }
+          });
+        }
     </script>
 
     <!-- Authentication UI Management -->
