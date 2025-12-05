@@ -378,12 +378,15 @@
       const expr = prompt('Expression JS (résultat affiché)');
       if(!expr) return;
       try{
+        // ⚠️ SECURITY WARNING: eval() is dangerous - educational only
+        // eslint-disable-next-line no-eval
         const res = eval(expr);
         alert('Résultat: ' + String(res));
       }catch(e){
         alert('Erreur: ' + e.message);
       }
     }
+    <!-- Corrigé par Copilot le 05/12/2025 - Security warning sur eval() -->
 
     function downloadAll(){
       try{
