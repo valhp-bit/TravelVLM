@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zone Bonus - TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .bonus-container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .header-section { text-align: center; margin-bottom: 40px; }
+        .header-section h1 { color: #667eea; font-size: 48px; margin-bottom: 15px; }
+        .hint-box { background: #fff3cd; border: 2px solid #ffc107; padding: 20px; border-radius: 8px; margin-bottom: 40px; text-align: center; }
+        .hint-text { color: #856404; font-size: 16px; font-weight: 500; }
+        .code-form { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; color: #333; font-weight: bold; margin-bottom: 10px; }
+        .form-input { width: 100%; padding: 14px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; }
+        .form-input:focus { outline: none; border-color: #667eea; }
+        .submit-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4); }
+        .error-msg { color: #dc3545; display: none; text-align: center; margin-top: 15px; font-weight: bold; }
+        .success-msg { color: #28a745; display: none; text-align: center; margin-top: 15px; font-weight: bold; }
+        .bonus-list { background: #f5f7fa; padding: 30px; border-radius: 12px; margin-top: 40px; }
+        .bonus-list h2 { color: #667eea; margin-bottom: 20px; }
+        .bonus-item { padding: 12px 0; border-bottom: 1px solid #ddd; }
+        .bonus-item:last-child { border-bottom: none; }
+        .back-btn { display: inline-block; margin-top: 30px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        @media (max-width: 768px) { .header-section h1 { font-size: 32px; } .code-form { padding: 20px; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="bonus-container">
+        <div class="header-section">
+            <h1>🔐 Zone Bonus VIP</h1>
+            <p style="color: #666; font-size: 18px;">Accès réservé aux membres privilégiés</p>
+        </div>
+
+        <div class="hint-box">
+            <div class="hint-text">
+                💡 <strong>Indice :</strong> Cherchez le code dans le footer de la page d'accueil... ou regardez entre les lignes de cette page 😉
+            </div>
+        </div>
+
+        <div class="code-form">
+            <h2 style="color: #333; text-align: center; margin-bottom: 25px;">Entrez votre code d'accès</h2>
+            <form onsubmit="validateCode(event)">
+                <div class="form-group">
+                    <label class="form-label" for="accessCode">Code d'Accès :</label>
+                    <input type="password" id="accessCode" class="form-input" placeholder="ENTREZ LE CODE" autocomplete="off">
+                </div>
+                <button type="submit" class="submit-btn">🔓 Accéder à la Zone Bonus</button>
+                <div class="error-msg" id="errorMsg">❌ Code incorrect. Réessayez !</div>
+                <div class="success-msg" id="successMsg">✅ Accès accepté ! Redirection en cours...</div>
+            </form>
+        </div>
+
+        <div class="bonus-list">
+            <h2>🎁 Contenus Bonus Disponibles</h2>
+            <p style="color: #666; margin-bottom: 15px;">Des pages exclusives vous attendent une fois le code d'accès saisi !</p>
+            <div class="bonus-item">🏆 <strong>Trophées</strong> - Galerie de vos accomplissements de voyageur</div>
+            <div class="bonus-item">🔓 <strong>Vérités Cachées</strong> - Secrets et histoires insolites de nos voyages</div>
+            <div class="bonus-item">👑 <strong>Zone VIP Exclusive</strong> - Offres ultra-premium réservées</div>
+            <div class="bonus-item">🎯 <strong>Mode Boss</strong> - Tableau de bord administrateur (demo)</div>
+            <div class="bonus-item">📊 <strong>Conseil Secret</strong> - Conseils des pros du voyage (bonus)</div>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <script>
+        // CODES D'ACCÈS BONUS
+        const bonusCodes = {
+            'TROPHY': 'trophe.html',
+            'TRUTH': 'hidden_truth.html',
+            'VIP2025': 'login_VIP.html',
+            'BOSS2025': 'boss.html',
+            'SECRET': 'secret.html'
+        };
+
+        function validateCode(event) {
+            event.preventDefault();
+            const code = document.getElementById('accessCode').value.toUpperCase().trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            if (bonusCodes[code]) {
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = bonusCodes[code];
+                }, 1500);
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('accessCode').value = '';
+            }
+        }
+
+        // Hint invisible: Le code est caché dans le commentaire HTML
+        // CODES: TROPHY, TRUTH, VIP2025, BOSS2025, SECRET
+        // Autres indices: Cherchez "SECRET" dans le footer principal ou les pages principales
+    </script>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>
