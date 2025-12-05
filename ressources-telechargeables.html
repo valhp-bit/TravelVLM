@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressources Téléchargeables | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .resources-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .header-section { text-align: center; margin-bottom: 50px; }
+        .header-section h1 { color: #667eea; font-size: 42px; margin-bottom: 15px; }
+        .categories-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 40px; }
+        .category-filter { padding: 10px 20px; background: #f5f7fa; border: 2px solid #ddd; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .category-filter:hover, .category-filter.active { background: #667eea; color: white; border-color: #667eea; }
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .resource-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #667eea; }
+        .resource-icon { font-size: 32px; margin-bottom: 15px; }
+        .resource-title { color: #333; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+        .resource-type { color: #667eea; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .resource-description { color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 15px; }
+        .resource-info { background: #f5f7fa; padding: 12px; border-radius: 6px; font-size: 12px; color: #666; margin-bottom: 15px; }
+        .download-btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px; }
+        .download-btn:hover { background: #764ba2; }
+        .stats-section { background: #f5f7fa; padding: 40px; border-radius: 12px; margin-bottom: 40px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; }
+        .stat-item { padding: 20px; }
+        .stat-number { color: #667eea; font-size: 32px; font-weight: bold; }
+        .stat-label { color: #666; margin-top: 10px; }
+        .search-box { margin-bottom: 30px; }
+        .search-box input { width: 100%; padding: 12px 20px; font-size: 15px; border: 2px solid #ddd; border-radius: 8px; }
+        .search-box input:focus { outline: none; border-color: #667eea; }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        @media (max-width: 768px) { .header-section h1 { font-size: 28px; } .resources-grid { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="resources-container">
+        <div class="header-section">
+            <h1>📚 Ressources Téléchargeables</h1>
+            <p style="color: #666; font-size: 18px;">Guides, checklists, conseils - À télécharger gratuitement pour vos voyages</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="🔍 Rechercher une ressource..." id="searchInput">
+        </div>
+
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">45+</div>
+                    <div class="stat-label">Ressources Disponibles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Gratuit pour Membres</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">PDF, EPUB, XLS</div>
+                    <div class="stat-label">Formats Variés</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">Téléchargements/Mois</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="categories-nav">
+            <button class="category-filter active" onclick="filterResources('all')">Tous</button>
+            <button class="category-filter" onclick="filterResources('guides')">Guides</button>
+            <button class="category-filter" onclick="filterResources('checklists')">Checklists</button>
+            <button class="category-filter" onclick="filterResources('cartes')">Cartes</button>
+            <button class="category-filter" onclick="filterResources('conseils')">Conseils</button>
+            <button class="category-filter" onclick="filterResources('templates')">Templates</button>
+        </div>
+
+        <div class="resources-grid">
+            <!-- GUIDES -->
+            <div class="resource-card" data-category="guides">
+                <div class="resource-icon">📖</div>
+                <div class="resource-type">Guide</div>
+                <div class="resource-title">Guide Complet Paris</div>
+                <div class="resource-description">200 pages avec secrets de Paris, monuments, restaurants, bars cachés. Édition 2025 à jour.</div>
+                <div class="resource-info">📄 PDF | 12 MB | Français/English</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="guides">
+                <div class="resource-icon">🌴</div>
+                <div class="resource-type">Guide</div>
+                <div class="resource-title">Guide Maldives Luxury</div>
+                <div class="resource-description">Réserve de plongée, resorts 5★, itinéraires de rêve, saisons optimales.</div>
+                <div class="resource-info">PDF | 8 MB | Français/English</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="guides">
+                <div class="resource-icon">🥾</div>
+                <div class="resource-type">Guide</div>
+                <div class="resource-title">Guide Rando Alpes Françaises</div>
+                <div class="resource-description">15 itinéraires de randonnée notés, cartes GPX, refuges et gîtes. Niveaux facile à expert.</div>
+                <div class="resource-info">PDF + GPX | 25 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <!-- CHECKLISTS -->
+            <div class="resource-card" data-category="checklists">
+                <div class="resource-icon">✅</div>
+                <div class="resource-type">Checklist</div>
+                <div class="resource-title">Checklist Valise Complète</div>
+                <div class="resource-description">Checklist personnalisable par saison, type de voyage, durée. À imprimer ou PDF interactif.</div>
+                <div class="resource-info">PDF Interactif | 2 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="checklists">
+                <div class="resource-icon">📋</div>
+                <div class="resource-type">Checklist</div>
+                <div class="resource-title">Checklist Voyage en Famille</div>
+                <div class="resource-description">Tous les essentiels pour voyager avec enfants : documents, médicaments, activités, en-cas.</div>
+                <div class="resource-info">PDF | 3 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="checklists">
+                <div class="resource-icon">💼</div>
+                <div class="resource-type">Checklist</div>
+                <div class="resource-title">Checklist Voyage Affaires</div>
+                <div class="resource-description">Documents vitaux, équipements tech, tenues business, contacts urgents.</div>
+                <div class="resource-info">PDF | 1.5 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <!-- CARTES -->
+            <div class="resource-card" data-category="cartes">
+                <div class="resource-icon">🗺️</div>
+                <div class="resource-type">Carte</div>
+                <div class="resource-title">Carte Interactive Europe</div>
+                <div class="resource-description">Carte 360° pays, villes, attractions principales. Format PDF haute résolution.</div>
+                <div class="resource-info">PDF | 18 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="cartes">
+                <div class="resource-icon">🧭</div>
+                <div class="resource-type">Carte</div>
+                <div class="resource-title">Carte Métro Paris + Villes</div>
+                <div class="resource-description">Plans détaillés métro Paris, Londres, Berlin. Hors ligne compatible.</div>
+                <div class="resource-info">PDF + PNG | 12 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="cartes">
+                <div class="resource-icon">🌍</div>
+                <div class="resource-type">Carte</div>
+                <div class="resource-title">Carte Monde Destinations TravelVLM</div>
+                <div class="resource-description">Toutes nos destinations avec codes couleur et zone focus. PDF et JPG.</div>
+                <div class="resource-info">PDF + JPG | 8 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <!-- CONSEILS -->
+            <div class="resource-card" data-category="conseils">
+                <div class="resource-icon">💡</div>
+                <div class="resource-type">Conseils</div>
+                <div class="resource-title">50 Conseils de Voyageur Expert</div>
+                <div class="resource-description">Astuces pro pour économiser 30%, sécurité, santé, culture. Ebook 100 pages.</div>
+                <div class="resource-info">EPUB + PDF | 5 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="conseils">
+                <div class="resource-icon">🏥</div>
+                <div class="resource-type">Conseils</div>
+                <div class="resource-title">Guide Santé & Vaccination Voyage</div>
+                <div class="resource-description">Vaccins requis par destination, trousse à pharmacie, numéros d'urgence. À jour 2025.</div>
+                <div class="resource-info">PDF | 4 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="conseils">
+                <div class="resource-icon">🍽️</div>
+                <div class="resource-type">Conseils</div>
+                <div class="resource-title">Guide Gastronomique Mondial</div>
+                <div class="resource-description">Plats typiques, restaurants secrets, normes hygiène par pays. Carnivore/végéta*</div>
+                <div class="resource-info">PDF | 15 MB | Français/English</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <!-- TEMPLATES -->
+            <div class="resource-card" data-category="templates">
+                <div class="resource-icon">📝</div>
+                <div class="resource-type">Template</div>
+                <div class="resource-title">Planificateur Voyage (Excel)</div>
+                <div class="resource-description">Spreadsheet pour budget, itinéraire jour par jour, contacts, dépenses. Formules pré-calées.</div>
+                <div class="resource-info">XLSX | 500 KB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+
+            <div class="resource-card" data-category="templates">
+                <div class="resource-icon">🎒</div>
+                <div class="resource-type">Template</div>
+                <div class="resource-title">Budget Voyage (Google Sheets)</div>
+                <div class="resource-description">Template budgétisation cloud, accès multi-personne, partage automatique.</div>
+                <div class="resource-info">Google Sheets | En ligne | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Accéder</a>
+            </div>
+
+            <div class="resource-card" data-category="templates">
+                <div class="resource-icon">📅</div>
+                <div class="resource-type">Template</div>
+                <div class="resource-title">Agenda Voyage (iCal + PDF)</div>
+                <div class="resource-description">Template calendrier synchronisable à votre téléphone et PC. Rappels automatiques.</div>
+                <div class="resource-info">iCal + PDF | 2 MB | Français</div>
+                <a href="index.html#contact" class="download-btn">⬇️ Télécharger</a>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <h2 style="margin-top: 0;">📧 Abonnez-Vous aux Mises à Jour</h2>
+            <p>Recevez nos nouvelles ressources directement par email. Inscription gratuite, 0 spam garanti.</p>
+            <a href="index.html#contact" style="display: inline-block; padding: 12px 30px; background: white; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 15px;">S'Abonner Gratuitement</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <script>
+        function filterResources(category) {
+            const cards = document.querySelectorAll('.resource-card');
+            const buttons = document.querySelectorAll('.category-filter');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.resource-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.resource-title').textContent.toLowerCase();
+                const description = card.querySelector('.resource-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || searchTerm === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

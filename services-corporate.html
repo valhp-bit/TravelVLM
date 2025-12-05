@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services Corporate | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .corporate-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .section-title { color: #667eea; font-size: 36px; margin-bottom: 30px; text-align: center; }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px; }
+        .service-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); border-top: 4px solid #667eea; transition: all 0.3s ease; }
+        .service-card:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(102,126,234,0.2); }
+        .service-card h3 { color: #667eea; margin-bottom: 15px; }
+        .service-card p { color: #666; line-height: 1.6; margin-bottom: 0; }
+        .feature-list { list-style: none; margin: 20px 0; padding: 0; }
+        .feature-list li { padding: 10px 0; border-bottom: 1px solid #eee; color: #666; }
+        .feature-list li:before { content: "✓ "; color: #667eea; font-weight: bold; margin-right: 10px; }
+        .cta-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 40px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; display: inline-block; margin-top: 20px; text-decoration: none; }
+        .cta-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(102,126,234,0.3); }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        @media (max-width: 768px) { .section-title { font-size: 28px; } .service-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="corporate-container">
+        <h1 style="text-align: center; color: #667eea; font-size: 42px; margin-bottom: 20px;">💼 Services Corporate</h1>
+        <p style="text-align: center; color: #666; font-size: 18px; margin-bottom: 50px;">Voyages d'affaires et séminaires d'entreprise sur mesure pour vos collaborateurs</p>
+
+        <h2 class="section-title">Nos Offres Entreprise</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <h3>🏢 Séminaires d'Équipe</h3>
+                <p>Organisez des séminaires de renforcement d'équipe dans les plus belles destinations. Nous gérons l'hébergement, les activités de team-building et les repas.</p>
+                <ul class="feature-list">
+                    <li>Logistique complète</li>
+                    <li>Activités team-building</li>
+                    <li>Salles de réunion équipées</li>
+                    <li>Budget flexible</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>📊 Voyages d'Incentive</h3>
+                <p>Récompensez vos meilleurs commerciaux ou collaborateurs avec un voyage d'exception en destination premium. Expériences luxueuses et mémorables.</p>
+                <ul class="feature-list">
+                    <li>Destinations premium</li>
+                    <li>Hébergement 5 étoiles</li>
+                    <li>Expériences exclusives</li>
+                    <li>Support VIP 24/7</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>🤝 Conférences & Événements</h3>
+                <p>Organisez vos conférences professionnelles dans un cadre inspirant. Salles modernes, équipements audiovisuels haut de gamme et services complets.</p>
+                <ul class="feature-list">
+                    <li>Salles multifonctions</li>
+                    <li>Équipement AV professionnel</li>
+                    <li>Catering gourmet</li>
+                    <li>Support logistique</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>✈️ Déplacements Professionnels</h3>
+                <p>Gérez tous vos déplacements professionnels. Vols, hébergements, transports et agendas optimisés pour une productivité maximale.</p>
+                <ul class="feature-list">
+                    <li>Réservation centralisée</li>
+                    <li>Classes affaires</li>
+                    <li>Hôtels de prestige</li>
+                    <li>Tarifs négociés</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>🌍 Voyages Multi-Destinations</h3>
+                <p>Itinéraires complexes à travers plusieurs pays. Parfait pour les roadshows, acquisitions ou expansions internationales de votre entreprise.</p>
+                <ul class="feature-list">
+                    <li>Itinéraires sur mesure</li>
+                    <li>Logistique coordonnée</li>
+                    <li>Support multilingue</li>
+                    <li>Flexibilité maximale</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>💻 Retreats Numériques</h3>
+                <p>Combinez travail et détente. Espaces de coworking modernes dans des environnements inspirants, parfaits pour le télétravail en équipe.</p>
+                <ul class="feature-list">
+                    <li>Internet haute vitesse</li>
+                    <li>Espaces de travail flexibles</li>
+                    <li>Connexion vidéo HD</li>
+                    <li>Conciergerie tech</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="background: #f5f7fa; padding: 40px; border-radius: 12px; margin-bottom: 40px;">
+            <h2 style="color: #667eea; margin-top: 0;">Avantages Exclusifs pour les Entreprises</h2>
+            <ul class="feature-list" style="border-bottom: none;">
+                <li>Facturation centralisée et rapports détaillés</li>
+                <li>Account manager dédié pour votre entreprise</li>
+                <li>Conditions tarifaires négociées</li>
+                <li>Assurance annulation complète</li>
+                <li>Support prioritaire 24 heures sur 24</li>
+                <li>Garantie de satisfaction client</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="rendezvous.html" class="cta-btn">Demander une Consultation</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

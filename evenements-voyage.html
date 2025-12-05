@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements & Conférences | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .events-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .header-section { text-align: center; margin-bottom: 50px; }
+        .header-section h1 { color: #667eea; font-size: 42px; margin-bottom: 15px; }
+        .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .event-card { background: white; padding: 0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.3s; }
+        .event-card:hover { transform: translateY(-5px); }
+        .event-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; }
+        .event-date { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
+        .event-title { font-size: 22px; margin-bottom: 5px; }
+        .event-location { font-size: 12px; opacity: 0.9; }
+        .event-body { padding: 20px; }
+        .event-description { color: #666; margin-bottom: 15px; line-height: 1.6; }
+        .event-details { background: #f5f7fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; }
+        .detail-item { margin-bottom: 8px; color: #333; }
+        .detail-label { color: #667eea; font-weight: bold; }
+        .event-features { list-style: none; padding: 0; margin: 15px 0; }
+        .event-features li { padding: 8px 0; color: #666; }
+        .event-features li:before { content: "🎯 "; margin-right: 8px; }
+        .cta-btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; }
+        .calendar-section { background: #f5f7fa; padding: 40px; border-radius: 12px; margin-bottom: 40px; }
+        .calendar-title { color: #667eea; font-size: 24px; font-weight: bold; margin-bottom: 20px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .calendar-item { background: white; padding: 15px; border-radius: 8px; border-left: 3px solid #667eea; text-align: center; }
+        .calendar-month { color: #667eea; font-weight: bold; margin-bottom: 5px; }
+        .calendar-event { color: #333; font-size: 12px; }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        @media (max-width: 768px) { .header-section h1 { font-size: 28px; } .events-grid { grid-template-columns: 1fr; } .calendar-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="events-container">
+        <div class="header-section">
+            <h1>🎉 Événements & Conférences</h1>
+            <p style="color: #666; font-size: 18px;">Participez à nos événements exclusifs et webinaires de voyage</p>
+        </div>
+
+        <div class="calendar-section">
+            <div class="calendar-title">📅 Calendrier 2025-2026</div>
+            <div class="calendar-grid">
+                <div class="calendar-item">
+                    <div class="calendar-month">Janvier 2025</div>
+                    <div class="calendar-event">Salon Mondial du Tourisme</div>
+                </div>
+                <div class="calendar-item">
+                    <div class="calendar-month">Mars 2025</div>
+                    <div class="calendar-event">Conférence Safari Luxe</div>
+                </div>
+                <div class="calendar-item">
+                    <div class="calendar-month">Juin 2025</div>
+                    <div class="calendar-event">Forum des Voyages Durables</div>
+                </div>
+                <div class="calendar-item">
+                    <div class="calendar-month">Septembre 2025</div>
+                    <div class="calendar-event">Sommet Voyage d'Affaires</div>
+                </div>
+                <div class="calendar-item">
+                    <div class="calendar-month">Novembre 2025</div>
+                    <div class="calendar-event">Gala des Voyageurs d'Élite</div>
+                </div>
+                <div class="calendar-item">
+                    <div class="calendar-month">Mars 2026</div>
+                    <div class="calendar-event">Expo Destinations Nouvelles</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #333; text-align: center; margin-bottom: 30px;">Nos Événements À Venir</h2>
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-date">15-17 Jan</div>
+                    <div class="event-title">Salon Mondial du Tourisme</div>
+                    <div class="event-location">Paris Expo</div>
+                </div>
+                <div class="event-body">
+                    <div class="event-description">Le plus grand salon international du tourisme avec stands de 500+ destinations et conférences en live.</div>
+                    <div class="event-details">
+                        <div class="detail-item"><span class="detail-label">📍 Lieu :</span> Hall 7, Porte de Versailles</div>
+                        <div class="detail-item"><span class="detail-label">⏰ Heures :</span> 10h-18h (gratuit pour les inscrits)</div>
+                        <div class="detail-item"><span class="detail-label">👥 Attendus :</span> 250,000+ visiteurs</div>
+                    </div>
+                    <ul class="event-features">
+                        <li>Conférences gratuites toutes les heures</li>
+                        <li>Stands interactifs 360°</li>
+                        <li>Discounts exclusifs sur place</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">M'Inscrire Gratuitement</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-date">22-23 Mars</div>
+                    <div class="event-title">Conférence Safari Luxe Afrique</div>
+                    <div class="event-location">Hôtel 5★ Paris</div>
+                </div>
+                <div class="event-body">
+                    <div class="event-description">2 jours dédiés aux safaris premium avec guides experts et présentation de lodges de luxe.</div>
+                    <div class="event-details">
+                        <div class="detail-item"><span class="detail-label">📍 Lieu :</span> Château de Versailles (salle royale)</div>
+                        <div class="detail-item"><span class="detail-label">⏰ Durée :</span> 2 jours intensifs</div>
+                        <div class="detail-item"><span class="detail-label">🎫 Tarif :</span> 299€ (petit-déjeuner inclus)</div>
+                    </div>
+                    <ul class="event-features">
+                        <li>Présentations de 20+ lodges de luxe</li>
+                        <li>Atelier photo safari</li>
+                        <li>Networking avec experts</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">Réserver Ticket</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-date">10-12 Juin</div>
+                    <div class="event-title">Forum Voyages Durables</div>
+                    <div class="event-location">Marseille</div>
+                </div>
+                <div class="event-body">
+                    <div class="event-description">Conférence sur l'écotourisme responsable et les destinations vertes du futur.</div>
+                    <div class="event-details">
+                        <div class="detail-item"><span class="detail-label">📍 Lieu :</span> Port de Marseille (outdoor)</div>
+                        <div class="detail-item"><span class="detail-label">⏰ Durée :</span> 3 jours</div>
+                        <div class="detail-item"><span class="detail-label">🎫 Tarif :</span> 149€</div>
+                    </div>
+                    <ul class="event-features">
+                        <li>15 conférences environnement</li>
+                        <li>Visite éco-lodge local</li>
+                        <li>Atelier permaculture</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">Réserver Ticket</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-date">8-10 Sept</div>
+                    <div class="event-title">Sommet Voyage d'Affaires</div>
+                    <div class="event-location">Lyon</div>
+                </div>
+                <div class="event-body">
+                    <div class="event-description">Conférence dédiée aux séminaires, incentives et voyage corporatif d'excellence.</div>
+                    <div class="event-details">
+                        <div class="detail-item"><span class="detail-label">📍 Lieu :</span> Palais de la Justice</div>
+                        <div class="detail-item"><span class="detail-label">⏰ Durée :</span> 3 jours</div>
+                        <div class="detail-item"><span class="detail-label">🎫 Tarif :</span> 399€ (déjeuners inclus)</div>
+                    </div>
+                    <ul class="event-features">
+                        <li>Seminaires B2B dédiés</li>
+                        <li>Présentation 30+ agences</li>
+                        <li>Gala networking élite</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">Réserver VIP</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-date">15 Nov</div>
+                    <div class="event-title">Gala des Voyageurs d'Élite</div>
+                    <div class="event-location">Château de Fontainebleau</div>
+                </div>
+                <div class="event-body">
+                    <div class="event-description">Soirée de gala exclusive réservée à nos meilleurs clients et partenaires premium.</div>
+                    <div class="event-details">
+                        <div class="detail-item"><span class="detail-label">📍 Lieu :</span> Château royal 5★</div>
+                        <div class="detail-item"><span class="detail-label">⏰ Heure :</span> 19h-23h (cocktail + dîner)</div>
+                        <div class="detail-item"><span class="detail-label">🎫 Accès :</span> Sur invitation uniquement</div>
+                    </div>
+                    <ul class="event-features">
+                        <li>Dîner gastronomique 5 services</li>
+                        <li>Animations exceptionnelles</li>
+                        <li>Meet & Greet avec voyageurs VIP</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">Demander Invitation</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-date">5-7 Mars</div>
+                    <div class="event-title">Expo Destinations Nouvelles 2026</div>
+                    <div class="event-location">Bordeaux</div>
+                </div>
+                <div class="event-body">
+                    <div class="event-description">Présentation des 50 destinations les plus excitantes à découvrir en 2026.</div>
+                    <div class="event-details">
+                        <div class="detail-item"><span class="detail-label">📍 Lieu :</span> Hangar 14, Quai des Chartrons</div>
+                        <div class="detail-item"><span class="detail-label">⏰ Durée :</span> 3 jours</div>
+                        <div class="detail-item"><span class="detail-label">🎫 Tarif :</span> 79€ (gratuit avant 12/02)</div>
+                    </div>
+                    <ul class="event-features">
+                        <li>50 destinations en showcase</li>
+                        <li>Immersive experiences 360°</li>
+                        <li>Flash sales évenements</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">Réserver Ticket</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <h2 style="margin-top: 0;">📧 Recevez l'Agenda Complet</h2>
+            <p>Abonnez-vous à notre newsletter pour être informé de tous nos événements et webinaires.</p>
+            <a href="index.html#contact" style="display: inline-block; padding: 12px 30px; background: white; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 15px;">S'Abonner à la Newsletter</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

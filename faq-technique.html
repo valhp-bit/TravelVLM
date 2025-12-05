@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Technique | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .faq-container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        .header-section { text-align: center; margin-bottom: 50px; }
+        .header-section h1 { color: #667eea; font-size: 42px; margin-bottom: 15px; }
+        .faq-section { margin-bottom: 40px; }
+        .faq-section-title { color: #667eea; font-size: 24px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; }
+        .faq-item { background: white; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; }
+        .faq-question { padding: 20px; background: #f5f7fa; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+        .faq-question:hover { background: #eff0f6; }
+        .faq-q-text { font-weight: bold; color: #333; }
+        .faq-icon { color: #667eea; font-size: 20px; transition: transform 0.3s; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .faq-answer { padding: 20px; color: #666; line-height: 1.8; display: none; background: white; }
+        .faq-item.open .faq-answer { display: block; }
+        .search-box { margin-bottom: 30px; }
+        .search-box input { width: 100%; padding: 15px 20px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; }
+        .search-box input:focus { outline: none; border-color: #667eea; }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .code-block { background: #333; color: #0f0; padding: 15px; border-radius: 6px; margin: 10px 0; font-family: monospace; font-size: 12px; overflow-x: auto; }
+        @media (max-width: 768px) { .header-section h1 { font-size: 28px; } .faq-question { padding: 15px; } .faq-answer { padding: 15px; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="faq-container">
+        <div class="header-section">
+            <h1>🛠️ FAQ Technique</h1>
+            <p style="color: #666; font-size: 18px;">Problèmes techniques ? Trouvez les réponses à vos questions</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="🔍 Rechercher une question..." id="searchInput" onkeyup="searchFAQ()">
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-section-title">💻 Navigateurs et Compatibilité</div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Quels navigateurs supportez-vous ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    TravelVLM fonctionne sur tous les navigateurs modernes : Chrome 90+, Firefox 88+, Safari 14+, Edge 90+. Pour une meilleure expérience, nous recommandons les versions les plus récentes. Les anciennes versions d'Internet Explorer ne sont pas supportées.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Le site fonctionne-t-il sur mobile ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Oui, 100% responsive ! TravelVLM s'adapte automatiquement à tous les appareils : smartphones (iPhone, Android), tablettes et ordinateurs. Essayez de redimensionner votre fenêtre pour voir comment le design s'ajuste.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Le site est lent. Comment optimiser le chargement ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Essayez ces solutions : 1) Videz le cache de votre navigateur (Ctrl+Shift+Suppr), 2) Désactivez les extensions navigateur, 3) Vérifiez votre connexion Internet, 4) Utilisez un autre navigateur. Si le problème persiste, nous pouvons enquêter.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-section-title">🔐 Sécurité et Données Personnelles</div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Le site utilise-t-il HTTPS (sécurisé) ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Absolument ! TravelVLM utilise HTTPS avec certificat SSL/TLS 256-bit. Vous verrez le cadenas 🔒 dans la barre d'adresse. Toutes vos données sont chiffrées en transit. Aucune information sensible n'est jamais transmise en clair.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Vous stockez mes données personnelles ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Nous suivons le RGPD. Les données de connexion sont stockées localement dans votre navigateur (localStorage). Nous ne transmettons jamais vos infos à des tiers sans consentement. Vous pouvez nettoyer vos données à tout moment dans les paramètres de confidentialité.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Comment supprimer mes données ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Pour supprimer vos données locales : 1) Ouvrez les Outils de Développement (F12), 2) Allez à l'onglet "Application", 3) Cliquez sur "Local Storage", 4) Sélectionnez les entrées TravelVLM et supprimez. Ou contactez support@travelvlm.com pour une suppression complète de compte.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-section-title">📱 Problèmes de Fonctionnalités</div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Les commentaires ne s'affichent pas. Pourquoi ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Les commentaires sont stockés localement. Si vous ne les voyez pas : 1) Vérifiez que JavaScript est activé, 2) Videz le cache navigateur, 3) Essayez un autre navigateur. Si un mot interdit est détecté, le commentaire sera automatiquement filtré et remplacé.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Les liens de pages ne fonctionnent pas ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Vérifiez que vous êtes à la racine du domaine. Si vous êtes dans un sous-dossier, les chemins relatifs pourraient être incorrects. Essayez : 1) Rafraîchir la page (F5), 2) Vider le cache (Ctrl+Shift+Suppr), 3) Vérifier l'URL dans la barre d'adresse.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Les images ne se chargent pas ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Généralement, les images sont en emojis ou gradients (pas d'externe). Si vous voyez des éléments manquants : 1) Vérifiez votre connexion Internet, 2) Désactivez les bloqueurs de publicités, 3) Refreshez la page. Les icônes emoji devraient toujours s'afficher.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-section-title">🎮 Bonus Techniques</div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Comment accéder à la zone Bonus (Easter Eggs) ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Il y a 2 easter eggs sur la page d'accueil : 1) Cliquez 3 fois rapidement sur le dragon 🐉 pour accéder à la zone Bonus, 2) Cliquez 5 fois rapidement sur le logo TravelVLM pour découvrir les Voyages Surprise. Amusez-vous !
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Qu'est-ce que la Galerie 360° ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    La Galerie 360° propose des visites virtuelles interactives de destinations. Sur desktop, utilisez votre souris pour explorer. Sur mobile, glissez votre doigt pour naviguer et pincez pour zoomer. Les gradients représentent les vues immersives.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Comment signaler un bug technique ?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Si vous découvrez un bug : 1) Notez la page exacte où il apparaît, 2) Décrivez les étapes pour le reproduire, 3) Précisez votre navigateur/OS, 4) Capturez une screenshot si possible. Envoyez à support@travelvlm.com. Merci de votre aide !
+                </div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; text-align: center; margin-top: 40px;">
+            <h2 style="margin-top: 0;">Vous n'avez pas trouvé la réponse ?</h2>
+            <p>Notre équipe support est prête à vous aider !</p>
+            <a href="index.html#contact" style="display: inline-block; padding: 12px 30px; background: white; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 15px;">Nous Contacter</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <script>
+        function toggleFAQ(element) {
+            element.parentElement.classList.toggle('open');
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-q-text').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm) || searchTerm === '') {
+                    item.style.display = 'block';
+                    if (searchTerm) {
+                        item.classList.add('open');
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

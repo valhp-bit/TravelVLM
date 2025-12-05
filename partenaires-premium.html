@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partenaires Premium | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .partners-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .header-section { text-align: center; margin-bottom: 50px; }
+        .header-section h1 { color: #667eea; font-size: 42px; margin-bottom: 15px; }
+        .partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .partner-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center; transition: transform 0.3s; }
+        .partner-card:hover { transform: translateY(-5px); }
+        .partner-logo { font-size: 48px; margin-bottom: 15px; }
+        .partner-name { color: #333; font-size: 22px; font-weight: bold; margin-bottom: 10px; }
+        .partner-category { color: #667eea; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .partner-description { color: #666; line-height: 1.6; margin-bottom: 15px; }
+        .benefits-list { list-style: none; padding: 0; margin: 15px 0; text-align: left; }
+        .benefits-list li { padding: 8px 0; color: #666; font-size: 14px; }
+        .benefits-list li:before { content: "✓ "; color: #667eea; font-weight: bold; margin-right: 8px; }
+        .cta-btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; font-size: 14px; }
+        .categories-section { background: #f5f7fa; padding: 40px; border-radius: 12px; margin-bottom: 40px; }
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .category-box { background: white; padding: 20px; border-radius: 8px; text-align: center; border-top: 3px solid #667eea; }
+        .category-icon { font-size: 32px; margin-bottom: 10px; }
+        .category-name { color: #333; font-weight: bold; }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        @media (max-width: 768px) { .header-section h1 { font-size: 28px; } .partners-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="partners-container">
+        <div class="header-section">
+            <h1>🤝 Nos Partenaires Premium</h1>
+            <p style="color: #666; font-size: 18px;">Des entreprises de confiance pour garantir vos meilleures expériences de voyage</p>
+        </div>
+
+        <div class="categories-section">
+            <h2 style="color: #667eea; text-align: center; margin-top: 0;">Catégories de Partenaires</h2>
+            <div class="categories-grid">
+                <div class="category-box">
+                    <div class="category-icon">🏨</div>
+                    <div class="category-name">Hôtellerie</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-icon">✈️</div>
+                    <div class="category-name">Compagnies Aériennes</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-icon">🚗</div>
+                    <div class="category-name">Location Véhicules</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-icon">🍽️</div>
+                    <div class="category-name">Gastronomie</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-icon">🎭</div>
+                    <div class="category-name">Loisirs & Culture</div>
+                </div>
+                <div class="category-box">
+                    <div class="category-icon">🏥</div>
+                    <div class="category-name">Assurances Voyage</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #333; text-align: center; margin-bottom: 30px;">Nos Partenaires Exclusifs</h2>
+        <div class="partners-grid">
+            <div class="partner-card">
+                <div class="partner-logo">🏨</div>
+                <div class="partner-name">Luxe Hotels Group</div>
+                <div class="partner-category">Hôtellerie 5 Étoiles</div>
+                <div class="partner-description">150+ hôtels de prestige en Europe et à l'international, offrant des services exceptionnels.</div>
+                <ul class="benefits-list">
+                    <li>Upgrades gratuits</li>
+                    <li>Petit-déjeuner inclus</li>
+                    <li>Tarifs préférentiels</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+            </div>
+
+            <div class="partner-card">
+                <div class="partner-logo">✈️</div>
+                <div class="partner-name">Air Prestige International</div>
+                <div class="partner-category">Compagnie Aérienne</div>
+                <div class="partner-description">Vols directs vers 250+ destinations avec un service haut de gamme et des tarifs exclusifs.</div>
+                <ul class="benefits-list">
+                    <li>Surclassements fréquents</li>
+                    <li>Bagages supplémentaires</li>
+                    <li>Lounge prioritaire</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+            </div>
+
+            <div class="partner-card">
+                <div class="partner-logo">🚗</div>
+                <div class="partner-name">Elite Car Rental</div>
+                <div class="partner-category">Location Véhicules Premium</div>
+                <div class="partner-description">Flotte de véhicules haut de gamme disponibles dans 85 pays avec chauffeur si demandé.</div>
+                <ul class="benefits-list">
+                    <li>Assurance incluse</li>
+                    <li>Assistance 24/7</li>
+                    <li>Tarifs réduits</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+            </div>
+
+            <div class="partner-card">
+                <div class="partner-logo">🍽️</div>
+                <div class="partner-name">Michelin Stars Dining</div>
+                <div class="partner-category">Gastronomie Mondiale</div>
+                <div class="partner-description">Réservations garanties dans les meilleurs restaurants du monde avec tables privées.</div>
+                <ul class="benefits-list">
+                    <li>Réservations VIP</li>
+                    <li>Menu dégustation</li>
+                    <li>Réductions tarifaires</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+            </div>
+
+            <div class="partner-card">
+                <div class="partner-logo">🎭</div>
+                <div class="partner-name">Experience Tours Pro</div>
+                <div class="partner-category">Loisirs & Activités</div>
+                <div class="partner-description">10,000+ expériences uniques : musées, aventures outdoor, spectacles, événements exclusifs.</div>
+                <ul class="benefits-list">
+                    <li>Accès prioritaire</li>
+                    <li>Guides privés</li>
+                    <li>Tarifs privilégiés</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+            </div>
+
+            <div class="partner-card">
+                <div class="partner-logo">🏥</div>
+                <div class="partner-name">Monde Secure Assurance</div>
+                <div class="partner-category">Assurance Voyage Complète</div>
+                <div class="partner-description">Couverture santé, rapatriement, annulation et responsabilité civile dans 195 pays.</div>
+                <ul class="benefits-list">
+                    <li>Prime spéciale 15%</li>
+                    <li>Couverture COVID</li>
+                    <li>Assistance multilingue</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <h2 style="margin-top: 0;">Devenir Partenaire Premium</h2>
+            <p>Vous représentez une entreprise de qualité dans le secteur du tourisme ? Rejoignez notre réseau d'excellence !</p>
+            <a href="index.html#contact" style="display: inline-block; padding: 12px 30px; background: white; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 15px;">Nous Contacter</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

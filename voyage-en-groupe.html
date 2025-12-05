@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyages en Groupe | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .group-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .header-section { text-align: center; margin-bottom: 50px; }
+        .header-section h1 { color: #667eea; font-size: 42px; margin-bottom: 15px; }
+        .group-features { background: #f5f7fa; padding: 40px; border-radius: 12px; margin-bottom: 40px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; }
+        .feature-item { padding: 20px; }
+        .feature-icon { font-size: 32px; margin-bottom: 10px; }
+        .feature-text { color: #333; font-weight: bold; }
+        .packages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .package-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 4px solid #667eea; }
+        .package-title { color: #667eea; font-size: 24px; font-weight: bold; margin-bottom: 15px; }
+        .package-size { color: #999; font-size: 12px; margin-bottom: 15px; }
+        .package-price { color: #667eea; font-size: 28px; font-weight: bold; margin: 15px 0; }
+        .package-list { list-style: none; padding: 0; margin: 20px 0; }
+        .package-list li { padding: 8px 0; color: #666; border-bottom: 1px solid #eee; }
+        .package-list li:before { content: "✓ "; color: #667eea; font-weight: bold; }
+        .cta-btn { display: inline-block; padding: 12px 25px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; }
+        .testimonial-section { background: #f5f7fa; padding: 40px; border-radius: 12px; margin-bottom: 40px; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .testimonial-card { background: white; padding: 20px; border-radius: 8px; border-left: 3px solid #667eea; }
+        .testimonial-text { color: #666; margin: 10px 0; }
+        .testimonial-author { color: #667eea; font-weight: bold; margin-top: 15px; }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        @media (max-width: 768px) { .header-section h1 { font-size: 28px; } .packages-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="group-container">
+        <div class="header-section">
+            <h1>👥 Voyages en Groupe</h1>
+            <p style="color: #666; font-size: 18px;">Regroupez-vous avec vos amis, votre famille ou vos collègues pour une expérience inoubliable</p>
+        </div>
+
+        <div class="group-features">
+            <h2 style="color: #667eea; text-align: center; margin-top: 0;">Pourquoi Voyager en Groupe ?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-text">Tarifs Réduits</div>
+                    <p style="color: #666; font-size: 12px;">Jusqu'à 25% de réduction</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-text">Itinéraires Sur Mesure</div>
+                    <p style="color: #666; font-size: 12px;">Adaptés à votre groupe</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">👨‍💼</div>
+                    <div class="feature-text">Coordinateur Dédié</div>
+                    <p style="color: #666; font-size: 12px;">À votre disposition 24/7</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🚌</div>
+                    <div class="feature-text">Transport Inclus</div>
+                    <p style="color: #666; font-size: 12px;">Bus/Minibus privé</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #333; text-align: center; margin-bottom: 30px;">Nos Formules de Groupe</h2>
+        <div class="packages-grid">
+            <div class="package-card">
+                <div class="package-title">Groupe Découverte</div>
+                <div class="package-size">10-20 personnes</div>
+                <div class="package-price">À partir de 899€</div>
+                <ul class="package-list">
+                    <li>3-4 jours tous inclusive</li>
+                    <li>Transport privé</li>
+                    <li>Hôtel 3-4 étoiles</li>
+                    <li>Guide touristique</li>
+                    <li>Activités variées</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">Demander Devis</a>
+            </div>
+
+            <div class="package-card">
+                <div class="package-title">Groupe Aventure</div>
+                <div class="package-size">15-30 personnes</div>
+                <div class="package-price">À partir de 1,299€</div>
+                <ul class="package-list">
+                    <li>5-7 jours tout compris</li>
+                    <li>Transport premium</li>
+                    <li>Hôtel 4-5 étoiles</li>
+                    <li>Guide expert</li>
+                    <li>Activités aventure</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">Demander Devis</a>
+            </div>
+
+            <div class="package-card">
+                <div class="package-title">Groupe Luxe</div>
+                <div class="package-size">20-50 personnes</div>
+                <div class="package-price">À partir de 1,899€</div>
+                <ul class="package-list">
+                    <li>7-10 jours VIP</li>
+                    <li>Transport de luxe</li>
+                    <li>Hôtel 5 étoiles</li>
+                    <li>Guide francophone</li>
+                    <li>Expériences exclusives</li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">Demander Devis</a>
+            </div>
+        </div>
+
+        <div class="testimonial-section">
+            <h2 style="color: #667eea; margin-top: 0;">Témoignages de Groupes</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div style="color: #ffd700; font-size: 18px;">★★★★★</div>
+                    <div class="testimonial-text">"Nous étions 25 personnes du bureau. TravelVLM a organisé un week-end parfait à Barcelone. Le coordinateur était formidable !"</div>
+                    <div class="testimonial-author">Équipe SofTech Solutions</div>
+                </div>
+                <div class="testimonial-card">
+                    <div style="color: #ffd700; font-size: 18px;">★★★★★</div>
+                    <div class="testimonial-text">"Notre groupe de 18 amis a voyagé aux Baléares. Tout était organisé, nous avons profité pleinement sans stress. Recommandé !"</div>
+                    <div class="testimonial-author">Groupe d'Amis Lyon</div>
+                </div>
+                <div class="testimonial-card">
+                    <div style="color: #ffd700; font-size: 18px;">★★★★★</div>
+                    <div class="testimonial-text">"Voyage corporatif avec 30 employés. Les tarifs groupes ont sauvé notre budget. Service exceptionnel du début à la fin !"</div>
+                    <div class="testimonial-author">Entreprise Industrie Pierre</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <h2 style="margin-top: 0;">Prêt à Organiser Votre Voyage en Groupe ?</h2>
+            <p>Contactez notre équipe pour une consultation gratuite et un devis personnalisé.</p>
+            <a href="index.html#contact" style="display: inline-block; padding: 12px 30px; background: white; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 15px;">Contactez-Nous</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>

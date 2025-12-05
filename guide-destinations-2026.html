@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Destinations 2026 | TravelVLM</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        .guide-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .header-section { text-align: center; margin-bottom: 50px; }
+        .header-section h1 { color: #667eea; font-size: 42px; margin-bottom: 15px; }
+        .destinations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .destination-card { background: white; padding: 0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.3s; }
+        .destination-card:hover { transform: translateY(-5px); }
+        .destination-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; }
+        .destination-emoji { font-size: 32px; margin-bottom: 10px; }
+        .destination-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+        .destination-tag { font-size: 12px; opacity: 0.9; }
+        .destination-body { padding: 20px; }
+        .destination-description { color: #666; margin-bottom: 15px; line-height: 1.6; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; font-size: 13px; }
+        .info-item { background: #f5f7fa; padding: 10px; border-radius: 6px; }
+        .info-label { color: #667eea; font-weight: bold; }
+        .info-value { color: #333; }
+        .highlights { list-style: none; padding: 0; margin: 15px 0; }
+        .highlights li { padding: 8px 0; color: #666; }
+        .highlights li:before { content: "→ "; color: #667eea; font-weight: bold; }
+        .cta-btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; }
+        .trending-section { background: linear-gradient(135deg, #ffd700 0%, #ff1493 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 40px; }
+        .trending-title { font-size: 24px; font-weight: bold; margin-bottom: 15px; }
+        .trending-list { list-style: none; padding: 0; }
+        .trending-list li { padding: 8px 0; font-size: 14px; }
+        .trending-list li:before { content: "🔥 "; margin-right: 8px; }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        @media (max-width: 768px) { .header-section h1 { font-size: 28px; } .destinations-grid { grid-template-columns: 1fr; } .info-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: bold; text-decoration: none; color: white;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffd700, #ff1493); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">✈️</div>
+                <span>TravelVLM</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="guide-container">
+        <div class="header-section">
+            <h1>🗺️ Guide Destinations 2026</h1>
+            <p style="color: #666; font-size: 18px;">Les destinations à découvrir absolument cette année</p>
+        </div>
+
+        <div class="trending-section">
+            <div class="trending-title">🌟 Tendances 2026 - Les Incontournables</div>
+            <ul class="trending-list">
+                <li>Voyages durables et écotourisme en expansion</li>
+                <li>Destinations "secrètes" de l'Asie du Sud-Est</li>
+                <li>Road trips épiques en Amérique du Sud</li>
+                <li>Villes créatives européennes hors des sentiers battus</li>
+                <li>Safari luxe en Afrique de l'Est</li>
+            </ul>
+        </div>
+
+        <div class="destinations-grid">
+            <div class="destination-card">
+                <div class="destination-header">
+                    <div class="destination-emoji">🌏</div>
+                    <div class="destination-name">Costa Rica</div>
+                    <div class="destination-tag">★★★★★ | Aventure & Écotourisme</div>
+                </div>
+                <div class="destination-body">
+                    <div class="destination-description">Bienvenue au paradis écologique ! Forêts vierges, volcans actifs, plages secrètes.</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Meilleure Saison</div>
+                            <div class="info-value">Déc-Avril</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Durée Idéale</div>
+                            <div class="info-value">10-14 jours</div>
+                        </div>
+                    </div>
+                    <ul class="highlights">
+                        <li>Parc National du Corcovado</li>
+                        <li>Zipline dans la canopée</li>
+                        <li>Plages du Pacifique</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-header">
+                    <div class="destination-emoji">🏰</div>
+                    <div class="destination-name">Slovénie</div>
+                    <div class="destination-tag">★★★★★ | Europe Secrète</div>
+                </div>
+                <div class="destination-body">
+                    <div class="destination-description">Châteaux médiévaux, lacs cristallins et grottes mystiques. L'Europe en version tranquille.</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Meilleure Saison</div>
+                            <div class="info-value">Mai-Sept</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Durée Idéale</div>
+                            <div class="info-value">7-10 jours</div>
+                        </div>
+                    </div>
+                    <ul class="highlights">
+                        <li>Lac de Bled & Son Île</li>
+                        <li>Grotte de Postojna</li>
+                        <li>Ljubljana - Capitale Charmante</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-header">
+                    <div class="destination-emoji">🕌</div>
+                    <div class="destination-name">Maroc</div>
+                    <div class="destination-tag">★★★★★ | Culture & Désert</div>
+                </div>
+                <div class="destination-body">
+                    <div class="destination-description">Medinas colorées, désert du Sahara, montagnes de l'Atlas. Un trésor africain.</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Meilleure Saison</div>
+                            <div class="info-value">Oct-Mai</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Durée Idéale</div>
+                            <div class="info-value">8-12 jours</div>
+                        </div>
+                    </div>
+                    <ul class="highlights">
+                        <li>Marrakech - Médina & Souks</li>
+                        <li>Désert du Sahara</li>
+                        <li>Fès - Ville Fortifiée</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-header">
+                    <div class="destination-emoji">🏔️</div>
+                    <div class="destination-name">Pérou</div>
+                    <div class="destination-tag">★★★★★ | Histoire & Montagne</div>
+                </div>
+                <div class="destination-body">
+                    <div class="destination-description">Machu Picchu, vallées sacrées, vestiges incas. L'histoire au rendez-vous.</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Meilleure Saison</div>
+                            <div class="info-value">Avril-Oct</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Durée Idéale</div>
+                            <div class="info-value">10-14 jours</div>
+                        </div>
+                    </div>
+                    <ul class="highlights">
+                        <li>Machu Picchu - Merveille</li>
+                        <li>Vallée Sacrée</li>
+                        <li>Chemin de l'Inca</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-header">
+                    <div class="destination-emoji">🌴</div>
+                    <div class="destination-name">Thaïlande</div>
+                    <div class="destination-tag">★★★★★ | Asie Mystique</div>
+                </div>
+                <div class="destination-body">
+                    <div class="destination-description">Temples dorés, plages idylliques, jungle dense. L'Asie authentique à découvrir.</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Meilleure Saison</div>
+                            <div class="info-value">Nov-Fév</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Durée Idéale</div>
+                            <div class="info-value">2-3 semaines</div>
+                        </div>
+                    </div>
+                    <ul class="highlights">
+                        <li>Bangkok - Temples Grandioses</li>
+                        <li>Îles Phi Phi</li>
+                        <li>Chiang Mai - Montagne</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <div class="destination-header">
+                    <div class="destination-emoji">🦁</div>
+                    <div class="destination-name">Kenya</div>
+                    <div class="destination-tag">★★★★★ | Safari Luxe</div>
+                </div>
+                <div class="destination-body">
+                    <div class="destination-description">Grand safari au cœur de la savane, rencontres animales spectaculaires.</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Meilleure Saison</div>
+                            <div class="info-value">Juin-Oct</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Durée Idéale</div>
+                            <div class="info-value">10-14 jours</div>
+                        </div>
+                    </div>
+                    <ul class="highlights">
+                        <li>Réserve Masai Mara</li>
+                        <li>Mont Kenya</li>
+                        <li>Lacs Rift Valley</li>
+                    </ul>
+                    <a href="index.html#contact" class="cta-btn">En Savoir Plus</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #f5f7fa; padding: 40px; border-radius: 12px; text-align: center;">
+            <h2 style="color: #667eea; margin-top: 0;">Besoin d'Inspiration ?</h2>
+            <p style="color: #666;">Nos experts en voyage peuvent vous créer un itinéraire parfaitement adapté à vos envies et votre budget.</p>
+            <a href="index.html#contact" style="display: inline-block; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 15px;">Demander Conseil</a>
+        </div>
+
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 80px;">
+        <p>&copy; 2025 TravelVLM - Là où vos rêves deviennent réalité</p>
+    </footer>
+
+    <!-- Page créée automatiquement le 05/12/2025 par Copilot → TravelVLM -->
+</body>
+</html>
