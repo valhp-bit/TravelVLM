@@ -177,10 +177,11 @@
   </div>
 
   <script src="https://unpkg.com/dompurify@2.4.0/dist/purify.min.js"></script>
+  <script src="js/moderation.js"></script>
   <script>
     function escapeHtml(str){if(!str) return ''; return str.replace(/[&<>"'`]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s]));}
     
-    const STORAGE_KEY='traveldream_comments_v1';
+    const STORAGE_KEY='travelvlm_comments_v1';
     
     /**
      * Valide les données commentaires importées
@@ -308,13 +309,13 @@
       setStars(5);
     })();
     
-    // Form submission
+    // Form submission with moderation
     document.getElementById('commentForm').addEventListener('submit', function(e){
       e.preventDefault();
       
       const name = document.getElementById('name').value.trim() || 'Anonyme';
       const email = document.getElementById('email').value.trim();
-      const text = document.getElementById('comment').value.trim();
+      let text = document.getElementById('comment').value.trim();
       const rating = Math.max(1, Math.min(5, parseInt(document.getElementById('rating').value || 5)));
       
       if(!text){
@@ -322,11 +323,24 @@
         return;
       }
       
+      // Apply moderation: censor forbidden words
+      const censored = censorText(text);
+      
+      // Check if comment is effectively empty after censoring
+      if(isEffectivelyEmpty(censored)){
+        alert('Votre commentaire après filtrage semble vide. Veuillez utiliser un langage approprié.');
+        return;
+      }
+      
+      // Sanitize with DOMPurify to prevent XSS
+      const safe = DOMPurify.sanitize(censored);
+      
+      // Store only the filtered/sanitized version
       const list = loadComments();
       list.push({
         name,
         email,
-        text,
+        text: safe,
         rating,
         time: Date.now()
       });
