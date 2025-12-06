@@ -65,11 +65,12 @@ function censorText(text) {
   return result;
 }
 
-// Helper: detect if comment is too censored to be useful
-function isEffectivelyEmpty(filteredText) {
-  if (!filteredText) return true;
-  // Count non-asterisk, non-whitespace characters
-  const meaningful = filteredText.replace(/[\s*]/g, '').length;
+// Helper: detect if comment is too short to be useful BEFORE censoring
+function isEffectivelyEmpty(originalText) {
+  if (!originalText) return true;
+  // Check the ORIGINAL text length (not filtered)
+  // Need at least 3 meaningful characters
+  const meaningful = originalText.replace(/[\s*]/g, '').length;
   return meaningful < 3;
 }
 
