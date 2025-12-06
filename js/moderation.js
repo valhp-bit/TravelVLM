@@ -1,18 +1,17 @@
 // Système de censure des commentaires – version bêta – date 05/12/2025
 // Contient la liste des mots interdits et la fonction censorText()
 
-// Liste de mots interdits (exemple, à compléter selon besoins)
+// ⚠️ LISTE PRÉCISE DE MOTS À CENSURER (avec variantes maj/min automatiques)
+// Ajoute UNIQUEMENT les mots que tu veux censurer
 const forbiddenWords = [
-  "con", "idiot", "fuck", "bitch", "merde", "salope", "pute", "shit", "asshole"
+  "connard",  // censure: connard, Connard, CONNARD, etc.
+  "con",      // censure: con, Con, CON, etc.
+  "pute",     // censure: pute, Pute, PUTE, etc.
+  "enculé"    // censure: enculé, Enculé, ENCULÉ, etc.
 ];
 
 // Liste personnalisable (vide par défaut, peut être chargée dynamiquement)
 let forbiddenWordsCustom = [];
-
-// Normalize accents (éèê -> e) for matching
-function normalizeAccents(str){
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
 
 // Build a safe regex from forbidden words (escape special chars)
 function escapeRegex(s){
@@ -20,24 +19,27 @@ function escapeRegex(s){
 }
 
 // Main censor function. Returns censored text.
+// Censure UNIQUEMENT les mots exacts (pas de sous-mots)
 function censorText(text){
   if(!text) return text;
   const base = forbiddenWords.concat(forbiddenWordsCustom || []);
   if(base.length === 0) return text;
 
-  // Normalize for matching but preserve original characters for replacement
-  const normalized = normalizeAccents(text).toLowerCase();
-
-  // Build regex using word boundaries to avoid false positives (e.g., "butter")
-  const words = base.map(w => escapeRegex(normalizeAccents(w)));
-  const regex = new RegExp("\\b(" + words.join('|') + ")\\b", 'gi');
-
-  // Replace matches in the original text by mapping positions from normalized string
-  // Simpler approach: perform replace on the original text using a regex built from original words
-  const origWords = base.map(w => escapeRegex(w));
-  const origRegex = new RegExp("\\b(" + origWords.join('|') + ")\\b", 'gi');
-
-  return text.replace(origRegex, (match) => '*'.repeat(match.length));
+  // Crée une regex avec word boundaries pour chaque mot
+  // 'gi' = global + case-insensitive (censure maj et min)
+  let result = text;
+  
+  for(let word of base){
+    // Échappe les caractères spéciaux du regex
+    const escaped = escapeRegex(word);
+    // Crée une regex avec word boundaries pour éviter les sous-mots
+    // \b = limite de mot (début/fin de mot)
+    const regex = new RegExp("\\b" + escaped + "\\b", 'gi');
+    // Remplace par des astérisques
+    result = result.replace(regex, (match) => '*'.repeat(match.length));
+  }
+  
+  return result;
 }
 
 // Helper: detect if filtered text is effectively empty (too censored)
