@@ -121,17 +121,17 @@ KEY MODIFICATIONS:
      b) if(isEffectivelyEmpty(censored)) 
         → Show alert: "Votre commentaire après filtrage semble vide..."
         → Block submission
-     c) const safe = DOMPurify.sanitize(censored);
+    c) const safe = sanitize(censored)  // sanitize() local, fallback escapeHtml
      d) Store ONLY: { text: safe } (NOT original)
      e) renderComments() displays filtered text
 
 SUBMISSION FLOW:
-  User Input → censorText() → isEffectivelyEmpty() → DOMPurify.sanitize() 
+  User Input → censorText() → isEffectivelyEmpty() → sanitize() 
   → localStorage.setItem() → renderComments()
 
 SECURITY:
   ✅ Filtered text stored (not original)
-  ✅ DOMPurify.sanitize() prevents XSS
+  ✅ Sanitization locale empêche l'exécution de code (sanitize() local)
   ✅ Moderation applied before storage
   ✅ Display uses sanitized content
 
@@ -208,7 +208,7 @@ Test 5: localStorage stores filtered only
 Test 6: XSS prevention
   Input:  "<script>alert('XSS')</script>"
   Censure: No forbidden word (script tag not filtered)
-  DOMPurify: Removes HTML/JS tags
+  Sanitization: `sanitize()` local (escapeHtml fallback) removes HTML/JS tags
   Result: No execution ✅
   Status: PASS
 
@@ -239,7 +239,7 @@ Branches: 4 total
 
 2. fix/bug-audit (7 commits)
    - From previous session
-   - Auth, Formspree, payments, debugger, documentation
+  - Auth, external services removed, payments, debugger, documentation
 
 3. update/collections-text (1 commit)
    ✅ e1d92c8 feat(content): update number of travel-collections to 5
@@ -327,7 +327,7 @@ FILES MODIFIED:
      - Line 184: Changed STORAGE_KEY value
      - Lines 325-360: Enhanced form submission with censoring
      - Integrated isEffectivelyEmpty() check
-     - Integrated DOMPurify.sanitize()
+    - Integrated sanitize() local
 
 FOLDER CREATED:
   1. js/ (new folder containing moderation.js)

@@ -18,6 +18,8 @@ TravelVLM est une plateforme de voyage complète avec :
 - 🎮 **Easter eggs** - Contenus cachés amusants
 - 📱 **100% responsive** - Fonctionne partout
 
+**Note importante :** Tous les formulaires du site sont traités localement dans le navigateur (stockage via `localStorage`) — aucun envoi vers un service externe (services de formulaire tiers).
+
 **Site Live** : https://valhp-bit.github.io/TravelVLM/
 
 ---

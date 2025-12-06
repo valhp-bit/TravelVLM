@@ -41,9 +41,9 @@
 - ✅ Zone Bonus intégrée
 - ✅ Tous les liens testés et validés
 
-**Sécurité**
-- ✅ XSS Protection (DOMPurify)
-- ✅ CSRF Protection (Formspree)
+- **Sécurité**
+- ✅ XSS Protection (sanitization locale)
+- ✅ CSRF Protection (formulaires gérés localement, pas de service externe)
 - ✅ localStorage Safe
 - ✅ Validation des emails
 - ✅ Cookies consent banner

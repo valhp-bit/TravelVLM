@@ -176,10 +176,20 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/dompurify@2.4.0/dist/purify.min.js"></script>
   <script src="js/moderation.js"></script>
   <script>
     function escapeHtml(str){if(!str) return ''; return str.replace(/[&<>"'`]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s]));}
+
+    // sanitize: utilise DOMPurify si une copie locale est incluse manuellement,
+    // sinon bascule sur escapeHtml pour éviter tout chargement externe.
+    function sanitize(str){
+      try{
+        if(window.DOMPurify && typeof DOMPurify.sanitize === 'function'){
+          return DOMPurify.sanitize(str);
+        }
+      }catch(e){ /* ignore */ }
+      return escapeHtml(str);
+    }
     
     const STORAGE_KEY='travelvlm_comments_v1';
     
@@ -246,8 +256,8 @@
         item.className = 'comment-item';
         const stars = '★'.repeat(c.rating || 0) + '☆'.repeat(5 - (c.rating || 0));
         
-        // Sanitize text with DOMPurify
-        const safeText = DOMPurify.sanitize(c.text || '');
+        // Sanitize text (local fallback)
+        const safeText = sanitize(c.text || '');
         
         item.innerHTML = `
           <div class="comment-header">

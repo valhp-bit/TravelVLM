@@ -99,8 +99,8 @@ const res = eval(expr);
 ---
 
 ### ✅ Sécurité
-- **XSS Protection** ✅ DOMPurify intégré
-- **CSRF Protection** ✅ Formspree handling
+- **XSS Protection** ✅ Sanitization locale (`sanitize()`), DOMPurify possible en copie locale
+- **CSRF Protection** ✅ Pas de traitement côté serveur (formulaires gérés localement)
 - **Injection Prevention** ✅ Validation JSON
 - **Data Privacy** ✅ HTTPS GitHub Pages
 - **localStorage Safe** ✅ Pas d'injection

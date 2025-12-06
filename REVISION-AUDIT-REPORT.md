@@ -168,7 +168,7 @@ Le fichier `auth-ui.js` contient :
 1. ✅ **login.html** - Connexion + remember email
 2. ✅ **register.html** - Création compte
 3. ✅ **reset-password.html** - Réinitialisation
-4. ✅ **rendezvous.html** - Formulaire RDV (Formspree)
+4. ✅ **rendezvous.html** - Formulaire RDV (gestion locale, stocké en localStorage)
 5. ✅ **planificateur-voyage.html** - Devis personnalisé
 6. ✅ **inscription-newsletter.html** - Newsletter
 7. ✅ **commentaire.html** - Commentaires + modération
@@ -196,7 +196,7 @@ Le fichier `auth-ui.js` contient :
 2. **CSRF Protection** ✅
    - Pas de mutations sensibles sans validation
    - Formulaires utilisent method="POST"
-   - Formspree offre CSRF protection natif
+   - Formulaires traités localement (pas de service externe; pas de CSRF côté serveur)
 
 3. **Injection Prevention** ✅
    - localStorage ne stocke que du JSON valide

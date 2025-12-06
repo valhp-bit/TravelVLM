@@ -24,8 +24,8 @@ Le fichier `auth-ui.js` contient :
 - **reset-password.html** : Réinitialisation mot de passe
 
 ### Intégration Formulaires
-- **rendezvous.html** : Formulaire Formspree
-- **commentaire.html** : Stockage localStorage + DOMPurify sanitization
+- **rendezvous.html** : Formulaire (gestion locale, aucun service externe)
+- **commentaire.html** : Stockage localStorage + sanitization locale (escapeHtml / DOMPurify optionnel local)
 - **voyage_pro.html** : Paiements désactivés (bêta)
 
 ---
@@ -147,40 +147,41 @@ export const auth = getAuth(app);
 
 ---
 
-## 📧 Configuration Formspree (Rendez-vous)
+## 📧 Gestion locale des demandes de rendez-vous
 
-### Étape 1 : Créer Formspree
-1. Aller sur [formspree.io](https://formspree.io)
-2. Créer un nouveau formulaire
-3. Copier l'ID du formulaire : `f/xvgzqzpo` (exemple)
+Les demandes de rendez-vous sont gérées localement dans le navigateur — aucun service externe n'est utilisé.
 
-### Étape 2 : Mettre à jour rendezvous.html
-```html
-<form id="rendezvousForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-  <!-- Champs ... -->
-</form>
+- Stockage : `localStorage` sous la clé `travelvlm_rendezvous_submissions_v1`.
+- Format : tableau JSON d'objets, chaque objet contient les champs du formulaire plus `submittedAt`.
+
+Exemple de format stocké :
+```json
+[
+  {
+    "firstname": "Jean",
+    "lastname": "Dupont",
+    "email": "jean@example.com",
+    "phone": "+33 (0)1 ******** 68",
+    "preferred_date": "2025-12-10",
+    "preferred_time": "14:30",
+    "subject": "Voyage de luxe",
+    "message": "Je souhaite un devis...",
+    "newsletter": "on",
+    "consent": "on",
+    "submittedAt": "2025-12-06T12:34:56.789Z"
+  }
+]
 ```
 
-### Étape 3 : Tester
-- Remplir le formulaire
-- Soumettre
-- Email reçu dans la boîte Formspree
+Comportement côté client (implémenté dans `rendezvous.html`) :
+- Le formulaire est intercepté en JavaScript.
+- Les données sont validées (consentement requis).
+- La soumission est ajoutée au tableau dans `localStorage`.
+- L'utilisateur peut télécharger immédiatement une copie JSON de sa soumission.
 
-### Clés Formspree Acceptées
-```javascript
-{
-  firstname: "string",
-  lastname: "string",
-  email: "string",
-  phone: "string",
-  preferred_date: "date",
-  preferred_time: "time",
-  subject: "string",
-  message: "string",
-  newsletter: "boolean",
-  consent: "boolean"
-}
-```
+Remarques de sécurité :
+- Ce stockage est local à l'appareil et n'implique aucune transmission réseau.
+- Pour passer en production avec un backend sécurisé, implémenter une API serveur et remplacer la logique JS locale.
 
 ---
 
@@ -344,7 +345,7 @@ logoutUser();
 ## 📋 Checklist Déploiement Production
 
 - [ ] Activer Firebase (créer firebase-config.js)
-- [ ] Configurer Formspree pour rendezvous
+- [ ] Vérifier la stratégie de stockage des rendez-vous (localStorage ou backend sécurisé)
 - [ ] Activer 2FA dans Firebase
 - [ ] Ajouter HTTPS
 - [ ] Implémenter backend custom si besoin
@@ -388,10 +389,9 @@ logoutUser();
 
 ## 📚 Ressources
 
-- [Firebase Docs](https://firebase.google.com/docs)
-- [Formspree Docs](https://formspree.io/docs)
-- [DOMPurify](https://github.com/cure53/DOMPurify)
-- [OWASP Security](https://owasp.org)
+- [Firebase Docs] (documentation externe)
+- DOMPurify (optionnel) : téléchargez `dompurify.min.js` localement dans `js/` si vous souhaitez l'utiliser.
+- [OWASP Security] (documentation externe)
 
 ---
 
