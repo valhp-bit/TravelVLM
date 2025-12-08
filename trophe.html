@@ -151,7 +151,7 @@
 
     <script>
     (function(){
-      const eggKey = 'traveldream_easter_egg_v1';
+      const eggKey = 'travelvlm_easter_egg_v1';
       const eggState = parseInt(localStorage.getItem(eggKey) || '0', 10);
 
       function setUnlocked(id, unlocked){
@@ -161,9 +161,9 @@
       }
 
       // helper checks
-      function hasComments(count){ try{ const raw = localStorage.getItem('traveldream_comments_v1'); if(!raw) return false; const list = JSON.parse(raw); return list.length >= (count||1); }catch(e){return false} }
-      function hasBookings(count){ try{ const raw = localStorage.getItem('traveldream_appts_v1'); if(!raw) return false; const list = JSON.parse(raw); return list.length >= (count||1); }catch(e){return false} }
-      function hasAdClicks(){ try{ for(const k in localStorage){ if(k.startsWith('traveldream_ad_clicks_') && parseInt(localStorage.getItem(k) || '0',10) > 0) return true; } }catch(e){} return false }
+      function hasComments(count){ try{ const raw = localStorage.getItem('travelvlm_comments_v1'); if(!raw) return false; const list = JSON.parse(raw); return list.length >= (count||1); }catch(e){return false} }
+      function hasBookings(count){ try{ const raw = localStorage.getItem('travelvlm_appts_v1'); if(!raw) return false; const list = JSON.parse(raw); return list.length >= (count||1); }catch(e){return false} }
+      function hasAdClicks(){ try{ for(const k in localStorage){ if(k.startsWith('travelvlm_ad_clicks_') && parseInt(localStorage.getItem(k) || '0',10) > 0) return true; } }catch(e){} return false }
 
       // base trophies
       setUnlocked('egg_hatch', localStorage.getItem(eggKey) !== null);
@@ -171,23 +171,23 @@
       setUnlocked('dragon_master', eggState >= 2);
 
       // new trophies checks
-      setUnlocked('visitor', localStorage.getItem('traveldream_visited') === '1');
+      setUnlocked('visitor', localStorage.getItem('travelvlm_visited') === '1');
       setUnlocked('first_comment', hasComments(1));
       setUnlocked('first_booking', hasBookings(1));
       setUnlocked('five_comments', hasComments(5));
       setUnlocked('five_bookings', hasBookings(5));
       setUnlocked('ad_click', hasAdClicks());
-      setUnlocked('share', localStorage.getItem('traveldream_shared') === '1');
+      setUnlocked('share', localStorage.getItem('travelvlm_shared') === '1');
       setUnlocked('vip_access', sessionStorage.getItem('vipAccess') === 'true');
       setUnlocked('boss_visit', sessionStorage.getItem('bossAccess') === 'true');
-      setUnlocked('bug_hunter', localStorage.getItem('traveldream_bug_reported') === '1');
+      setUnlocked('bug_hunter', localStorage.getItem('travelvlm_bug_reported') === '1');
     })();
   </script>
 
   <!-- Easter egg script -->
   <script>
     (function(){
-      const EGG_KEY = 'traveldream_easter_egg_v1';
+      const EGG_KEY = 'travelvlm_easter_egg_v1';
       const el = document.getElementById('secretEgg');
       if(!el) return;
       let state = parseInt(localStorage.getItem(EGG_KEY) || '0', 10);
@@ -221,7 +221,7 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
-      const key='traveldream_cookies_v1';
+      const key='travelvlm_cookies_v1';
       const banner = document.getElementById('cookieBanner');
       function show(){ if(banner) banner.style.display='flex' }
       function hide(){ if(banner) banner.style.display='none' }
@@ -231,16 +231,16 @@
       const rejectBtn = document.getElementById('cookieReject');
       if(acceptBtn) acceptBtn.addEventListener('click', ()=>{ localStorage.setItem(key,'accepted'); hide(); });
       if(rejectBtn) rejectBtn.addEventListener('click', ()=>{ localStorage.setItem(key,'rejected'); hide(); });
-      try{ localStorage.setItem('traveldream_visited','1'); }catch(e){}
+      try{ localStorage.setItem('travelvlm_visited','1'); }catch(e){}
     });
     function recordAdClick(e, id){
       try{ if(e && e.preventDefault) e.preventDefault(); }catch(err){}
-      const key = 'traveldream_cookies_v1';
+      const key = 'travelvlm_cookies_v1';
       const v = localStorage.getItem(key);
       const href = (e && e.currentTarget && e.currentTarget.href) ? e.currentTarget.href : (e && e.target && e.target.closest && e.target.closest('a') ? e.target.closest('a').href : null);
       const doNav = () => { if(href) window.location.href = href; return false; };
       if(v === 'accepted'){
-        const ck = 'traveldream_ad_clicks_' + id;
+        const ck = 'travelvlm_ad_clicks_' + id;
         const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
         localStorage.setItem(ck, String(n));
         return doNav();
@@ -249,7 +249,7 @@
         if(ok){
           localStorage.setItem(key, 'accepted');
           try{ document.getElementById('cookieBanner').style.display='none'; }catch(e){}
-          const ck = 'traveldream_ad_clicks_' + id;
+          const ck = 'travelvlm_ad_clicks_' + id;
           const n = parseInt(localStorage.getItem(ck) || '0', 10) + 1;
           localStorage.setItem(ck, String(n));
           return doNav();
