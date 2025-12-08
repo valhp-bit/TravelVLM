@@ -176,17 +176,18 @@
     function listLocalKeys(){
       const keys = [];
       for(const k in localStorage){
-        keys.push('<code>' + escapeHtml(k) + '</code>');
+        keys.push(escapeHtml(k));
       }
-      document.getElementById('localKeys').innerHTML = keys.length > 0 ? keys.join(', ') : '(vide)';
+      // Use textContent to avoid injecting HTML in the keys list
+      document.getElementById('localKeys').textContent = keys.length > 0 ? keys.join(', ') : '(vide)';
     }
 
     function listSessionKeys(){
       const keys = [];
       for(const k in sessionStorage){
-        keys.push('<code>' + escapeHtml(k) + '</code>');
+        keys.push(escapeHtml(k));
       }
-      document.getElementById('sessionKeys').innerHTML = keys.length > 0 ? keys.join(', ') : '(vide)';
+      document.getElementById('sessionKeys').textContent = keys.length > 0 ? keys.join(', ') : '(vide)';
     }
 
     function exportLocal(){
@@ -306,7 +307,9 @@
       try{
         const state = parseInt(localStorage.getItem('traveldream_easter_egg_v1') || '0');
         const labels = ['🥚', '🐲', '🐉'];
-        document.getElementById('eggDisplay').innerHTML = '<strong>État actuel:</strong> ' + labels[state] + ' (état #' + state + ')';
+        const disp = document.getElementById('eggDisplay');
+        // Use safe HTML setting to avoid injection (labels are internal but escape anyway)
+        setSafeHTML(disp, `<strong>État actuel:</strong> ${escapeHtml(labels[state])} (état #${state})`);
       }catch(e){
         alert('Erreur: ' + e.message);
       }

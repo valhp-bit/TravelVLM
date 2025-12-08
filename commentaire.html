@@ -244,10 +244,13 @@
     function renderComments(){
       const list = loadComments();
       const container = document.getElementById('commentList');
-      container.innerHTML = '';
+      container.textContent = '';
       
       if(list.length === 0){
-        container.innerHTML = '<div class="small">Aucun commentaire pour le moment. Soyez le premier !</div>';
+        const emptyDiv = document.createElement('div');
+        emptyDiv.className = 'small';
+        emptyDiv.textContent = 'Aucun commentaire pour le moment. Soyez le premier !';
+        container.appendChild(emptyDiv);
         updateStats(list);
         return;
       }
@@ -262,18 +265,43 @@
         // Sanitize text (local fallback)
         const safeText = sanitize(c.text || '');
         
-        item.innerHTML = `
-          <div class="comment-header">
-            <div>
-              <div class="comment-author">${escapeHtml(c.name || 'Anonyme')} <span class="small">— ${escapeHtml(c.email || '')}</span></div>
-              <div class="small">${formatDate(c.time || Date.now())}</div>
-            </div>
-            <div style="text-align:right">
-              <div class="small">${stars}</div>
-            </div>
-          </div>
-          <div class="comment-text">${safeText}</div>
-        `;
+        // Build DOM nodes safely instead of using innerHTML
+        const header = document.createElement('div');
+        header.className = 'comment-header';
+
+        const left = document.createElement('div');
+        const author = document.createElement('div');
+        author.className = 'comment-author';
+        author.textContent = (c.name || 'Anonyme');
+        const smallEmail = document.createElement('span');
+        smallEmail.className = 'small';
+        smallEmail.textContent = ' — ' + (c.email || '');
+        author.appendChild(smallEmail);
+
+        const dateDiv = document.createElement('div');
+        dateDiv.className = 'small';
+        dateDiv.textContent = formatDate(c.time || Date.now());
+
+        left.appendChild(author);
+        left.appendChild(dateDiv);
+
+        const right = document.createElement('div');
+        right.style.textAlign = 'right';
+        const starsDiv = document.createElement('div');
+        starsDiv.className = 'small';
+        starsDiv.textContent = stars;
+        right.appendChild(starsDiv);
+
+        header.appendChild(left);
+        header.appendChild(right);
+
+        const textDiv = document.createElement('div');
+        textDiv.className = 'comment-text';
+        // safeText is already sanitized
+        setSafeHTML(textDiv, safeText);
+
+        item.appendChild(header);
+        item.appendChild(textDiv);
         container.appendChild(item);
       }
       

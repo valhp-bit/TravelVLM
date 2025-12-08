@@ -236,16 +236,17 @@ function setupAuthUI() {
         `;
 
         const authContainer = document.createElement('div');
-        authContainer.innerHTML = authHTML;
+        // Use setSafeHTML to avoid injecting unsafe markup coming from user data
+        setSafeHTML(authContainer, authHTML);
         authContainer.setAttribute('data-auth-btn', 'container');
         headerNav.appendChild(authContainer);
 
         // Update mobile view
         const mobileAuth = document.createElement('div');
-        mobileAuth.innerHTML = `
-            <a href="account.html" data-auth-btn="mobile" style="color: white; text-decoration: none; font-weight: 500;">👤 ${currentUser.firstname}</a>
+        setSafeHTML(mobileAuth, `
+            <a href="account.html" data-auth-btn="mobile" style="color: white; text-decoration: none; font-weight: 500;">👤 ${escapeHtml(currentUser.firstname || '')}</a>
             <button onclick="logoutUser()" data-auth-btn="logout-mobile" style="background: #ff6b6b; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 500;">Déconnexion</button>
-        `;
+        `);
         mobileAuth.style.display = 'flex';
         mobileAuth.style.gap = '10px';
         mobileAuth.style.flexWrap = 'wrap';
@@ -262,7 +263,7 @@ function setupAuthUI() {
         `;
 
         const authContainer = document.createElement('div');
-        authContainer.innerHTML = authHTML;
+        setSafeHTML(authContainer, authHTML);
         authContainer.style.display = 'flex';
         authContainer.style.gap = '10px';
         authContainer.setAttribute('data-auth-btn', 'container');
