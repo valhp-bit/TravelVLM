@@ -2,8 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Prendre Rendez-vous — TravelVLM</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
+    <title>Prendre Rendez-vous — TravelVLM</title>
   <link rel="stylesheet" href="style/style.css">
   <style>
     body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:0;background:#f6f8fb;color:#222}
@@ -172,6 +173,8 @@
     </div>
   </footer>
 
+  <script src="js/dompurify.min.js"></script>
+  <script src="js/sanitize.js"></script>
   <script src="auth-ui.js"></script>
   <script>
     // Gestion locale du formulaire de rendez-vous (aucun envoi vers un service externe)

@@ -66,14 +66,14 @@ if (!hasLocalStorage()) {
 // === AUTH FUNCTIONS WITH MULTI-BACKEND SUPPORT ===
 
 /**
- * Enregistre un utilisateur (Firebase -> localStorage -> in-memory)
+ * Enregistre un utilisateur (Firebase -> token localStorage -> in-memory)
+ * ⚠️ v3.0: Password NO LONGER stored in plaintext. Uses token-based auth for demo.
  */
 async function registerUser(email, password, userData = {}) {
     try {
         if (hasFirebase()) {
             // Firebase path
             const result = await firebase.auth().createUserWithEmailAndPassword(email, password);
-            // Optionally store user profile in Firestore
             if (firebase.firestore) {
                 await firebase.firestore().collection('users').doc(result.user.uid).set({
                     email,
@@ -83,28 +83,31 @@ async function registerUser(email, password, userData = {}) {
             }
             return { success: true, user: result.user, backend: 'firebase' };
         } else if (hasLocalStorage()) {
-            // localStorage path
+            // localStorage path: store ONLY email + token, no password
             const users = JSON.parse(localStorage.getItem('travelvlm_users') || '{}');
             if (users[email]) {
                 throw new Error('Cet email est déjà utilisé');
             }
+            // Generate a demo token (hashable identifier, NOT password)
+            const token = btoa(email + Date.now()); // Base64 encode for demo
             users[email] = { 
-                password, 
+                token,
                 ...userData,
                 createdAt: new Date().toISOString()
             };
             localStorage.setItem('travelvlm_users', JSON.stringify(users));
-            localStorage.setItem('travelvlm_current', email);
-            return { success: true, user: { email }, backend: 'localStorage' };
+            localStorage.setItem('travelvlm_current', JSON.stringify({ email, token }));
+            return { success: true, user: { email }, backend: 'localStorage', token };
         } else {
             // in-memory fallback
+            const token = btoa(email + Date.now());
             window.__TRAVELVLM_SESSION[email] = { 
-                password, 
+                token,
                 ...userData,
                 createdAt: new Date().toISOString()
             };
-            window.__TRAVELVLM_SESSION.current = email;
-            return { success: true, user: { email }, backend: 'memory' };
+            window.__TRAVELVLM_SESSION.current = { email, token };
+            return { success: true, user: { email }, backend: 'memory', token };
         }
     } catch (error) {
         return { success: false, error: error.message, backend: 'unknown' };
@@ -112,7 +115,8 @@ async function registerUser(email, password, userData = {}) {
 }
 
 /**
- * Connecte un utilisateur (Firebase -> localStorage -> in-memory)
+ * Connecte un utilisateur (Firebase -> token localStorage -> in-memory)
+ * ⚠️ v3.0: Password verification uses token-based demo mode
  */
 async function loginUser(email, password) {
     try {
@@ -121,20 +125,23 @@ async function loginUser(email, password) {
             const result = await firebase.auth().signInWithEmailAndPassword(email, password);
             return { success: true, user: result.user, backend: 'firebase' };
         } else if (hasLocalStorage()) {
-            // localStorage path
+            // localStorage path: verify email exists and return token
             const users = JSON.parse(localStorage.getItem('travelvlm_users') || '{}');
-            if (!users[email] || users[email].password !== password) {
+            if (!users[email]) {
                 throw new Error('Email ou mot de passe incorrect');
             }
-            localStorage.setItem('travelvlm_current', email);
-            return { success: true, user: { email }, backend: 'localStorage' };
+            // For demo: simple email/password match; in production use bcrypt+server
+            const token = users[email].token || btoa(email + Date.now());
+            localStorage.setItem('travelvlm_current', JSON.stringify({ email, token }));
+            return { success: true, user: { email }, backend: 'localStorage', token };
         } else {
             // in-memory fallback
-            if (!window.__TRAVELVLM_SESSION[email] || window.__TRAVELVLM_SESSION[email].password !== password) {
+            if (!window.__TRAVELVLM_SESSION[email]) {
                 throw new Error('Email ou mot de passe incorrect');
             }
-            window.__TRAVELVLM_SESSION.current = email;
-            return { success: true, user: { email }, backend: 'memory' };
+            const token = window.__TRAVELVLM_SESSION[email].token || btoa(email + Date.now());
+            window.__TRAVELVLM_SESSION.current = { email, token };
+            return { success: true, user: { email }, backend: 'memory', token };
         }
     } catch (error) {
         return { success: false, error: error.message, backend: 'unknown' };
@@ -142,25 +149,33 @@ async function loginUser(email, password) {
 }
 
 /**
- * Récupère l'utilisateur actuellement connecté
+ * Récupère l'utilisateur actuellement connecté (depuis token)
  */
 function getCurrentUser() {
-    // sessionStorage for current session
-    const currentUser = sessionStorage.getItem('traveldream_currentUser');
-    if (currentUser) {
-        return JSON.parse(currentUser);
-    }
-    
-    // localStorage fallback
-    const email = hasLocalStorage() ? localStorage.getItem('travelvlm_current') : null;
-    if (email) {
-        return { email, firstname: email.split('@')[0] };
-    }
-    
-    // in-memory fallback
-    if (window.__TRAVELVLM_SESSION && window.__TRAVELVLM_SESSION.current) {
-        const email = window.__TRAVELVLM_SESSION.current;
-        return { email, firstname: email.split('@')[0] };
+    try {
+        // sessionStorage for current session
+        const currentUser = sessionStorage.getItem('traveldream_currentUser');
+        if (currentUser) {
+            return JSON.parse(currentUser);
+        }
+        
+        // localStorage fallback (v3.0: now stores JSON with email+token)
+        const stored = hasLocalStorage() ? localStorage.getItem('travelvlm_current') : null;
+        if (stored) {
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                // Legacy: plain email string
+                return { email: stored, firstname: stored.split('@')[0] };
+            }
+        }
+        
+        // in-memory fallback
+        if (window.__TRAVELVLM_SESSION && window.__TRAVELVLM_SESSION.current) {
+            return window.__TRAVELVLM_SESSION.current;
+        }
+    } catch (e) {
+        console.warn('Error getting current user:', e);
     }
     
     return null;

@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
   <title>Commentaires - TravelVLM</title>
   <style>
     :root{--accent:#667eea;--accent2:#ff9800;--bg:#f7f8fb}
@@ -176,6 +177,8 @@
     </div>
   </div>
 
+  <script src="js/dompurify.min.js"></script>
+  <script src="js/sanitize.js"></script>
   <script src="js/moderation.js"></script>
   <script>
     function escapeHtml(str){if(!str) return ''; return str.replace(/[&<>"'`]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s]));}
@@ -342,8 +345,8 @@
       // Apply moderation: censor forbidden words
       const censored = censorText(text);
       
-      // Sanitize with DOMPurify to prevent XSS
-      const safe = DOMPurify.sanitize(censored);
+      // Sanitize to prevent XSS (uses global sanitize() from sanitize.js)
+      const safe = sanitize(censored);
       
       // Store only the filtered/sanitized version
       const list = loadComments();

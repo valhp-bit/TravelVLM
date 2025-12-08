@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
     <title>Créer un Compte — TravelVLM</title>
     <style>
         * {
@@ -303,6 +304,8 @@
         </div>
     </div>
 
+    <script src="js/dompurify.min.js"></script>
+    <script src="js/sanitize.js"></script>
     <script src="auth-ui.js"></script>
     <script>
         const form = document.getElementById('registerForm');
